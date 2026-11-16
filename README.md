@@ -16,6 +16,13 @@ the build is given a Supabase project (see `supabase/README.md`).
   access goes through the `CloudBackend` interface; coach review is gated by
   `Entitlements` so payments can be added later without touching the screens.
 
+## Builds
+
+Every push runs `.github/workflows/ci.yml` on GitHub Actions: analyzer, all tests,
+a release Android build (APKs downloadable from the run page as the
+`solo-calisthenics-apk` artifact) and an unsigned iOS build. See
+`docs/DEVICE_CHECKLIST.md` for installing the APK and what to test on a phone.
+
 ## Run
 
 ```bash
