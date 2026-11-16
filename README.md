@@ -3,13 +3,18 @@
 Offline-first, privacy-first calisthenics training app (Flutter, Android 8.0+ / iOS 15+).
 English and Arabic with full RTL. No account, no server, no analytics.
 
-**Status: Phases 1 and 2 complete.**
+**Status: Phases 1, 2 and 3 are written.** Phase 3 is optional and hidden unless
+the build is given a Supabase project (see `supabase/README.md`).
 
 * Phase 1: onboarding and profiling, exercise library, workout logger, rest timer,
   encrypted local storage, theme, Arabic/English.
 * Phase 2: weekly planner with a rule-based progression engine, skill tree,
   progress dashboard, encrypted photo vault with PIN/biometric lock, encrypted
   backup export and import.
+* Phase 3 (optional cloud): Google sign-in, passphrase-encrypted cloud backup,
+  coach review (30-second 720p clips, feedback inbox, coach inbox). All server
+  access goes through the `CloudBackend` interface; coach review is gated by
+  `Entitlements` so payments can be added later without touching the screens.
 
 ## Run
 
@@ -63,6 +68,7 @@ lib/
     progress/               analytics dashboard, photo vault, comparison
     security/               PIN + biometric lock
     backup/                 encrypted export / restore
+    cloud/                  optional: backend interface, Supabase implementation, coach review
     settings/               key/value settings, reminders
   l10n/                     app_en.arb, app_ar.arb (+ generated code)
 assets/
@@ -133,4 +139,8 @@ tool/                       authoring helpers and screenshot renderer
 
 ## Roadmap
 
-* Phase 3 (optional cloud): Google sign-in, encrypted cloud backup, coach review.
+* Connect a Supabase project and verify Phase 3 against it (the Supabase
+  implementation is compile-checked only so far).
+* Payments for coach review (`Entitlements`).
+* Server-side scheduled clip cleanup (Edge Function).
+* Voice counting; real exercise clips.

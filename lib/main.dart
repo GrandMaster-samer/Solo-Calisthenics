@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
 import 'core/db/app_database.dart';
@@ -11,6 +12,10 @@ import 'core/db/encrypted_connection.dart';
 import 'core/notifications/notification_service.dart';
 import 'core/providers.dart';
 import 'core/theme/app_colors.dart';
+import 'features/cloud/application/cloud_providers.dart';
+import 'features/cloud/data/cloud_config.dart';
+import 'features/cloud/data/supabase_backend.dart';
+import 'features/cloud/domain/cloud_backend.dart';
 import 'features/exercises/data/exercise_repository.dart';
 import 'features/profile/application/profile_controller.dart';
 import 'features/profile/data/profile_repository.dart';
@@ -30,6 +35,9 @@ Future<void> main() async {
   });
   await _boot();
 }
+
+/// Connected once per process; survives in-app restarts (restore, wipe).
+CloudBackend? _cloud;
 
 Future<void> _boot() async {
   const keyStore = SecureKeyStore();
@@ -66,6 +74,19 @@ Future<void> _boot() async {
   final injuries = await profiles.loadInjuries();
   final library = await ExerciseLibrary.load();
 
+  // Optional cloud backend: only when this build was given a project, and never
+  // allowed to stop the app from starting.
+  CloudBackend? cloud = _cloud;
+  final cloudConfig = CloudConfig.fromEnvironment();
+  if (cloud == null && cloudConfig != null) {
+    try {
+      cloud = _cloud = await SupabaseBackend.connect(cloudConfig);
+    } on Object catch (e) {
+      debugPrint('Cloud backend unavailable: $e');
+    }
+  }
+  final tempDir = await getTemporaryDirectory();
+
   runApp(
     ProviderScope(
       key: UniqueKey(), // a restart builds a completely fresh app
@@ -81,6 +102,8 @@ Future<void> _boot() async {
           ),
         ),
         databaseProvider.overrideWithValue(db),
+        cloudBackendProvider.overrideWithValue(cloud),
+        cloudTempDirectoryProvider.overrideWithValue(() async => tempDir),
         exerciseLibraryProvider.overrideWithValue(library),
         notificationServiceProvider.overrideWithValue(notifications),
         initialSettingsProvider.overrideWithValue(settings),

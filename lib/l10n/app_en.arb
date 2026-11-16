@@ -551,5 +551,87 @@
   "backupTooNew": "This backup was made by a newer version of the app. Update the app first.",
   "backupImportTitle": "Replace all data?",
   "backupImportBody": "Everything currently in the app will be replaced by the backup. This cannot be undone.",
-  "backupImportConfirm": "Replace and restore"
+  "backupImportConfirm": "Replace and restore",
+  "cloudTitle": "Account and cloud (optional)",
+  "cloudOptionalHint": "The app works fully without an account. Sign in only if you want cloud backup or coach review.",
+  "signInGoogle": "Sign in with Google",
+  "signOut": "Sign out",
+  "signedIn": "Signed in",
+  "roleCoach": "Signed in as coach",
+  "cloudFailed": "That did not work. Check your connection and try again.",
+  "cloudBackupNow": "Back up to the cloud",
+  "cloudBackupNone": "No cloud backup yet. Encrypted on this device before upload.",
+  "cloudBackupLast": "Last cloud backup: {date}",
+  "@cloudBackupLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cloudBackupDone": "Encrypted backup uploaded.",
+  "cloudBackupTooLarge": "The backup is larger than {mb} MB. Remove some photos or use the file export instead.",
+  "@cloudBackupTooLarge": {
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "cloudRestore": "Restore from the cloud",
+  "cloudDeleteData": "Delete my cloud data",
+  "cloudDeleteDataHint": "Removes your cloud backup, clips and feedback from the server.",
+  "cloudDeleteDataBody": "Your cloud backup, review clips and feedback will be deleted from the server. Data on this device is not affected.",
+  "coachReview": "Coach review",
+  "coachOpen": "Send a clip to the coach",
+  "coachHint": "Get technique corrections on a short video of your movement.",
+  "coachSignInNeeded": "Coach review needs an account, so your clips and feedback reach the right person.",
+  "clipNewTitle": "New clip",
+  "clipRules": "Up to {seconds} seconds. Compressed on your phone, sent without sound, and deleted after review or after {days} days.",
+  "@clipRules": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "clipChooseExercise": "Choose the exercise",
+  "clipRecord": "Record",
+  "clipChoose": "Choose video",
+  "clipReady": "Clip ready to send",
+  "clipNote": "Note for the coach",
+  "clipSend": "Send for review",
+  "clipSent": "Clip sent. Feedback will appear below.",
+  "clipTooLong": "The clip must be {seconds} seconds or shorter.",
+  "@clipTooLong": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "clipFailed": "Could not prepare the clip.",
+  "clipUnavailable": "This clip is no longer available.",
+  "clipPlay": "Play",
+  "feedbackInbox": "Your feedback",
+  "feedbackEmpty": "Clips you send and the coach's feedback will appear here.",
+  "statusWaiting": "Waiting",
+  "statusReviewed": "Reviewed",
+  "coachSays": "Coach feedback",
+  "coachInbox": "Coach inbox",
+  "coachInboxWaiting": "{count, plural, =0{Nothing waiting} =1{1 clip waiting} other{{count} clips waiting}}",
+  "@coachInboxWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "coachInboxEmpty": "No clips waiting for review.",
+  "feedbackWrite": "Technique feedback",
+  "feedbackSend": "Send feedback",
+  "feedbackDeletesClip": "Sending the feedback deletes the clip from the server."
 }

@@ -1770,6 +1770,270 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Replace and restore'**
   String get backupImportConfirm;
+
+  /// No description provided for @cloudTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account and cloud (optional)'**
+  String get cloudTitle;
+
+  /// No description provided for @cloudOptionalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The app works fully without an account. Sign in only if you want cloud backup or coach review.'**
+  String get cloudOptionalHint;
+
+  /// No description provided for @signInGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get signInGoogle;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @signedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in'**
+  String get signedIn;
+
+  /// No description provided for @roleCoach.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as coach'**
+  String get roleCoach;
+
+  /// No description provided for @cloudFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'That did not work. Check your connection and try again.'**
+  String get cloudFailed;
+
+  /// No description provided for @cloudBackupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up to the cloud'**
+  String get cloudBackupNow;
+
+  /// No description provided for @cloudBackupNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No cloud backup yet. Encrypted on this device before upload.'**
+  String get cloudBackupNone;
+
+  /// No description provided for @cloudBackupLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last cloud backup: {date}'**
+  String cloudBackupLast(String date);
+
+  /// No description provided for @cloudBackupDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup uploaded.'**
+  String get cloudBackupDone;
+
+  /// No description provided for @cloudBackupTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup is larger than {mb} MB. Remove some photos or use the file export instead.'**
+  String cloudBackupTooLarge(int mb);
+
+  /// No description provided for @cloudRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from the cloud'**
+  String get cloudRestore;
+
+  /// No description provided for @cloudDeleteData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my cloud data'**
+  String get cloudDeleteData;
+
+  /// No description provided for @cloudDeleteDataHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Removes your cloud backup, clips and feedback from the server.'**
+  String get cloudDeleteDataHint;
+
+  /// No description provided for @cloudDeleteDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cloud backup, review clips and feedback will be deleted from the server. Data on this device is not affected.'**
+  String get cloudDeleteDataBody;
+
+  /// No description provided for @coachReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach review'**
+  String get coachReview;
+
+  /// No description provided for @coachOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a clip to the coach'**
+  String get coachOpen;
+
+  /// No description provided for @coachHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get technique corrections on a short video of your movement.'**
+  String get coachHint;
+
+  /// No description provided for @coachSignInNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach review needs an account, so your clips and feedback reach the right person.'**
+  String get coachSignInNeeded;
+
+  /// No description provided for @clipNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New clip'**
+  String get clipNewTitle;
+
+  /// No description provided for @clipRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {seconds} seconds. Compressed on your phone, sent without sound, and deleted after review or after {days} days.'**
+  String clipRules(int seconds, int days);
+
+  /// No description provided for @clipChooseExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the exercise'**
+  String get clipChooseExercise;
+
+  /// No description provided for @clipRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get clipRecord;
+
+  /// No description provided for @clipChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose video'**
+  String get clipChoose;
+
+  /// No description provided for @clipReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Clip ready to send'**
+  String get clipReady;
+
+  /// No description provided for @clipNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the coach'**
+  String get clipNote;
+
+  /// No description provided for @clipSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send for review'**
+  String get clipSend;
+
+  /// No description provided for @clipSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Clip sent. Feedback will appear below.'**
+  String get clipSent;
+
+  /// No description provided for @clipTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'The clip must be {seconds} seconds or shorter.'**
+  String clipTooLong(int seconds);
+
+  /// No description provided for @clipFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not prepare the clip.'**
+  String get clipFailed;
+
+  /// No description provided for @clipUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This clip is no longer available.'**
+  String get clipUnavailable;
+
+  /// No description provided for @clipPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get clipPlay;
+
+  /// No description provided for @feedbackInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback'**
+  String get feedbackInbox;
+
+  /// No description provided for @feedbackEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Clips you send and the coach\'s feedback will appear here.'**
+  String get feedbackEmpty;
+
+  /// No description provided for @statusWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get statusWaiting;
+
+  /// No description provided for @statusReviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed'**
+  String get statusReviewed;
+
+  /// No description provided for @coachSays.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach feedback'**
+  String get coachSays;
+
+  /// No description provided for @coachInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach inbox'**
+  String get coachInbox;
+
+  /// No description provided for @coachInboxWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing waiting} =1{1 clip waiting} other{{count} clips waiting}}'**
+  String coachInboxWaiting(num count);
+
+  /// No description provided for @coachInboxEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No clips waiting for review.'**
+  String get coachInboxEmpty;
+
+  /// No description provided for @feedbackWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Technique feedback'**
+  String get feedbackWrite;
+
+  /// No description provided for @feedbackSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send feedback'**
+  String get feedbackSend;
+
+  /// No description provided for @feedbackDeletesClip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the feedback deletes the clip from the server.'**
+  String get feedbackDeletesClip;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

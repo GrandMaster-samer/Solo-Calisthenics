@@ -4,6 +4,17 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.grandmastersamer.solocalisthenics</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Recording a clip for coach review. Audio is removed before upload.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlock your private progress photos.</string>
 	<key>NSCameraUsageDescription</key>

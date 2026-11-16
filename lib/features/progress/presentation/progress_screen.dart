@@ -8,6 +8,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/units.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_l10n.dart';
+import '../../cloud/application/cloud_providers.dart';
+import '../../cloud/presentation/coach_screens.dart';
 import '../../planner/application/planner_controller.dart';
 import '../../workout/application/active_session_controller.dart';
 import '../data/analytics_repository.dart';
@@ -133,6 +135,21 @@ class ProgressScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                if (ref.watch(cloudBackendProvider) != null) ...[
+                  section(l.coachReview),
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: ListTile(
+                      key: const Key('open-coach'),
+                      leading: const Icon(Icons.rate_review_outlined, color: AppColors.secondary),
+                      title: Text(l.coachOpen),
+                      subtitle: Text(l.coachHint),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.of(context)
+                          .push(MaterialPageRoute<void>(builder: (_) => const CoachHubScreen())),
+                    ),
+                  ),
+                ],
                 section(l.vaultTitle),
                 Card(
                   clipBehavior: Clip.antiAlias,

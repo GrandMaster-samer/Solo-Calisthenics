@@ -979,4 +979,162 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get backupImportConfirm => 'Replace and restore';
+
+  @override
+  String get cloudTitle => 'Account and cloud (optional)';
+
+  @override
+  String get cloudOptionalHint =>
+      'The app works fully without an account. Sign in only if you want cloud backup or coach review.';
+
+  @override
+  String get signInGoogle => 'Sign in with Google';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signedIn => 'Signed in';
+
+  @override
+  String get roleCoach => 'Signed in as coach';
+
+  @override
+  String get cloudFailed =>
+      'That did not work. Check your connection and try again.';
+
+  @override
+  String get cloudBackupNow => 'Back up to the cloud';
+
+  @override
+  String get cloudBackupNone =>
+      'No cloud backup yet. Encrypted on this device before upload.';
+
+  @override
+  String cloudBackupLast(String date) {
+    return 'Last cloud backup: $date';
+  }
+
+  @override
+  String get cloudBackupDone => 'Encrypted backup uploaded.';
+
+  @override
+  String cloudBackupTooLarge(int mb) {
+    return 'The backup is larger than $mb MB. Remove some photos or use the file export instead.';
+  }
+
+  @override
+  String get cloudRestore => 'Restore from the cloud';
+
+  @override
+  String get cloudDeleteData => 'Delete my cloud data';
+
+  @override
+  String get cloudDeleteDataHint =>
+      'Removes your cloud backup, clips and feedback from the server.';
+
+  @override
+  String get cloudDeleteDataBody =>
+      'Your cloud backup, review clips and feedback will be deleted from the server. Data on this device is not affected.';
+
+  @override
+  String get coachReview => 'Coach review';
+
+  @override
+  String get coachOpen => 'Send a clip to the coach';
+
+  @override
+  String get coachHint =>
+      'Get technique corrections on a short video of your movement.';
+
+  @override
+  String get coachSignInNeeded =>
+      'Coach review needs an account, so your clips and feedback reach the right person.';
+
+  @override
+  String get clipNewTitle => 'New clip';
+
+  @override
+  String clipRules(int seconds, int days) {
+    return 'Up to $seconds seconds. Compressed on your phone, sent without sound, and deleted after review or after $days days.';
+  }
+
+  @override
+  String get clipChooseExercise => 'Choose the exercise';
+
+  @override
+  String get clipRecord => 'Record';
+
+  @override
+  String get clipChoose => 'Choose video';
+
+  @override
+  String get clipReady => 'Clip ready to send';
+
+  @override
+  String get clipNote => 'Note for the coach';
+
+  @override
+  String get clipSend => 'Send for review';
+
+  @override
+  String get clipSent => 'Clip sent. Feedback will appear below.';
+
+  @override
+  String clipTooLong(int seconds) {
+    return 'The clip must be $seconds seconds or shorter.';
+  }
+
+  @override
+  String get clipFailed => 'Could not prepare the clip.';
+
+  @override
+  String get clipUnavailable => 'This clip is no longer available.';
+
+  @override
+  String get clipPlay => 'Play';
+
+  @override
+  String get feedbackInbox => 'Your feedback';
+
+  @override
+  String get feedbackEmpty =>
+      'Clips you send and the coach\'s feedback will appear here.';
+
+  @override
+  String get statusWaiting => 'Waiting';
+
+  @override
+  String get statusReviewed => 'Reviewed';
+
+  @override
+  String get coachSays => 'Coach feedback';
+
+  @override
+  String get coachInbox => 'Coach inbox';
+
+  @override
+  String coachInboxWaiting(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count clips waiting',
+      one: '1 clip waiting',
+      zero: 'Nothing waiting',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coachInboxEmpty => 'No clips waiting for review.';
+
+  @override
+  String get feedbackWrite => 'Technique feedback';
+
+  @override
+  String get feedbackSend => 'Send feedback';
+
+  @override
+  String get feedbackDeletesClip =>
+      'Sending the feedback deletes the clip from the server.';
 }

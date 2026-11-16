@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/units.dart';
 import '../../../l10n/app_l10n.dart';
 import '../../backup/presentation/backup_actions.dart';
+import '../../cloud/presentation/cloud_account_section.dart';
 import '../../onboarding/presentation/onboarding_screen.dart';
 import '../../security/presentation/lock_gate.dart';
 import '../application/settings_controller.dart';
@@ -254,6 +255,7 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: Text(l.backupImportHint),
             onTap: () => importBackup(context, ref),
           ),
+          const CloudAccountSection(),
           header(l.settingsAbout),
           ListTile(
             leading: const Icon(Icons.health_and_safety_outlined),

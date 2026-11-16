@@ -965,4 +965,158 @@ class AppL10nAr extends AppL10n {
 
   @override
   String get backupImportConfirm => 'استبدال واستعادة';
+
+  @override
+  String get cloudTitle => 'الحساب والسحابة (اختياري)';
+
+  @override
+  String get cloudOptionalHint =>
+      'يعمل التطبيق كاملاً دون حساب. سجّل الدخول فقط إذا أردت النسخ السحابي أو مراجعة المدرب.';
+
+  @override
+  String get signInGoogle => 'تسجيل الدخول بحساب Google';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get signedIn => 'تم تسجيل الدخول';
+
+  @override
+  String get roleCoach => 'تم الدخول كمدرب';
+
+  @override
+  String get cloudFailed =>
+      'تعذّر تنفيذ العملية. تحقق من الاتصال وحاول مجدداً.';
+
+  @override
+  String get cloudBackupNow => 'نسخ احتياطي إلى السحابة';
+
+  @override
+  String get cloudBackupNone =>
+      'لا توجد نسخة سحابية بعد. تُشفَّر على هذا الجهاز قبل الرفع.';
+
+  @override
+  String cloudBackupLast(String date) {
+    return 'آخر نسخة سحابية: $date';
+  }
+
+  @override
+  String get cloudBackupDone => 'تم رفع النسخة المشفّرة.';
+
+  @override
+  String cloudBackupTooLarge(int mb) {
+    return 'حجم النسخة يتجاوز $mb ميغابايت. احذف بعض الصور أو استخدم التصدير إلى ملف.';
+  }
+
+  @override
+  String get cloudRestore => 'استعادة من السحابة';
+
+  @override
+  String get cloudDeleteData => 'حذف بياناتي السحابية';
+
+  @override
+  String get cloudDeleteDataHint =>
+      'يحذف نسختك السحابية ومقاطعك والملاحظات من الخادم.';
+
+  @override
+  String get cloudDeleteDataBody =>
+      'ستُحذف نسختك السحابية ومقاطع المراجعة والملاحظات من الخادم. لن تتأثر البيانات على هذا الجهاز.';
+
+  @override
+  String get coachReview => 'مراجعة المدرب';
+
+  @override
+  String get coachOpen => 'أرسل مقطعاً إلى المدرب';
+
+  @override
+  String get coachHint => 'احصل على تصحيحات للأداء عبر فيديو قصير لحركتك.';
+
+  @override
+  String get coachSignInNeeded =>
+      'تحتاج مراجعة المدرب إلى حساب حتى تصل مقاطعك والملاحظات إلى الشخص الصحيح.';
+
+  @override
+  String get clipNewTitle => 'مقطع جديد';
+
+  @override
+  String clipRules(int seconds, int days) {
+    return 'حتى $seconds ثانية. يُضغط على هاتفك ويُرسل دون صوت ويُحذف بعد المراجعة أو بعد $days يوماً.';
+  }
+
+  @override
+  String get clipChooseExercise => 'اختر التمرين';
+
+  @override
+  String get clipRecord => 'تسجيل';
+
+  @override
+  String get clipChoose => 'اختيار فيديو';
+
+  @override
+  String get clipReady => 'المقطع جاهز للإرسال';
+
+  @override
+  String get clipNote => 'ملاحظة للمدرب';
+
+  @override
+  String get clipSend => 'إرسال للمراجعة';
+
+  @override
+  String get clipSent => 'تم إرسال المقطع. ستظهر الملاحظات في الأسفل.';
+
+  @override
+  String clipTooLong(int seconds) {
+    return 'يجب ألا يتجاوز المقطع $seconds ثانية.';
+  }
+
+  @override
+  String get clipFailed => 'تعذّر تجهيز المقطع.';
+
+  @override
+  String get clipUnavailable => 'هذا المقطع لم يعد متاحاً.';
+
+  @override
+  String get clipPlay => 'تشغيل';
+
+  @override
+  String get feedbackInbox => 'ملاحظاتك';
+
+  @override
+  String get feedbackEmpty => 'ستظهر هنا المقاطع التي ترسلها وملاحظات المدرب.';
+
+  @override
+  String get statusWaiting => 'بانتظار المراجعة';
+
+  @override
+  String get statusReviewed => 'تمت المراجعة';
+
+  @override
+  String get coachSays => 'ملاحظات المدرب';
+
+  @override
+  String get coachInbox => 'صندوق المدرب';
+
+  @override
+  String coachInboxWaiting(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مقاطع بالانتظار: $count',
+      zero: 'لا شيء بالانتظار',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coachInboxEmpty => 'لا توجد مقاطع بانتظار المراجعة.';
+
+  @override
+  String get feedbackWrite => 'ملاحظات على الأداء';
+
+  @override
+  String get feedbackSend => 'إرسال الملاحظات';
+
+  @override
+  String get feedbackDeletesClip => 'إرسال الملاحظات يحذف المقطع من الخادم.';
 }

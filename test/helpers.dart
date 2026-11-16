@@ -11,6 +11,10 @@ import 'package:solo_calisthenics/core/db/app_database.dart';
 import 'package:solo_calisthenics/core/notifications/notification_service.dart';
 import 'package:solo_calisthenics/core/platform/volume_buttons.dart';
 import 'package:solo_calisthenics/core/providers.dart';
+import 'package:solo_calisthenics/features/cloud/application/cloud_providers.dart';
+import 'package:solo_calisthenics/features/cloud/data/clip_source.dart';
+import 'package:solo_calisthenics/features/cloud/domain/cloud_backend.dart';
+import 'package:solo_calisthenics/features/cloud/presentation/coach_screens.dart';
 import 'package:solo_calisthenics/features/exercises/data/exercise_repository.dart';
 import 'package:solo_calisthenics/features/exercises/domain/exercise.dart';
 import 'package:solo_calisthenics/features/profile/application/profile_controller.dart';
@@ -118,6 +122,10 @@ class TestEnv {
   final notifications = NoopNotificationService();
   final library = loadLibrary();
   final volume = FakeVolumeButtons();
+
+  /// Set before building the app to enable the optional cloud features.
+  CloudBackend? cloud;
+  ClipSource? clipSource;
   final biometrics = FakeBiometrics();
   late final appLock = AppLock(MemorySecretStore(), biometrics);
 
@@ -131,6 +139,9 @@ class TestEnv {
     notificationServiceProvider.overrideWithValue(notifications),
     clockProvider.overrideWithValue(clock.call),
     volumeButtonsProvider.overrideWithValue(volume),
+    cloudBackendProvider.overrideWithValue(cloud),
+    if (clipSource != null) clipSourceProvider.overrideWithValue(clipSource!),
+    clipPlayerBuilderProvider.overrideWithValue((url) => Text('PLAYER $url')),
     appLockProvider.overrideWithValue(appLock),
     photoPickerProvider.overrideWithValue(({required bool camera}) async => tinyPng),
     initialSettingsProvider.overrideWithValue(settings),
