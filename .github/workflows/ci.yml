@@ -82,3 +82,27 @@ jobs:
           name: solo-calisthenics-apk
           path: build/app/outputs/flutter-apk/*-release.apk
           retention-days: 30
+
+  ios:
+    name: Build iOS (no signing)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      - run: flutter pub get
+      - name: Build for iPhone without code signing
+        run: |
+          set -o pipefail
+          flutter build ios --release --no-codesign 2>&1 | tee build.log
+      - name: Show build errors
+        if: failure()
+        run: |
+          grep -nE "error:|Error:|\[!\]|FAILED|could not|Could not|requires a higher minimum|Undefined symbol" build.log | head -40 | while IFS= read -r line; do
+            echo "::error::${line}"
+          done
+          echo "::error::$(tail -n 25 build.log | tr '\n' '|' | cut -c1-3000)"
