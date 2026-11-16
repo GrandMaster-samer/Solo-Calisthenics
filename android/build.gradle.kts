@@ -19,6 +19,15 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Android's release lint ("lintVital") crashes inside some plugin modules with the
+// current toolchain. It checks the plugins' code, not this app's, so skip it for
+// plugin modules only; the app module is still linted.
+subprojects {
+    if (name != "app") {
+        tasks.matching { it.name.startsWith("lintVital") }.configureEach { enabled = false }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

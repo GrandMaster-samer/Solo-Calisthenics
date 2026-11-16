@@ -25,8 +25,22 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
+      - name: flutter analyze
+        run: |
+          set -o pipefail
+          flutter analyze 2>&1 | tee analyze.log
+      - name: Show analyzer problems
+        if: failure()
+        run: grep -E "^ *(error|warning|info) " analyze.log | head -30 | while IFS= read -r line; do echo "::error::${line}"; done
+      - name: flutter test
+        run: |
+          set -o pipefail
+          flutter test 2>&1 | tee test.log
+      - name: Show failing tests
+        if: failure()
+        run: |
+          [ -f test.log ] || exit 0
+          grep -E "\[E\]|Expected:|Actual:|Some tests failed|Error:" test.log | head -30 | while IFS= read -r line; do echo "::error::${line}"; done
 
   android:
     name: Build Android APK
@@ -34,7 +48,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
