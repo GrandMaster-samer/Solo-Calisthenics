@@ -1,0 +1,324 @@
+{
+  "@@locale": "en",
+  "appName": "Solo Calisthenics",
+  "listSeparator": ", ",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "save": "Save",
+  "skip": "Skip",
+  "continueLabel": "Continue",
+  "finishSetup": "Finish setup",
+  "remove": "Remove",
+  "dismiss": "Dismiss",
+  "invalidValue": "Enter a valid value",
+  "language": "Language",
+  "languageSystem": "System",
+  "welcomeTitle": "Train with your own body",
+  "welcomeBody": "A few questions so the app fits your level and protects your joints. Everything stays on this device, encrypted. No account needed.",
+  "disclaimerTitle": "Health disclaimer",
+  "disclaimerBody": "This app does not diagnose or treat injuries. If you have pain or an injury, consult a medical professional before training. Stop any exercise that causes pain.",
+  "disclaimerAccept": "I understand",
+  "statsTitle": "About you",
+  "statsBody": "Used to adapt your training. You can change this later in Settings.",
+  "birthYear": "Year of birth",
+  "height": "Height",
+  "weight": "Weight",
+  "feet": "Feet",
+  "inches": "Inches",
+  "unitCm": "cm",
+  "unitFtIn": "ft / in",
+  "unitKg": "kg",
+  "unitLb": "lb",
+  "experienceTitle": "Training experience",
+  "experienceBody": "Pick the level that matches your calisthenics training.",
+  "expBeginner": "Beginner",
+  "expIntermediate": "Intermediate",
+  "expAdvanced": "Advanced",
+  "expBeginnerDesc": "New to bodyweight training, or returning after a long break.",
+  "expIntermediateDesc": "Comfortable with push-ups, pull-ups and dips for multiple sets.",
+  "expAdvancedDesc": "Working on skills such as muscle-ups, levers or handstand push-ups.",
+  "baselineTitle": "Baseline test (optional)",
+  "baselineBody": "Your best single effort for each. Leave blank what you have not tested, or skip this step.",
+  "maxPushUps": "Max push-ups",
+  "maxPullUps": "Max pull-ups",
+  "maxDeadHang": "Max dead hang",
+  "maxPlank": "Max plank",
+  "repsUnit": "reps",
+  "secondsUnit": "s",
+  "jointsTitle": "Joints and injuries",
+  "jointsBody": "Flag any joint with a past or current limitation. Exercises are filtered and adapted to match.",
+  "jointsRules": "Mild: allowed with a targeted warm-up and fewer sets. Moderate: high-stress exercises are replaced with an easier variation. Severe: medium and high-stress exercises are excluded.",
+  "noIssue": "No issue",
+  "severityMild": "Mild",
+  "severityModerate": "Moderate",
+  "severitySevere": "Severe",
+  "injuryCurrent": "Current issue",
+  "injuryCurrentHint": "Turn off if this is a past injury you still want to protect.",
+  "jointWrists": "Wrists",
+  "jointShoulders": "Shoulders",
+  "jointElbows": "Elbows",
+  "jointKnees": "Knees",
+  "jointLowerBack": "Lower back",
+  "tabTrain": "Train",
+  "tabLibrary": "Library",
+  "tabSettings": "Settings",
+  "patternPush": "Push",
+  "patternPull": "Pull",
+  "patternLegs": "Legs",
+  "patternCore": "Core",
+  "patternStatics": "Statics",
+  "stressNone": "None",
+  "stressLow": "Low",
+  "stressMedium": "Medium",
+  "stressHigh": "High",
+  "targetReps": "{min}–{max} reps",
+  "@targetReps": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "targetSeconds": "{min}–{max} s",
+  "@targetSeconds": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "restSeconds": "Rest {seconds} s",
+  "@restSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "levelInChain": "Level {level} of {total}",
+  "@levelInChain": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "notRecommendedFor": "Not recommended for your {joints}",
+  "@notRecommendedFor": {
+    "placeholders": {
+      "joints": {
+        "type": "String"
+      }
+    }
+  },
+  "cautionFor": "Take care: {joints}",
+  "@cautionFor": {
+    "placeholders": {
+      "joints": {
+        "type": "String"
+      }
+    }
+  },
+  "volumeCapped": "Volume capped at {sets} sets.",
+  "@volumeCapped": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "trySubstitute": "Try instead: {name}",
+  "@trySubstitute": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noSubstitute": "No easier variation in this chain is suitable right now.",
+  "excludedConfirmTitle": "Not recommended",
+  "excludedConfirmBody": "Your injury screening excludes this exercise ({joints}). Add it anyway?",
+  "@excludedConfirmBody": {
+    "placeholders": {
+      "joints": {
+        "type": "String"
+      }
+    }
+  },
+  "addAnyway": "Add anyway",
+  "formCues": "Form cues",
+  "commonMistakes": "Common mistakes",
+  "jointStress": "Joint stress",
+  "progressionPath": "Progression path",
+  "easier": "Easier (regression)",
+  "harder": "Harder (progression)",
+  "noneInChain": "None: end of the chain",
+  "mediaPlaceholder": "PLACEHOLDER\nVisual guide not added yet",
+  "exerciseMissing": "Exercise not found",
+  "trainThis": "Train this exercise",
+  "pickExercises": "Pick exercises",
+  "addSelected": "Add ({count})",
+  "@addSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "starterWorkouts": "Starter workouts",
+  "starterWorkoutsHint": "Matched to your level and adapted to your joints.",
+  "templatePush": "Push",
+  "templatePull": "Pull",
+  "templateLegsCore": "Legs and core",
+  "templateFullBody": "Full body",
+  "templateEmpty": "No suitable exercises with your current injury settings.",
+  "buildYourOwn": "Build your own workout",
+  "customWorkout": "Custom workout",
+  "history": "History",
+  "historyEmpty": "Finished workouts will appear here.",
+  "workoutInProgress": "Workout in progress",
+  "resume": "Resume",
+  "setsLogged": "{count, plural, =0{No sets yet} =1{1 set logged} other{{count} sets logged}}",
+  "@setsLogged": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "minutesShort": "{minutes} min",
+  "@minutesShort": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "setsCount": "{count, plural, =1{1 set} other{{count} sets}}",
+  "@setsCount": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "startWorkout": "Start workout",
+  "addExercises": "Add exercises",
+  "replaceWorkoutTitle": "Replace current workout?",
+  "replaceWorkoutBody": "You have a workout in progress. Starting a new one discards it.",
+  "startNew": "Start new",
+  "warmUpTitle": "Warm up these joints first",
+  "warmUpWrists": "Wrist circles and palm/back-of-hand rocks, 1 minute",
+  "warmUpShoulders": "Arm circles, scapular push-ups and band pull-aparts, 2 minutes",
+  "warmUpElbows": "Light elbow bends and forearm rotations, 1 minute",
+  "warmUpKnees": "Knee circles, slow half squats and leg swings, 2 minutes",
+  "warmUpLowerBack": "Cat-cow, bird-dog and glute bridges, 2 minutes",
+  "setOf": "Set {current} of {total}",
+  "@setOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tapToCount": "Tap anywhere here to count a rep",
+  "tapOrVolumeToCount": "Tap here or press volume up to count a rep",
+  "tapToStartHold": "Tap to start the hold timer",
+  "tapToStopHold": "Tap to stop and save",
+  "minusOne": "Remove one rep",
+  "enterReps": "Enter reps",
+  "enterSeconds": "Enter seconds",
+  "doneReps": "Done · {count} reps",
+  "@doneReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "doneSeconds": "Done · {count} s",
+  "@doneSeconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "undoLastSet": "Undo last set",
+  "previousExercise": "Previous exercise",
+  "nextExercise": "Next exercise",
+  "rest": "Rest",
+  "skipRest": "Skip rest",
+  "minusSeconds": "−{seconds} s",
+  "@minusSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "plusSeconds": "+{seconds} s",
+  "@plusSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "nextUp": "Next: {exercise} · {set}",
+  "@nextUp": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      },
+      "set": {
+        "type": "String"
+      }
+    }
+  },
+  "rirQuestion": "How many more reps could you have done? (RIR)",
+  "rpeQuestion": "How hard was that set? (RPE)",
+  "restOverTitle": "Rest is over",
+  "restOverBody": "Time for your next set.",
+  "finish": "Finish",
+  "finishWorkout": "Finish workout",
+  "keepGoing": "Keep going",
+  "finishEarlyTitle": "Finish early?",
+  "finishEarlyBody": "Some sets are not done yet. What you logged is saved.",
+  "discard": "Discard workout",
+  "discardTitle": "Discard this workout?",
+  "discardBody": "All sets logged in this workout will be deleted.",
+  "workoutComplete": "Workout complete",
+  "settingsGeneral": "General",
+  "settingsWorkout": "Workout",
+  "settingsReminders": "Workout reminders",
+  "settingsAbout": "About",
+  "editProfile": "Profile and injuries",
+  "editProfileHint": "Stats, experience, baseline test, joint screening",
+  "effortScale": "Effort scale after each set",
+  "effortRir": "RIR (reps in reserve)",
+  "effortRpe": "RPE (6–10)",
+  "settingSound": "Sounds",
+  "settingHaptics": "Vibration",
+  "settingVolumeButtons": "Count reps with volume buttons",
+  "settingVolumeButtonsHint": "Volume up adds a rep, volume down removes one.",
+  "weekdaysShort": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
+  "reminderTime": "Reminder time",
+  "reminderTitle": "Time to train",
+  "reminderBody": "Your workout is waiting.",
+  "privacyTitle": "Privacy",
+  "privacyBody": "All data is stored encrypted on this device. Nothing is sent anywhere.",
+  "licenses": "Open-source licenses"
+}

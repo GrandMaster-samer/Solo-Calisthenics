@@ -1,0 +1,4289 @@
+{
+ "version": 1,
+ "chains": [
+  {
+   "id": "push_up",
+   "pattern": "push",
+   "name": {
+    "en": "Push-up",
+    "ar": "تمرين الضغط"
+   }
+  },
+  {
+   "id": "dip",
+   "pattern": "push",
+   "name": {
+    "en": "Dip",
+    "ar": "تمرين المتوازي"
+   }
+  },
+  {
+   "id": "hspu",
+   "pattern": "push",
+   "name": {
+    "en": "Handstand Push-up",
+    "ar": "ضغط الوقوف على اليدين"
+   }
+  },
+  {
+   "id": "pull_up",
+   "pattern": "pull",
+   "name": {
+    "en": "Pull-up",
+    "ar": "تمرين العقلة"
+   }
+  },
+  {
+   "id": "row",
+   "pattern": "pull",
+   "name": {
+    "en": "Bodyweight Row",
+    "ar": "السحب الأفقي"
+   }
+  },
+  {
+   "id": "muscle_up",
+   "pattern": "pull",
+   "name": {
+    "en": "Muscle-up",
+    "ar": "الماسل أب"
+   }
+  },
+  {
+   "id": "squat",
+   "pattern": "legs",
+   "name": {
+    "en": "Squat",
+    "ar": "القرفصاء"
+   }
+  },
+  {
+   "id": "hinge",
+   "pattern": "legs",
+   "name": {
+    "en": "Posterior Chain",
+    "ar": "السلسلة الخلفية"
+   }
+  },
+  {
+   "id": "leg_raise",
+   "pattern": "core",
+   "name": {
+    "en": "Leg Raise",
+    "ar": "رفع الساقين"
+   }
+  },
+  {
+   "id": "plank",
+   "pattern": "core",
+   "name": {
+    "en": "Plank",
+    "ar": "البلانك"
+   }
+  },
+  {
+   "id": "l_sit",
+   "pattern": "core",
+   "name": {
+    "en": "L-sit",
+    "ar": "وضعية L"
+   }
+  },
+  {
+   "id": "dragon_flag",
+   "pattern": "core",
+   "name": {
+    "en": "Dragon Flag",
+    "ar": "علم التنين"
+   }
+  },
+  {
+   "id": "handstand",
+   "pattern": "statics",
+   "name": {
+    "en": "Handstand",
+    "ar": "الوقوف على اليدين"
+   }
+  },
+  {
+   "id": "planche",
+   "pattern": "statics",
+   "name": {
+    "en": "Planche",
+    "ar": "البلانش"
+   }
+  },
+  {
+   "id": "front_lever",
+   "pattern": "statics",
+   "name": {
+    "en": "Front Lever",
+    "ar": "الرافعة الأمامية"
+   }
+  }
+ ],
+ "exercises": [
+  {
+   "id": "wall_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 20,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "low",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "wall"
+   ],
+   "regression": null,
+   "progression": "incline_push_up",
+   "media": null,
+   "name": {
+    "en": "Wall Push-up",
+    "ar": "ضغط على الحائط"
+   },
+   "cues": {
+    "en": [
+     "Hands at chest height, body in one line",
+     "Lower chest to the wall under control",
+     "Push away until arms are straight"
+    ],
+    "ar": [
+     "اليدان بمستوى الصدر والجسم على خط واحد",
+     "أنزل صدرك نحو الحائط بتحكم",
+     "ادفع حتى تستقيم الذراعان"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips sagging or piking",
+     "Elbows flaring straight out to the sides"
+    ],
+    "ar": [
+     "هبوط أو رفع الوركين",
+     "فتح المرفقين للخارج تماماً"
+    ]
+   }
+  },
+  {
+   "id": "incline_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "low",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "wall_push_up",
+   "progression": "knee_push_up",
+   "media": null,
+   "name": {
+    "en": "Incline Push-up",
+    "ar": "ضغط مائل (اليدان مرتفعتان)"
+   },
+   "cues": {
+    "en": [
+     "Hands on a bench or bar, shoulders over wrists",
+     "Keep ribs down and glutes tight",
+     "Chest touches the edge, then press"
+    ],
+    "ar": [
+     "اليدان على مقعد أو بار والكتفان فوق الرسغين",
+     "اشدد البطن والمؤخرة",
+     "المس الحافة بصدرك ثم ادفع"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Reaching with the chin instead of the chest",
+     "Half range of motion"
+    ],
+    "ar": [
+     "مدّ الذقن بدلاً من الصدر",
+     "مدى حركي ناقص"
+    ]
+   }
+  },
+  {
+   "id": "knee_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "incline_push_up",
+   "progression": "push_up",
+   "media": null,
+   "name": {
+    "en": "Knee Push-up",
+    "ar": "ضغط على الركبتين"
+   },
+   "cues": {
+    "en": [
+     "Straight line from knees to head",
+     "Elbows about 45° from the body",
+     "Chest to the floor, full lockout"
+    ],
+    "ar": [
+     "خط مستقيم من الركبتين إلى الرأس",
+     "المرفقان بزاوية ٤٥° تقريباً عن الجسم",
+     "الصدر إلى الأرض ثم مدّ كامل"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bending at the hips",
+     "Head dropping forward"
+    ],
+    "ar": [
+     "الانثناء من الوركين",
+     "سقوط الرأس للأمام"
+    ]
+   }
+  },
+  {
+   "id": "push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "knee_push_up",
+   "progression": "diamond_push_up",
+   "media": null,
+   "name": {
+    "en": "Push-up",
+    "ar": "ضغط"
+   },
+   "cues": {
+    "en": [
+     "Hands under shoulders, body rigid like a plank",
+     "Lower until chest is just above the floor",
+     "Push the floor away and spread the shoulder blades at the top"
+    ],
+    "ar": [
+     "اليدان تحت الكتفين والجسم مشدود كاللوح",
+     "انزل حتى يقترب الصدر من الأرض",
+     "ادفع الأرض وباعد بين لوحي الكتف في الأعلى"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Sagging lower back",
+     "Flared elbows at 90°"
+    ],
+    "ar": [
+     "تقوّس أسفل الظهر",
+     "فتح المرفقين بزاوية ٩٠°"
+    ]
+   }
+  },
+  {
+   "id": "diamond_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "push_up",
+   "progression": "decline_push_up",
+   "media": null,
+   "name": {
+    "en": "Diamond Push-up",
+    "ar": "ضغط الماسة"
+   },
+   "cues": {
+    "en": [
+     "Hands together under the chest",
+     "Elbows brush the ribs on the way down",
+     "Lock out fully at the top"
+    ],
+    "ar": [
+     "اليدان متقاربتان تحت الصدر",
+     "المرفقان يلامسان الأضلاع عند النزول",
+     "مدّ كامل في الأعلى"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hands too far forward",
+     "Shoulders shrugging to the ears"
+    ],
+    "ar": [
+     "اليدان متقدمتان كثيراً",
+     "رفع الكتفين نحو الأذنين"
+    ]
+   }
+  },
+  {
+   "id": "decline_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 6,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "diamond_push_up",
+   "progression": "archer_push_up",
+   "media": null,
+   "name": {
+    "en": "Decline Push-up",
+    "ar": "ضغط منحدر (القدمان مرتفعتان)"
+   },
+   "cues": {
+    "en": [
+     "Feet on a bench, hands under shoulders",
+     "Keep the hips level with the shoulders",
+     "Lower with control, press explosively"
+    ],
+    "ar": [
+     "القدمان على مقعد واليدان تحت الكتفين",
+     "حافظ على الوركين بمستوى الكتفين",
+     "انزل بتحكم وادفع بقوة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips sagging",
+     "Neck craning forward"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "مدّ الرقبة للأمام"
+    ]
+   }
+  },
+  {
+   "id": "archer_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 7,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 8,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "decline_push_up",
+   "progression": "one_arm_push_up",
+   "media": null,
+   "name": {
+    "en": "Archer Push-up",
+    "ar": "ضغط الرامي"
+   },
+   "cues": {
+    "en": [
+     "Wide hands, shift your weight to one arm",
+     "Keep the assisting arm straight",
+     "Alternate sides each rep or each set"
+    ],
+    "ar": [
+     "يدان متباعدتان وانقل وزنك إلى ذراع واحدة",
+     "أبقِ الذراع المساعدة مستقيمة",
+     "بدّل الجانب كل عدة أو كل مجموعة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Twisting the hips",
+     "Bending the assisting arm"
+    ],
+    "ar": [
+     "دوران الوركين",
+     "ثني الذراع المساعدة"
+    ]
+   }
+  },
+  {
+   "id": "one_arm_push_up",
+   "pattern": "push",
+   "chain": "push_up",
+   "level": 8,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 6,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "archer_push_up",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "One-arm Push-up",
+    "ar": "ضغط بذراع واحدة"
+   },
+   "cues": {
+    "en": [
+     "Feet wide, free hand behind the back",
+     "Keep shoulders square to the floor",
+     "Lower slowly, press without twisting"
+    ],
+    "ar": [
+     "القدمان متباعدتان واليد الحرة خلف الظهر",
+     "أبقِ الكتفين موازيين للأرض",
+     "انزل ببطء وادفع دون دوران"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Rotating the torso",
+     "Dropping into the bottom"
+    ],
+    "ar": [
+     "دوران الجذع",
+     "السقوط في أسفل الحركة"
+    ]
+   }
+  },
+  {
+   "id": "bench_dip",
+   "pattern": "push",
+   "chain": "dip",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": null,
+   "progression": "support_hold",
+   "media": null,
+   "name": {
+    "en": "Bench Dip",
+    "ar": "غطس على المقعد"
+   },
+   "cues": {
+    "en": [
+     "Hands on the bench edge, fingers forward",
+     "Keep your back close to the bench",
+     "Lower until elbows reach about 90°"
+    ],
+    "ar": [
+     "اليدان على حافة المقعد والأصابع للأمام",
+     "أبقِ ظهرك قريباً من المقعد",
+     "انزل حتى زاوية ٩٠° تقريباً للمرفقين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Going too deep with shoulders rolled forward",
+     "Hips drifting away from the bench"
+    ],
+    "ar": [
+     "النزول العميق مع دوران الكتفين للأمام",
+     "ابتعاد الوركين عن المقعد"
+    ]
+   }
+  },
+  {
+   "id": "support_hold",
+   "pattern": "push",
+   "chain": "dip",
+   "level": 2,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 15,
+    "max": 40,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "low",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "dip_bars"
+   ],
+   "regression": "bench_dip",
+   "progression": "negative_dip",
+   "media": null,
+   "name": {
+    "en": "Support Hold",
+    "ar": "ثبات الارتكاز على المتوازي"
+   },
+   "cues": {
+    "en": [
+     "Arms locked, shoulders pressed down",
+     "Body slightly hollow, legs together",
+     "Squeeze the bars"
+    ],
+    "ar": [
+     "الذراعان ممدودتان والكتفان للأسفل",
+     "الجسم مجوّف قليلاً والساقان معاً",
+     "اقبض على البار بقوة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Shrugged shoulders",
+     "Bent elbows"
+    ],
+    "ar": [
+     "رفع الكتفين",
+     "ثني المرفقين"
+    ]
+   }
+  },
+  {
+   "id": "negative_dip",
+   "pattern": "push",
+   "chain": "dip",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 6,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "dip_bars"
+   ],
+   "regression": "support_hold",
+   "progression": "dip",
+   "media": null,
+   "name": {
+    "en": "Negative Dip",
+    "ar": "غطس سلبي (نزول بطيء)"
+   },
+   "cues": {
+    "en": [
+     "Start at the top in a support hold",
+     "Lower for 3 to 5 seconds",
+     "Step up to reset, do not press"
+    ],
+    "ar": [
+     "ابدأ من الأعلى في وضع الارتكاز",
+     "انزل خلال ٣ إلى ٥ ثوانٍ",
+     "اصعد بقدميك ولا تدفع"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Dropping fast at the bottom",
+     "Shoulders rising to the ears"
+    ],
+    "ar": [
+     "السقوط السريع في الأسفل",
+     "ارتفاع الكتفين نحو الأذنين"
+    ]
+   }
+  },
+  {
+   "id": "dip",
+   "pattern": "push",
+   "chain": "dip",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "dip_bars"
+   ],
+   "regression": "negative_dip",
+   "progression": "straight_bar_dip",
+   "media": null,
+   "name": {
+    "en": "Parallel Bar Dip",
+    "ar": "غطس على المتوازي"
+   },
+   "cues": {
+    "en": [
+     "Lean slightly forward, elbows back",
+     "Lower until shoulders are just below elbows",
+     "Press to a full lockout"
+    ],
+    "ar": [
+     "مِل قليلاً للأمام والمرفقان للخلف",
+     "انزل حتى يصبح الكتفان أسفل المرفقين قليلاً",
+     "ادفع حتى المدّ الكامل"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Partial range",
+     "Swinging the legs"
+    ],
+    "ar": [
+     "مدى ناقص",
+     "تأرجح الساقين"
+    ]
+   }
+  },
+  {
+   "id": "straight_bar_dip",
+   "pattern": "push",
+   "chain": "dip",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 10,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "dip",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Straight Bar Dip",
+    "ar": "غطس على البار المستقيم"
+   },
+   "cues": {
+    "en": [
+     "Hands just outside the hips on top of the bar",
+     "Lean the chest over the bar as you lower",
+     "Press up and push the bar toward the hips"
+    ],
+    "ar": [
+     "اليدان خارج الوركين فوق البار",
+     "أمِل صدرك فوق البار أثناء النزول",
+     "ادفع للأعلى ووجّه البار نحو الوركين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Elbows flaring wide",
+     "Not reaching chest to bar depth"
+    ],
+    "ar": [
+     "فتح المرفقين",
+     "عدم الوصول بالصدر إلى البار"
+    ]
+   }
+  },
+  {
+   "id": "pike_push_up",
+   "pattern": "push",
+   "chain": "hspu",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "elevated_pike_push_up",
+   "media": null,
+   "name": {
+    "en": "Pike Push-up",
+    "ar": "ضغط الرمح"
+   },
+   "cues": {
+    "en": [
+     "Hips high, body in an inverted V",
+     "Head travels forward to form a triangle with the hands",
+     "Press back up through the shoulders"
+    ],
+    "ar": [
+     "الوركان عالياً والجسم على شكل V مقلوب",
+     "الرأس يتقدم ليشكل مثلثاً مع اليدين",
+     "ادفع للأعلى من الكتفين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Elbows flaring out",
+     "Turning it into a regular push-up"
+    ],
+    "ar": [
+     "فتح المرفقين",
+     "تحويله إلى ضغط عادي"
+    ]
+   }
+  },
+  {
+   "id": "elevated_pike_push_up",
+   "pattern": "push",
+   "chain": "hspu",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 10,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "pike_push_up",
+   "progression": "wall_hspu_negative",
+   "media": null,
+   "name": {
+    "en": "Elevated Pike Push-up",
+    "ar": "ضغط الرمح والقدمان مرتفعتان"
+   },
+   "cues": {
+    "en": [
+     "Feet on a bench, hips stacked over shoulders",
+     "Lower the head in front of the hands",
+     "Press until arms lock out"
+    ],
+    "ar": [
+     "القدمان على مقعد والوركان فوق الكتفين",
+     "أنزل الرأس أمام اليدين",
+     "ادفع حتى مدّ الذراعين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips dropping back",
+     "Short range of motion"
+    ],
+    "ar": [
+     "رجوع الوركين للخلف",
+     "مدى حركي قصير"
+    ]
+   }
+  },
+  {
+   "id": "wall_hspu_negative",
+   "pattern": "push",
+   "chain": "hspu",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 5,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "wall"
+   ],
+   "regression": "elevated_pike_push_up",
+   "progression": "wall_hspu",
+   "media": null,
+   "name": {
+    "en": "Wall Handstand Push-up Negative",
+    "ar": "نزول سلبي في ضغط الوقوف على الحائط"
+   },
+   "cues": {
+    "en": [
+     "Kick up to the wall with locked arms",
+     "Lower for 4 to 6 seconds to the head",
+     "Come down safely and reset"
+    ],
+    "ar": [
+     "اصعد إلى الحائط بذراعين ممدودتين",
+     "انزل خلال ٤ إلى ٦ ثوانٍ حتى الرأس",
+     "انزل بأمان ثم أعد"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Collapsing onto the head",
+     "Arching hard through the lower back"
+    ],
+    "ar": [
+     "الانهيار على الرأس",
+     "تقوّس شديد في أسفل الظهر"
+    ]
+   }
+  },
+  {
+   "id": "wall_hspu",
+   "pattern": "push",
+   "chain": "hspu",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "wall"
+   ],
+   "regression": "wall_hspu_negative",
+   "progression": "freestanding_hspu",
+   "media": null,
+   "name": {
+    "en": "Wall Handstand Push-up",
+    "ar": "ضغط الوقوف على اليدين على الحائط"
+   },
+   "cues": {
+    "en": [
+     "Hands a hand-length from the wall",
+     "Lower the head gently to the floor in a tripod",
+     "Press hard and keep ribs tucked"
+    ],
+    "ar": [
+     "اليدان على بعد كفّ من الحائط",
+     "أنزل الرأس بلطف على شكل مثلث",
+     "ادفع بقوة واشدد الأضلاع"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Banana back",
+     "Bouncing off the head"
+    ],
+    "ar": [
+     "ظهر مقوّس كالموزة",
+     "الارتداد على الرأس"
+    ]
+   }
+  },
+  {
+   "id": "freestanding_hspu",
+   "pattern": "push",
+   "chain": "hspu",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 1,
+    "max": 5,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "wall_hspu",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Freestanding Handstand Push-up",
+    "ar": "ضغط الوقوف على اليدين الحر"
+   },
+   "cues": {
+    "en": [
+     "Start from a stable handstand",
+     "Lean slightly forward as you lower",
+     "Press back to balance over the hands"
+    ],
+    "ar": [
+     "ابدأ من وقوف ثابت على اليدين",
+     "مِل قليلاً للأمام أثناء النزول",
+     "ادفع وعد إلى التوازن فوق اليدين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Losing the line at the bottom",
+     "Rushing the descent"
+    ],
+    "ar": [
+     "فقدان الاستقامة في الأسفل",
+     "التسرع في النزول"
+    ]
+   }
+  },
+  {
+   "id": "dead_hang",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 15,
+    "max": 45,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": null,
+   "progression": "scapular_pull_up",
+   "media": null,
+   "name": {
+    "en": "Dead Hang",
+    "ar": "التعلق الحر"
+   },
+   "cues": {
+    "en": [
+     "Full grip, thumbs around the bar",
+     "Let the body hang long, ribs down",
+     "Breathe calmly"
+    ],
+    "ar": [
+     "قبضة كاملة والإبهام حول البار",
+     "دع الجسم يتدلى والأضلاع للأسفل",
+     "تنفس بهدوء"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Swinging",
+     "Holding the breath"
+    ],
+    "ar": [
+     "التأرجح",
+     "حبس النفس"
+    ]
+   }
+  },
+  {
+   "id": "scapular_pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "dead_hang",
+   "progression": "band_assisted_pull_up",
+   "media": null,
+   "name": {
+    "en": "Scapular Pull-up",
+    "ar": "سحب لوحي الكتف"
+   },
+   "cues": {
+    "en": [
+     "Hang with straight arms",
+     "Pull the shoulder blades down and together",
+     "Lower slowly back to a dead hang"
+    ],
+    "ar": [
+     "تعلّق بذراعين مستقيمتين",
+     "اسحب لوحي الكتف للأسفل وللداخل",
+     "انزل ببطء إلى التعلق الحر"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bending the elbows",
+     "Shrugging instead of depressing"
+    ],
+    "ar": [
+     "ثني المرفقين",
+     "رفع الكتفين بدل خفضهما"
+    ]
+   }
+  },
+  {
+   "id": "band_assisted_pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 10,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar",
+    "band"
+   ],
+   "regression": "scapular_pull_up",
+   "progression": "negative_pull_up",
+   "media": null,
+   "name": {
+    "en": "Band-assisted Pull-up",
+    "ar": "عقلة بمساعدة المطاط"
+   },
+   "cues": {
+    "en": [
+     "Loop the band over the bar, foot or knee in it",
+     "Pull the chest toward the bar",
+     "Lower under control to straight arms"
+    ],
+    "ar": [
+     "ثبّت المطاط على البار وضع قدمك أو ركبتك فيه",
+     "اسحب صدرك نحو البار",
+     "انزل بتحكم حتى استقامة الذراعين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bouncing off the band",
+     "Chin reaching without the chest"
+    ],
+    "ar": [
+     "الارتداد على المطاط",
+     "مدّ الذقن دون الصدر"
+    ]
+   }
+  },
+  {
+   "id": "negative_pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 6,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "band_assisted_pull_up",
+   "progression": "chin_up",
+   "media": null,
+   "name": {
+    "en": "Negative Pull-up",
+    "ar": "عقلة سلبية (نزول بطيء)"
+   },
+   "cues": {
+    "en": [
+     "Jump or step to chin over the bar",
+     "Lower for 4 to 6 seconds",
+     "Finish in a full dead hang"
+    ],
+    "ar": [
+     "اقفز أو اصعد حتى تصبح الذقن فوق البار",
+     "انزل خلال ٤ إلى ٦ ثوانٍ",
+     "انتهِ بتعلق حر كامل"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Dropping the last half",
+     "Skipping the full hang"
+    ],
+    "ar": [
+     "السقوط في النصف الأخير",
+     "تجاهل التعلق الكامل"
+    ]
+   }
+  },
+  {
+   "id": "chin_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 10,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "negative_pull_up",
+   "progression": "pull_up",
+   "media": null,
+   "name": {
+    "en": "Chin-up",
+    "ar": "عقلة بقبضة معكوسة"
+   },
+   "cues": {
+    "en": [
+     "Palms facing you, shoulder width",
+     "Pull elbows down to the ribs",
+     "Chin clearly over the bar"
+    ],
+    "ar": [
+     "الكفان باتجاهك بعرض الكتفين",
+     "اسحب المرفقين نحو الأضلاع",
+     "الذقن فوق البار بوضوح"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Kicking the legs",
+     "Half reps at the bottom"
+    ],
+    "ar": [
+     "ركل الساقين",
+     "عدّات ناقصة في الأسفل"
+    ]
+   }
+  },
+  {
+   "id": "pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 6,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 10,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "chin_up",
+   "progression": "l_sit_pull_up",
+   "media": null,
+   "name": {
+    "en": "Pull-up",
+    "ar": "عقلة"
+   },
+   "cues": {
+    "en": [
+     "Overhand grip slightly wider than shoulders",
+     "Start by pulling the shoulder blades down",
+     "Drive elbows to the hips, chin over the bar"
+    ],
+    "ar": [
+     "قبضة علوية أوسع قليلاً من الكتفين",
+     "ابدأ بسحب لوحي الكتف للأسفل",
+     "ادفع المرفقين نحو الوركين والذقن فوق البار"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Kipping",
+     "Not reaching full extension"
+    ],
+    "ar": [
+     "التأرجح للمساعدة",
+     "عدم المدّ الكامل"
+    ]
+   }
+  },
+  {
+   "id": "l_sit_pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 7,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "pull_up",
+   "progression": "archer_pull_up",
+   "media": null,
+   "name": {
+    "en": "L-sit Pull-up",
+    "ar": "عقلة بوضعية L"
+   },
+   "cues": {
+    "en": [
+     "Lift straight legs to horizontal",
+     "Hold the L while pulling",
+     "Lower without dropping the legs"
+    ],
+    "ar": [
+     "ارفع الساقين مستقيمتين حتى الأفق",
+     "حافظ على وضعية L أثناء السحب",
+     "انزل دون إسقاط الساقين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Legs dropping",
+     "Leaning far back"
+    ],
+    "ar": [
+     "هبوط الساقين",
+     "الميل الشديد للخلف"
+    ]
+   }
+  },
+  {
+   "id": "archer_pull_up",
+   "pattern": "pull",
+   "chain": "pull_up",
+   "level": 8,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 6,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "l_sit_pull_up",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Archer Pull-up",
+    "ar": "عقلة الرامي"
+   },
+   "cues": {
+    "en": [
+     "Wide grip, pull toward one hand",
+     "Keep the other arm long",
+     "Alternate sides"
+    ],
+    "ar": [
+     "قبضة واسعة واسحب نحو يد واحدة",
+     "أبقِ الذراع الأخرى ممدودة",
+     "بدّل الجانبين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Twisting the body",
+     "Bending the straight arm early"
+    ],
+    "ar": [
+     "دوران الجسم",
+     "ثني الذراع الممدودة مبكراً"
+    ]
+   }
+  },
+  {
+   "id": "high_row",
+   "pattern": "pull",
+   "chain": "row",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "low",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "low_bar"
+   ],
+   "regression": null,
+   "progression": "australian_row",
+   "media": null,
+   "name": {
+    "en": "High Bar Row",
+    "ar": "سحب أفقي والبار مرتفع"
+   },
+   "cues": {
+    "en": [
+     "Bar at chest height, lean back with straight body",
+     "Pull the chest to the bar",
+     "Squeeze the shoulder blades together"
+    ],
+    "ar": [
+     "البار بمستوى الصدر ومِل للخلف بجسم مستقيم",
+     "اسحب صدرك إلى البار",
+     "اضغط لوحي الكتف معاً"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips sagging",
+     "Pulling with the neck forward"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "مدّ الرقبة للأمام"
+    ]
+   }
+  },
+  {
+   "id": "australian_row",
+   "pattern": "pull",
+   "chain": "row",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "low",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "low_bar"
+   ],
+   "regression": "high_row",
+   "progression": "elevated_row",
+   "media": null,
+   "name": {
+    "en": "Australian Row",
+    "ar": "السحب الأسترالي"
+   },
+   "cues": {
+    "en": [
+     "Bar at hip height, heels on the floor",
+     "Body in one straight line",
+     "Pull the bar to the lower chest"
+    ],
+    "ar": [
+     "البار بمستوى الورك والكعبان على الأرض",
+     "الجسم على خط مستقيم",
+     "اسحب البار إلى أسفل الصدر"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips dropping",
+     "Shrugging the shoulders"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "رفع الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "elevated_row",
+   "pattern": "pull",
+   "chain": "row",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "low_bar",
+    "bench"
+   ],
+   "regression": "australian_row",
+   "progression": "archer_row",
+   "media": null,
+   "name": {
+    "en": "Feet-elevated Row",
+    "ar": "سحب أفقي والقدمان مرتفعتان"
+   },
+   "cues": {
+    "en": [
+     "Feet on a bench, body horizontal",
+     "Pull until the chest touches the bar",
+     "Lower with straight arms each rep"
+    ],
+    "ar": [
+     "القدمان على مقعد والجسم أفقي",
+     "اسحب حتى يلامس الصدر البار",
+     "انزل حتى استقامة الذراعين كل عدة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Short pulls",
+     "Hips piking"
+    ],
+    "ar": [
+     "سحب قصير",
+     "رفع الوركين"
+    ]
+   }
+  },
+  {
+   "id": "archer_row",
+   "pattern": "pull",
+   "chain": "row",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 8,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "low_bar"
+   ],
+   "regression": "elevated_row",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Archer Row",
+    "ar": "سحب الرامي الأفقي"
+   },
+   "cues": {
+    "en": [
+     "Wide grip, pull toward one hand",
+     "Keep the far arm straight",
+     "Hold the body rigid"
+    ],
+    "ar": [
+     "قبضة واسعة واسحب نحو يد واحدة",
+     "أبقِ الذراع البعيدة مستقيمة",
+     "حافظ على صلابة الجسم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Rotating the torso",
+     "Hips sagging"
+    ],
+    "ar": [
+     "دوران الجذع",
+     "هبوط الوركين"
+    ]
+   }
+  },
+  {
+   "id": "chest_to_bar_pull_up",
+   "pattern": "pull",
+   "chain": "muscle_up",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": null,
+   "progression": "high_pull_up",
+   "media": null,
+   "name": {
+    "en": "Chest-to-bar Pull-up",
+    "ar": "عقلة حتى الصدر"
+   },
+   "cues": {
+    "en": [
+     "Pull explosively from a dead hang",
+     "Aim the lower chest at the bar",
+     "Control the way down"
+    ],
+    "ar": [
+     "اسحب بانفجار من التعلق الحر",
+     "وجّه أسفل الصدر نحو البار",
+     "تحكم في النزول"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Excessive kip",
+     "Stopping at the chin"
+    ],
+    "ar": [
+     "تأرجح مفرط",
+     "التوقف عند الذقن"
+    ]
+   }
+  },
+  {
+   "id": "high_pull_up",
+   "pattern": "pull",
+   "chain": "muscle_up",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 4,
+    "min": 2,
+    "max": 5,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "chest_to_bar_pull_up",
+   "progression": "muscle_up_negative",
+   "media": null,
+   "name": {
+    "en": "High Pull-up (to the waist)",
+    "ar": "عقلة عالية حتى الخصر"
+   },
+   "cues": {
+    "en": [
+     "Slight forward swing, then pull in an arc",
+     "Pull the bar toward the hips",
+     "Keep the bar close to the body"
+    ],
+    "ar": [
+     "تأرجح خفيف للأمام ثم اسحب في قوس",
+     "اسحب البار نحو الوركين",
+     "أبقِ البار قريباً من الجسم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Pulling straight up only",
+     "Knees jerking up"
+    ],
+    "ar": [
+     "السحب عمودياً فقط",
+     "رفع الركبتين بعنف"
+    ]
+   }
+  },
+  {
+   "id": "muscle_up_negative",
+   "pattern": "pull",
+   "chain": "muscle_up",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 5,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "high_pull_up",
+   "progression": "kipping_muscle_up",
+   "media": null,
+   "name": {
+    "en": "Muscle-up Negative",
+    "ar": "ماسل أب سلبي"
+   },
+   "cues": {
+    "en": [
+     "Start in support on top of the bar",
+     "Lower slowly through the transition",
+     "Keep the chest close to the bar"
+    ],
+    "ar": [
+     "ابدأ من الارتكاز فوق البار",
+     "انزل ببطء عبر مرحلة الانتقال",
+     "أبقِ الصدر قريباً من البار"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Falling through the transition",
+     "Elbows flaring wide"
+    ],
+    "ar": [
+     "السقوط في مرحلة الانتقال",
+     "فتح المرفقين"
+    ]
+   }
+  },
+  {
+   "id": "kipping_muscle_up",
+   "pattern": "pull",
+   "chain": "muscle_up",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 4,
+    "min": 1,
+    "max": 5,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "muscle_up_negative",
+   "progression": "strict_muscle_up",
+   "media": null,
+   "name": {
+    "en": "Kipping Muscle-up",
+    "ar": "ماسل أب بالتأرجح"
+   },
+   "cues": {
+    "en": [
+     "Use a controlled swing to pull high",
+     "Fast wrists over the bar in the transition",
+     "Finish with a full straight bar dip"
+    ],
+    "ar": [
+     "استخدم تأرجحاً مضبوطاً للسحب عالياً",
+     "اقلب الرسغين بسرعة فوق البار",
+     "انتهِ بغطس كامل على البار"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Chicken wing (one elbow first)",
+     "No lockout at the top"
+    ],
+    "ar": [
+     "صعود مرفق قبل الآخر",
+     "عدم المدّ في الأعلى"
+    ]
+   }
+  },
+  {
+   "id": "strict_muscle_up",
+   "pattern": "pull",
+   "chain": "muscle_up",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 4,
+    "min": 1,
+    "max": 5,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "kipping_muscle_up",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Strict Muscle-up",
+    "ar": "ماسل أب صارم"
+   },
+   "cues": {
+    "en": [
+     "False grip or strong high pull from dead hang",
+     "Lean the chest over the bar at sternum height",
+     "Press out to locked arms"
+    ],
+    "ar": [
+     "قبضة زائفة أو سحب عالٍ قوي من التعلق الحر",
+     "أمِل صدرك فوق البار عند مستوى القص",
+     "ادفع حتى مدّ الذراعين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Using a swing",
+     "Uneven elbows in the transition"
+    ],
+    "ar": [
+     "استخدام التأرجح",
+     "عدم تساوي المرفقين في الانتقال"
+    ]
+   }
+  },
+  {
+   "id": "assisted_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "low",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "bodyweight_squat",
+   "media": null,
+   "name": {
+    "en": "Assisted Squat",
+    "ar": "قرفصاء بمساعدة"
+   },
+   "cues": {
+    "en": [
+     "Hold a post or doorframe for balance",
+     "Sit down between the heels",
+     "Stand up pushing through the whole foot"
+    ],
+    "ar": [
+     "أمسك عموداً أو إطار باب للتوازن",
+     "اجلس بين الكعبين",
+     "انهض بالدفع من كامل القدم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Pulling up with the arms",
+     "Heels lifting"
+    ],
+    "ar": [
+     "السحب بالذراعين",
+     "ارتفاع الكعبين"
+    ]
+   }
+  },
+  {
+   "id": "bodyweight_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 20,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "medium",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "assisted_squat",
+   "progression": "split_squat",
+   "media": null,
+   "name": {
+    "en": "Bodyweight Squat",
+    "ar": "قرفصاء بوزن الجسم"
+   },
+   "cues": {
+    "en": [
+     "Feet shoulder width, toes slightly out",
+     "Knees track over the toes",
+     "Hips below knees if mobility allows"
+    ],
+    "ar": [
+     "القدمان بعرض الكتفين والأصابع للخارج قليلاً",
+     "الركبتان باتجاه أصابع القدمين",
+     "الوركان أسفل الركبتين إن سمحت المرونة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Knees caving in",
+     "Rounding the lower back"
+    ],
+    "ar": [
+     "انحراف الركبتين للداخل",
+     "تدوير أسفل الظهر"
+    ]
+   }
+  },
+  {
+   "id": "split_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 12,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "medium",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "bodyweight_squat",
+   "progression": "bulgarian_split_squat",
+   "media": null,
+   "name": {
+    "en": "Split Squat",
+    "ar": "قرفصاء منقسمة"
+   },
+   "cues": {
+    "en": [
+     "Long stance, torso upright",
+     "Lower the back knee toward the floor",
+     "Drive through the front foot"
+    ],
+    "ar": [
+     "وقفة طويلة والجذع منتصب",
+     "أنزل الركبة الخلفية نحو الأرض",
+     "ادفع من القدم الأمامية"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Front heel lifting",
+     "Stance too narrow"
+    ],
+    "ar": [
+     "ارتفاع كعب القدم الأمامية",
+     "وقفة ضيقة جداً"
+    ]
+   }
+  },
+  {
+   "id": "bulgarian_split_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "medium",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "split_squat",
+   "progression": "cossack_squat",
+   "media": null,
+   "name": {
+    "en": "Bulgarian Split Squat",
+    "ar": "القرفصاء البلغارية"
+   },
+   "cues": {
+    "en": [
+     "Back foot on a bench",
+     "Drop straight down, front shin near vertical",
+     "Stand tall at the top"
+    ],
+    "ar": [
+     "القدم الخلفية على مقعد",
+     "انزل عمودياً والساق الأمامية شبه عمودية",
+     "قف باستقامة في الأعلى"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Pushing off the back leg",
+     "Knee collapsing inward"
+    ],
+    "ar": [
+     "الدفع بالرجل الخلفية",
+     "انهيار الركبة للداخل"
+    ]
+   }
+  },
+  {
+   "id": "cossack_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 10,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "medium",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "bulgarian_split_squat",
+   "progression": "shrimp_squat",
+   "media": null,
+   "name": {
+    "en": "Cossack Squat",
+    "ar": "قرفصاء القوزاق"
+   },
+   "cues": {
+    "en": [
+     "Wide stance, sink onto one leg",
+     "Keep the other leg straight, toes up",
+     "Chest stays tall"
+    ],
+    "ar": [
+     "وقفة واسعة وانزل على ساق واحدة",
+     "أبقِ الساق الأخرى مستقيمة والأصابع للأعلى",
+     "الصدر مرفوع"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Heel of the bent leg lifting",
+     "Collapsing forward"
+    ],
+    "ar": [
+     "ارتفاع كعب الساق المثنية",
+     "الانهيار للأمام"
+    ]
+   }
+  },
+  {
+   "id": "shrimp_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 6,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "high",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "cossack_squat",
+   "progression": "assisted_pistol_squat",
+   "media": null,
+   "name": {
+    "en": "Shrimp Squat",
+    "ar": "قرفصاء الروبيان"
+   },
+   "cues": {
+    "en": [
+     "Hold the rear foot behind you",
+     "Lower the back knee softly to the floor",
+     "Lean forward to balance, then stand"
+    ],
+    "ar": [
+     "أمسك القدم الخلفية خلفك",
+     "أنزل الركبة الخلفية بلطف إلى الأرض",
+     "مِل للأمام للتوازن ثم انهض"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Slamming the knee down",
+     "Pushing off the back toes"
+    ],
+    "ar": [
+     "ضرب الركبة بالأرض",
+     "الدفع بأصابع القدم الخلفية"
+    ]
+   }
+  },
+  {
+   "id": "assisted_pistol_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 7,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 8,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "high",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "shrimp_squat",
+   "progression": "pistol_squat",
+   "media": null,
+   "name": {
+    "en": "Assisted Pistol Squat",
+    "ar": "قرفصاء المسدس بمساعدة"
+   },
+   "cues": {
+    "en": [
+     "Hold a support with one hand",
+     "Lower on one leg with the other extended",
+     "Use as little help as possible"
+    ],
+    "ar": [
+     "أمسك دعامة بيد واحدة",
+     "انزل على ساق واحدة والأخرى ممدودة",
+     "استخدم أقل مساعدة ممكنة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Dropping into the bottom",
+     "Knee caving in"
+    ],
+    "ar": [
+     "السقوط في الأسفل",
+     "انحراف الركبة للداخل"
+    ]
+   }
+  },
+  {
+   "id": "pistol_squat",
+   "pattern": "legs",
+   "chain": "squat",
+   "level": 8,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "high",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "assisted_pistol_squat",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Pistol Squat",
+    "ar": "قرفصاء المسدس"
+   },
+   "cues": {
+    "en": [
+     "Free leg straight in front, arms forward",
+     "Lower with control to full depth",
+     "Stand without bouncing"
+    ],
+    "ar": [
+     "الساق الحرة ممدودة أماماً والذراعان للأمام",
+     "انزل بتحكم إلى العمق الكامل",
+     "انهض دون ارتداد"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Heel lifting",
+     "Rounding and falling back"
+    ],
+    "ar": [
+     "ارتفاع الكعب",
+     "تدوير الظهر والسقوط للخلف"
+    ]
+   }
+  },
+  {
+   "id": "glute_bridge",
+   "pattern": "legs",
+   "chain": "hinge",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 20,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "low",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "single_leg_glute_bridge",
+   "media": null,
+   "name": {
+    "en": "Glute Bridge",
+    "ar": "جسر المؤخرة"
+   },
+   "cues": {
+    "en": [
+     "Feet flat, heels close to the hips",
+     "Lift the hips by squeezing the glutes",
+     "Pause one second at the top"
+    ],
+    "ar": [
+     "القدمان مسطحتان والكعبان قرب الوركين",
+     "ارفع الوركين بشدّ المؤخرة",
+     "توقف ثانية في الأعلى"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Arching the lower back",
+     "Pushing through the toes"
+    ],
+    "ar": [
+     "تقوّس أسفل الظهر",
+     "الدفع من أصابع القدم"
+    ]
+   }
+  },
+  {
+   "id": "single_leg_glute_bridge",
+   "pattern": "legs",
+   "chain": "hinge",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "low",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "glute_bridge",
+   "progression": "hamstring_slide_curl",
+   "media": null,
+   "name": {
+    "en": "Single-leg Glute Bridge",
+    "ar": "جسر المؤخرة بساق واحدة"
+   },
+   "cues": {
+    "en": [
+     "One foot down, other knee to the chest",
+     "Keep the hips level as you lift",
+     "Lower slowly"
+    ],
+    "ar": [
+     "قدم على الأرض والركبة الأخرى نحو الصدر",
+     "حافظ على استواء الوركين عند الرفع",
+     "انزل ببطء"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips rotating",
+     "Hamstring taking over with feet too far"
+    ],
+    "ar": [
+     "دوران الوركين",
+     "ابتعاد القدم فيعمل الخلفي وحده"
+    ]
+   }
+  },
+  {
+   "id": "hamstring_slide_curl",
+   "pattern": "legs",
+   "chain": "hinge",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 6,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "medium",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "single_leg_glute_bridge",
+   "progression": "nordic_curl_negative",
+   "media": null,
+   "name": {
+    "en": "Hamstring Slide Curl",
+    "ar": "ثني خلفي بالانزلاق"
+   },
+   "cues": {
+    "en": [
+     "Heels on a towel or sliders, hips lifted",
+     "Slide the heels out slowly",
+     "Pull back keeping the hips high"
+    ],
+    "ar": [
+     "الكعبان على منشفة أو زلاقات والوركان مرفوعان",
+     "ادفع الكعبين للخارج ببطء",
+     "اسحب للخلف مع إبقاء الوركين عالياً"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips dropping",
+     "Rushing the extension"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "التسرع في المدّ"
+    ]
+   }
+  },
+  {
+   "id": "nordic_curl_negative",
+   "pattern": "legs",
+   "chain": "hinge",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 6,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "high",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "hamstring_slide_curl",
+   "progression": "nordic_curl",
+   "media": null,
+   "name": {
+    "en": "Nordic Curl Negative",
+    "ar": "نورديك سلبي"
+   },
+   "cues": {
+    "en": [
+     "Anchor the ankles, kneel tall",
+     "Lower the body as slowly as possible",
+     "Catch with the hands and push back up"
+    ],
+    "ar": [
+     "ثبّت الكاحلين واجثُ باستقامة",
+     "أنزل الجسم بأبطأ ما يمكن",
+     "استقبل بيديك وادفع للعودة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Breaking at the hips",
+     "Falling the last half"
+    ],
+    "ar": [
+     "الانثناء من الوركين",
+     "السقوط في النصف الأخير"
+    ]
+   }
+  },
+  {
+   "id": "nordic_curl",
+   "pattern": "legs",
+   "chain": "hinge",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 6,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "high",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "nordic_curl_negative",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Nordic Curl",
+    "ar": "نورديك كيرل"
+   },
+   "cues": {
+    "en": [
+     "Body straight from knees to head",
+     "Lower under control to the floor",
+     "Pull back up with the hamstrings"
+    ],
+    "ar": [
+     "الجسم مستقيم من الركبتين إلى الرأس",
+     "انزل بتحكم إلى الأرض",
+     "عد للأعلى بعضلات الفخذ الخلفية"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips shooting back",
+     "Big push from the hands"
+    ],
+    "ar": [
+     "رجوع الوركين للخلف",
+     "دفع قوي باليدين"
+    ]
+   }
+  },
+  {
+   "id": "lying_knee_raise",
+   "pattern": "core",
+   "chain": "leg_raise",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 15,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "lying_leg_raise",
+   "media": null,
+   "name": {
+    "en": "Lying Knee Raise",
+    "ar": "رفع الركبتين استلقاءً"
+   },
+   "cues": {
+    "en": [
+     "Lower back pressed into the floor",
+     "Bring the knees over the hips",
+     "Lower the feet slowly"
+    ],
+    "ar": [
+     "أسفل الظهر ملتصق بالأرض",
+     "اجلب الركبتين فوق الوركين",
+     "أنزل القدمين ببطء"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Back arching off the floor",
+     "Using momentum"
+    ],
+    "ar": [
+     "ارتفاع الظهر عن الأرض",
+     "استخدام الزخم"
+    ]
+   }
+  },
+  {
+   "id": "lying_leg_raise",
+   "pattern": "core",
+   "chain": "leg_raise",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "lying_knee_raise",
+   "progression": "hanging_knee_raise",
+   "media": null,
+   "name": {
+    "en": "Lying Leg Raise",
+    "ar": "رفع الساقين استلقاءً"
+   },
+   "cues": {
+    "en": [
+     "Legs straight, hands by the sides",
+     "Raise the legs to vertical",
+     "Lower until just above the floor"
+    ],
+    "ar": [
+     "الساقان مستقيمتان واليدان بجانب الجسم",
+     "ارفع الساقين حتى الوضع العمودي",
+     "انزل حتى قرب الأرض"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Lower back lifting",
+     "Dropping the legs"
+    ],
+    "ar": [
+     "ارتفاع أسفل الظهر",
+     "إسقاط الساقين"
+    ]
+   }
+  },
+  {
+   "id": "hanging_knee_raise",
+   "pattern": "core",
+   "chain": "leg_raise",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 15,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "lying_leg_raise",
+   "progression": "hanging_leg_raise",
+   "media": null,
+   "name": {
+    "en": "Hanging Knee Raise",
+    "ar": "رفع الركبتين تعلقاً"
+   },
+   "cues": {
+    "en": [
+     "Hang with active shoulders",
+     "Curl the knees to the chest",
+     "Lower without swinging"
+    ],
+    "ar": [
+     "تعلّق بكتفين نشطين",
+     "اثنِ الركبتين نحو الصدر",
+     "انزل دون تأرجح"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Swinging",
+     "Only lifting the thighs to horizontal"
+    ],
+    "ar": [
+     "التأرجح",
+     "رفع الفخذين حتى الأفق فقط"
+    ]
+   }
+  },
+  {
+   "id": "hanging_leg_raise",
+   "pattern": "core",
+   "chain": "leg_raise",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 12,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "hanging_knee_raise",
+   "progression": "toes_to_bar",
+   "media": null,
+   "name": {
+    "en": "Hanging Leg Raise",
+    "ar": "رفع الساقين تعلقاً"
+   },
+   "cues": {
+    "en": [
+     "Straight legs, toes pointed",
+     "Raise to horizontal or higher",
+     "Control the descent"
+    ],
+    "ar": [
+     "ساقان مستقيمتان وأصابع مشدودة",
+     "ارفع حتى الأفق أو أعلى",
+     "تحكم في النزول"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bending the knees",
+     "Kipping"
+    ],
+    "ar": [
+     "ثني الركبتين",
+     "التأرجح للمساعدة"
+    ]
+   }
+  },
+  {
+   "id": "toes_to_bar",
+   "pattern": "core",
+   "chain": "leg_raise",
+   "level": 5,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 4,
+    "max": 10,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "hanging_leg_raise",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Toes to Bar",
+    "ar": "أصابع القدم إلى البار"
+   },
+   "cues": {
+    "en": [
+     "Pull down on the bar with straight arms",
+     "Lift straight legs until toes touch the bar",
+     "Lower slowly"
+    ],
+    "ar": [
+     "اضغط على البار بذراعين مستقيمتين",
+     "ارفع الساقين حتى تلمس الأصابع البار",
+     "انزل ببطء"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Swinging for momentum",
+     "Bending the arms"
+    ],
+    "ar": [
+     "التأرجح لكسب الزخم",
+     "ثني الذراعين"
+    ]
+   }
+  },
+  {
+   "id": "knee_plank",
+   "pattern": "core",
+   "chain": "plank",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 20,
+    "max": 45,
+    "restSec": 45
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "low",
+    "elbows": "none",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "plank",
+   "media": null,
+   "name": {
+    "en": "Knee Plank",
+    "ar": "بلانك على الركبتين"
+   },
+   "cues": {
+    "en": [
+     "Elbows under shoulders",
+     "Straight line from knees to head",
+     "Squeeze glutes and abs"
+    ],
+    "ar": [
+     "المرفقان تحت الكتفين",
+     "خط مستقيم من الركبتين إلى الرأس",
+     "اشدد المؤخرة والبطن"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips too high",
+     "Head hanging"
+    ],
+    "ar": [
+     "الوركان مرتفعان جداً",
+     "تدلّي الرأس"
+    ]
+   }
+  },
+  {
+   "id": "plank",
+   "pattern": "core",
+   "chain": "plank",
+   "level": 2,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 20,
+    "max": 60,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "low",
+    "elbows": "none",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "knee_plank",
+   "progression": "side_plank",
+   "media": null,
+   "name": {
+    "en": "Plank",
+    "ar": "بلانك"
+   },
+   "cues": {
+    "en": [
+     "Elbows under shoulders, feet together",
+     "Tuck the pelvis and brace",
+     "Push the floor away"
+    ],
+    "ar": [
+     "المرفقان تحت الكتفين والقدمان معاً",
+     "أدر الحوض للداخل واشدد البطن",
+     "ادفع الأرض"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Sagging lower back",
+     "Holding the breath"
+    ],
+    "ar": [
+     "هبوط أسفل الظهر",
+     "حبس النفس"
+    ]
+   }
+  },
+  {
+   "id": "side_plank",
+   "pattern": "core",
+   "chain": "plank",
+   "level": 3,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 15,
+    "max": 45,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "plank",
+   "progression": "hollow_body_hold",
+   "media": null,
+   "name": {
+    "en": "Side Plank",
+    "ar": "بلانك جانبي"
+   },
+   "cues": {
+    "en": [
+     "Elbow under the shoulder, feet stacked",
+     "Lift the hips to a straight line",
+     "Hold each side"
+    ],
+    "ar": [
+     "المرفق تحت الكتف والقدمان فوق بعضهما",
+     "ارفع الوركين إلى خط مستقيم",
+     "اثبت على كل جانب"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips dropping",
+     "Rolling forward"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "الدوران للأمام"
+    ]
+   }
+  },
+  {
+   "id": "hollow_body_hold",
+   "pattern": "core",
+   "chain": "plank",
+   "level": 4,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 15,
+    "max": 45,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "none",
+    "elbows": "none",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "side_plank",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Hollow Body Hold",
+    "ar": "ثبات الجسم المجوّف"
+   },
+   "cues": {
+    "en": [
+     "Lower back glued to the floor",
+     "Arms overhead, legs straight and low",
+     "Scale by tucking the knees"
+    ],
+    "ar": [
+     "أسفل الظهر ملتصق بالأرض",
+     "الذراعان فوق الرأس والساقان مستقيمتان ومنخفضتان",
+     "سهّل بثني الركبتين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Lower back arching",
+     "Chin jutting out"
+    ],
+    "ar": [
+     "تقوّس أسفل الظهر",
+     "بروز الذقن"
+    ]
+   }
+  },
+  {
+   "id": "foot_supported_l_sit",
+   "pattern": "core",
+   "chain": "l_sit",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 30,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "low",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "tuck_l_sit",
+   "media": null,
+   "name": {
+    "en": "Foot-supported L-sit",
+    "ar": "L-sit مع دعم القدمين"
+   },
+   "cues": {
+    "en": [
+     "Hands by the hips, press the floor",
+     "Lift the hips, heels stay down",
+     "Shoulders pressed down"
+    ],
+    "ar": [
+     "اليدان بجانب الوركين واضغط الأرض",
+     "ارفع الوركين والكعبان على الأرض",
+     "الكتفان للأسفل"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Shoulders shrugged",
+     "Bent arms"
+    ],
+    "ar": [
+     "رفع الكتفين",
+     "ثني الذراعين"
+    ]
+   }
+  },
+  {
+   "id": "tuck_l_sit",
+   "pattern": "core",
+   "chain": "l_sit",
+   "level": 2,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 30,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "foot_supported_l_sit",
+   "progression": "one_leg_l_sit",
+   "media": null,
+   "name": {
+    "en": "Tuck L-sit",
+    "ar": "L-sit مضموم"
+   },
+   "cues": {
+    "en": [
+     "Lock the arms and lift the feet",
+     "Knees to the chest",
+     "Push tall through the shoulders"
+    ],
+    "ar": [
+     "مدّ الذراعين وارفع القدمين",
+     "الركبتان نحو الصدر",
+     "ادفع عالياً من الكتفين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Leaning back",
+     "Sinking into the shoulders"
+    ],
+    "ar": [
+     "الميل للخلف",
+     "الغوص في الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "one_leg_l_sit",
+   "pattern": "core",
+   "chain": "l_sit",
+   "level": 3,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 20,
+    "restSec": 75
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "tuck_l_sit",
+   "progression": "l_sit",
+   "media": null,
+   "name": {
+    "en": "One-leg L-sit",
+    "ar": "L-sit بساق واحدة"
+   },
+   "cues": {
+    "en": [
+     "From tuck, extend one leg straight",
+     "Keep the extended leg horizontal",
+     "Switch legs each set"
+    ],
+    "ar": [
+     "من الوضع المضموم مدّ ساقاً واحدة",
+     "أبقِ الساق الممدودة أفقية",
+     "بدّل الساقين كل مجموعة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Extended leg dropping",
+     "Rounded shoulders"
+    ],
+    "ar": [
+     "هبوط الساق الممدودة",
+     "تدوير الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "l_sit",
+   "pattern": "core",
+   "chain": "l_sit",
+   "level": 4,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 30,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "medium",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "one_leg_l_sit",
+   "progression": "v_sit",
+   "media": null,
+   "name": {
+    "en": "L-sit",
+    "ar": "وضعية L"
+   },
+   "cues": {
+    "en": [
+     "Arms locked, both legs straight and horizontal",
+     "Point the toes, squeeze the quads",
+     "Depress the shoulders"
+    ],
+    "ar": [
+     "الذراعان ممدودتان والساقان مستقيمتان أفقياً",
+     "شدّ أصابع القدم والفخذين",
+     "اخفض الكتفين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bent knees",
+     "Legs below horizontal"
+    ],
+    "ar": [
+     "ثني الركبتين",
+     "الساقان تحت الأفق"
+    ]
+   }
+  },
+  {
+   "id": "v_sit",
+   "pattern": "core",
+   "chain": "l_sit",
+   "level": 5,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 5,
+    "max": 15,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "l_sit",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "V-sit",
+    "ar": "وضعية V"
+   },
+   "cues": {
+    "en": [
+     "From L-sit, lift the legs higher",
+     "Push the hips forward between the hands",
+     "Keep the arms locked"
+    ],
+    "ar": [
+     "من وضعية L ارفع الساقين أعلى",
+     "ادفع الوركين للأمام بين اليدين",
+     "أبقِ الذراعين ممدودتين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Leaning back without lifting the hips",
+     "Bent arms"
+    ],
+    "ar": [
+     "الميل للخلف دون رفع الوركين",
+     "ثني الذراعين"
+    ]
+   }
+  },
+  {
+   "id": "tuck_dragon_flag",
+   "pattern": "core",
+   "chain": "dragon_flag",
+   "level": 1,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 3,
+    "max": 8,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": null,
+   "progression": "dragon_flag_negative",
+   "media": null,
+   "name": {
+    "en": "Tuck Dragon Flag",
+    "ar": "علم التنين المضموم"
+   },
+   "cues": {
+    "en": [
+     "Grip the bench behind the head",
+     "Lift onto the shoulders with knees tucked",
+     "Lower as one piece"
+    ],
+    "ar": [
+     "أمسك المقعد خلف الرأس",
+     "ارتفع على الكتفين والركبتان مضمومتان",
+     "انزل كقطعة واحدة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bending at the hips",
+     "Weight on the neck"
+    ],
+    "ar": [
+     "الانثناء من الوركين",
+     "تحميل الرقبة"
+    ]
+   }
+  },
+  {
+   "id": "dragon_flag_negative",
+   "pattern": "core",
+   "chain": "dragon_flag",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 5,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "high"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "tuck_dragon_flag",
+   "progression": "dragon_flag",
+   "media": null,
+   "name": {
+    "en": "Dragon Flag Negative",
+    "ar": "علم التنين السلبي"
+   },
+   "cues": {
+    "en": [
+     "Start vertical on the shoulders, body straight",
+     "Lower slowly for 4 to 6 seconds",
+     "Reset at the top with bent knees"
+    ],
+    "ar": [
+     "ابدأ عمودياً على الكتفين والجسم مستقيم",
+     "انزل ببطء خلال ٤ إلى ٦ ثوانٍ",
+     "عد للأعلى بثني الركبتين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Hips piking",
+     "Dropping near the bottom"
+    ],
+    "ar": [
+     "انثناء الوركين",
+     "السقوط قرب الأسفل"
+    ]
+   }
+  },
+  {
+   "id": "dragon_flag",
+   "pattern": "core",
+   "chain": "dragon_flag",
+   "level": 3,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 6,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "none",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "high"
+   },
+   "equipment": [
+    "bench"
+   ],
+   "regression": "dragon_flag_negative",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Dragon Flag",
+    "ar": "علم التنين"
+   },
+   "cues": {
+    "en": [
+     "Body rigid from shoulders to toes",
+     "Lower until just above the bench",
+     "Raise without bending the hips"
+    ],
+    "ar": [
+     "الجسم صلب من الكتفين إلى الأصابع",
+     "انزل حتى قرب المقعد",
+     "ارتفع دون ثني الوركين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Arching the lower back",
+     "Using the neck"
+    ],
+    "ar": [
+     "تقوّس أسفل الظهر",
+     "استخدام الرقبة"
+    ]
+   }
+  },
+  {
+   "id": "crow_pose",
+   "pattern": "statics",
+   "chain": "handstand",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 8,
+    "max": 30,
+    "restSec": 60
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "low",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "none"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "wall_walk",
+   "media": null,
+   "name": {
+    "en": "Crow Pose",
+    "ar": "وضعية الغراب"
+   },
+   "cues": {
+    "en": [
+     "Knees on the upper arms, look forward",
+     "Lean until the feet float",
+     "Grip the floor with the fingertips"
+    ],
+    "ar": [
+     "الركبتان على العضدين والنظر للأمام",
+     "مِل حتى ترتفع القدمان",
+     "اقبض على الأرض بأطراف الأصابع"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Looking down at the hands",
+     "Jumping into it"
+    ],
+    "ar": [
+     "النظر إلى اليدين",
+     "القفز إلى الوضعية"
+    ]
+   }
+  },
+  {
+   "id": "wall_walk",
+   "pattern": "statics",
+   "chain": "handstand",
+   "level": 2,
+   "type": "reps",
+   "defaults": {
+    "sets": 3,
+    "min": 2,
+    "max": 5,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "wall"
+   ],
+   "regression": "crow_pose",
+   "progression": "chest_to_wall_handstand",
+   "media": null,
+   "name": {
+    "en": "Wall Walk",
+    "ar": "المشي على الحائط"
+   },
+   "cues": {
+    "en": [
+     "Start in a push-up with feet at the wall",
+     "Walk the feet up and the hands in",
+     "Walk back down under control"
+    ],
+    "ar": [
+     "ابدأ بوضع الضغط والقدمان عند الحائط",
+     "اصعد بالقدمين وقرّب اليدين",
+     "انزل بتحكم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Arching the back",
+     "Coming down too fast"
+    ],
+    "ar": [
+     "تقوّس الظهر",
+     "النزول بسرعة"
+    ]
+   }
+  },
+  {
+   "id": "chest_to_wall_handstand",
+   "pattern": "statics",
+   "chain": "handstand",
+   "level": 3,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 15,
+    "max": 45,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "wall"
+   ],
+   "regression": "wall_walk",
+   "progression": "handstand_kick_up",
+   "media": null,
+   "name": {
+    "en": "Chest-to-wall Handstand",
+    "ar": "الوقوف على اليدين والصدر للحائط"
+   },
+   "cues": {
+    "en": [
+     "Hands close to the wall, only toes touching",
+     "Push tall, ears between the arms",
+     "Ribs in, glutes tight"
+    ],
+    "ar": [
+     "اليدان قرب الحائط والأصابع فقط تلامسه",
+     "ادفع عالياً والأذنان بين الذراعين",
+     "الأضلاع للداخل والمؤخرة مشدودة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Banana shape",
+     "Bent elbows"
+    ],
+    "ar": [
+     "شكل الموزة",
+     "ثني المرفقين"
+    ]
+   }
+  },
+  {
+   "id": "handstand_kick_up",
+   "pattern": "statics",
+   "chain": "handstand",
+   "level": 4,
+   "type": "reps",
+   "defaults": {
+    "sets": 4,
+    "min": 3,
+    "max": 6,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "chest_to_wall_handstand",
+   "progression": "freestanding_handstand",
+   "media": null,
+   "name": {
+    "en": "Handstand Kick-up",
+    "ar": "الصعود إلى الوقوف على اليدين"
+   },
+   "cues": {
+    "en": [
+     "Lunge, place hands shoulder width",
+     "Kick gently to find the balance point",
+     "Learn to bail by cartwheeling out"
+    ],
+    "ar": [
+     "تقدّم وضع اليدين بعرض الكتفين",
+     "اركل بلطف لإيجاد نقطة التوازن",
+     "تعلّم الخروج الآمن بالعجلة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Kicking too hard",
+     "Bent arms on entry"
+    ],
+    "ar": [
+     "الركل بقوة زائدة",
+     "ثني الذراعين عند الصعود"
+    ]
+   }
+  },
+  {
+   "id": "freestanding_handstand",
+   "pattern": "statics",
+   "chain": "handstand",
+   "level": 5,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 5,
+    "max": 30,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "low",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "handstand_kick_up",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Freestanding Handstand",
+    "ar": "الوقوف الحر على اليدين"
+   },
+   "cues": {
+    "en": [
+     "Stack wrists, shoulders, hips and ankles",
+     "Balance with finger pressure",
+     "Squeeze everything, point the toes"
+    ],
+    "ar": [
+     "صفّ الرسغين والكتفين والوركين والكاحلين",
+     "وازن بضغط الأصابع",
+     "شدّ كامل الجسم وأصابع القدم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Walking on the hands to save balance",
+     "Head sticking far out"
+    ],
+    "ar": [
+     "المشي باليدين لحفظ التوازن",
+     "إخراج الرأس كثيراً"
+    ]
+   }
+  },
+  {
+   "id": "planche_lean",
+   "pattern": "statics",
+   "chain": "planche",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 3,
+    "min": 10,
+    "max": 30,
+    "restSec": 90
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": null,
+   "progression": "tuck_planche",
+   "media": null,
+   "name": {
+    "en": "Planche Lean",
+    "ar": "ميل البلانش"
+   },
+   "cues": {
+    "en": [
+     "Push-up position, arms locked",
+     "Lean the shoulders past the wrists",
+     "Round the upper back and tuck the pelvis"
+    ],
+    "ar": [
+     "وضع الضغط والذراعان ممدودتان",
+     "أمِل الكتفين أمام الرسغين",
+     "دوّر أعلى الظهر وأدر الحوض"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bending the elbows",
+     "Hips piked high"
+    ],
+    "ar": [
+     "ثني المرفقين",
+     "رفع الوركين عالياً"
+    ]
+   }
+  },
+  {
+   "id": "tuck_planche",
+   "pattern": "statics",
+   "chain": "planche",
+   "level": 2,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 5,
+    "max": 20,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "planche_lean",
+   "progression": "advanced_tuck_planche",
+   "media": null,
+   "name": {
+    "en": "Tuck Planche",
+    "ar": "البلانش المضموم"
+   },
+   "cues": {
+    "en": [
+     "Arms locked, knees to the chest",
+     "Lift the hips to shoulder height",
+     "Protract the shoulder blades hard"
+    ],
+    "ar": [
+     "الذراعان ممدودتان والركبتان نحو الصدر",
+     "ارفع الوركين إلى مستوى الكتفين",
+     "باعد لوحي الكتف بقوة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bent arms",
+     "Hips lower than shoulders"
+    ],
+    "ar": [
+     "ثني الذراعين",
+     "الوركان أدنى من الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "advanced_tuck_planche",
+   "pattern": "statics",
+   "chain": "planche",
+   "level": 3,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 5,
+    "max": 15,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "tuck_planche",
+   "progression": "straddle_planche",
+   "media": null,
+   "name": {
+    "en": "Advanced Tuck Planche",
+    "ar": "البلانش المضموم المتقدم"
+   },
+   "cues": {
+    "en": [
+     "Flatten the back, knees away from the chest",
+     "Hips level with the shoulders",
+     "Keep leaning forward"
+    ],
+    "ar": [
+     "سطّح الظهر وأبعد الركبتين عن الصدر",
+     "الوركان بمستوى الكتفين",
+     "واصل الميل للأمام"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Rounded lower back",
+     "Losing the lean"
+    ],
+    "ar": [
+     "تدوير أسفل الظهر",
+     "فقدان الميل"
+    ]
+   }
+  },
+  {
+   "id": "straddle_planche",
+   "pattern": "statics",
+   "chain": "planche",
+   "level": 4,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 3,
+    "max": 12,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "advanced_tuck_planche",
+   "progression": "full_planche",
+   "media": null,
+   "name": {
+    "en": "Straddle Planche",
+    "ar": "البلانش المفتوح"
+   },
+   "cues": {
+    "en": [
+     "Extend the legs wide behind you",
+     "Body parallel to the floor",
+     "Squeeze the glutes and point the toes"
+    ],
+    "ar": [
+     "مدّ الساقين متباعدتين خلفك",
+     "الجسم موازٍ للأرض",
+     "شدّ المؤخرة وأصابع القدم"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Arched back with low hips",
+     "Bent elbows"
+    ],
+    "ar": [
+     "ظهر مقوّس ووركان منخفضان",
+     "ثني المرفقين"
+    ]
+   }
+  },
+  {
+   "id": "full_planche",
+   "pattern": "statics",
+   "chain": "planche",
+   "level": 5,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 2,
+    "max": 10,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "high",
+    "shoulders": "high",
+    "elbows": "high",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "floor"
+   ],
+   "regression": "straddle_planche",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Full Planche",
+    "ar": "البلانش الكامل"
+   },
+   "cues": {
+    "en": [
+     "Legs together, body in one line",
+     "Shoulders far in front of the hands",
+     "Arms locked, full protraction"
+    ],
+    "ar": [
+     "الساقان معاً والجسم على خط واحد",
+     "الكتفان متقدمان كثيراً أمام اليدين",
+     "الذراعان ممدودتان مع مباعدة كاملة للوحين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Piked hips",
+     "Bent arms"
+    ],
+    "ar": [
+     "انثناء الوركين",
+     "ثني الذراعين"
+    ]
+   }
+  },
+  {
+   "id": "tuck_front_lever",
+   "pattern": "statics",
+   "chain": "front_lever",
+   "level": 1,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 5,
+    "max": 20,
+    "restSec": 120
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "medium",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": null,
+   "progression": "advanced_tuck_front_lever",
+   "media": null,
+   "name": {
+    "en": "Tuck Front Lever",
+    "ar": "الرافعة الأمامية المضمومة"
+   },
+   "cues": {
+    "en": [
+     "Hang, pull the knees to the chest",
+     "Tilt back until the back is horizontal",
+     "Straight arms, shoulders pulled down"
+    ],
+    "ar": [
+     "تعلّق واسحب الركبتين نحو الصدر",
+     "مِل للخلف حتى يصبح الظهر أفقياً",
+     "ذراعان مستقيمتان وكتفان للأسفل"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bent arms",
+     "Hips sagging below the shoulders"
+    ],
+    "ar": [
+     "ثني الذراعين",
+     "هبوط الوركين تحت الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "advanced_tuck_front_lever",
+   "pattern": "statics",
+   "chain": "front_lever",
+   "level": 2,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 5,
+    "max": 15,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "low"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "tuck_front_lever",
+   "progression": "one_leg_front_lever",
+   "media": null,
+   "name": {
+    "en": "Advanced Tuck Front Lever",
+    "ar": "الرافعة الأمامية المضمومة المتقدمة"
+   },
+   "cues": {
+    "en": [
+     "Flat back, knees over the hips",
+     "Pull the bar toward the hips",
+     "Keep the arms straight"
+    ],
+    "ar": [
+     "ظهر مسطّح والركبتان فوق الوركين",
+     "اسحب البار نحو الوركين",
+     "أبقِ الذراعين مستقيمتين"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Rounded back",
+     "Shoulders rising"
+    ],
+    "ar": [
+     "تدوير الظهر",
+     "ارتفاع الكتفين"
+    ]
+   }
+  },
+  {
+   "id": "one_leg_front_lever",
+   "pattern": "statics",
+   "chain": "front_lever",
+   "level": 3,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 4,
+    "max": 12,
+    "restSec": 150
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "advanced_tuck_front_lever",
+   "progression": "straddle_front_lever",
+   "media": null,
+   "name": {
+    "en": "One-leg Front Lever",
+    "ar": "الرافعة الأمامية بساق واحدة"
+   },
+   "cues": {
+    "en": [
+     "Extend one leg, keep the other tucked",
+     "Body horizontal from shoulders to foot",
+     "Switch legs each set"
+    ],
+    "ar": [
+     "مدّ ساقاً واحدة وأبقِ الأخرى مضمومة",
+     "الجسم أفقي من الكتفين إلى القدم",
+     "بدّل الساقين كل مجموعة"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Extended leg dropping",
+     "Hips piking"
+    ],
+    "ar": [
+     "هبوط الساق الممدودة",
+     "انثناء الوركين"
+    ]
+   }
+  },
+  {
+   "id": "straddle_front_lever",
+   "pattern": "statics",
+   "chain": "front_lever",
+   "level": 4,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 3,
+    "max": 12,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "one_leg_front_lever",
+   "progression": "front_lever",
+   "media": null,
+   "name": {
+    "en": "Straddle Front Lever",
+    "ar": "الرافعة الأمامية المفتوحة"
+   },
+   "cues": {
+    "en": [
+     "Both legs straight and wide",
+     "Hips fully open",
+     "Depress and retract the shoulder blades"
+    ],
+    "ar": [
+     "الساقان مستقيمتان ومتباعدتان",
+     "الوركان مفتوحان تماماً",
+     "اخفض لوحي الكتف وقرّبهما"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Bent hips",
+     "Bent arms"
+    ],
+    "ar": [
+     "ثني الوركين",
+     "ثني الذراعين"
+    ]
+   }
+  },
+  {
+   "id": "front_lever",
+   "pattern": "statics",
+   "chain": "front_lever",
+   "level": 5,
+   "type": "hold",
+   "defaults": {
+    "sets": 4,
+    "min": 2,
+    "max": 10,
+    "restSec": 180
+   },
+   "jointStress": {
+    "wrists": "low",
+    "shoulders": "high",
+    "elbows": "medium",
+    "knees": "none",
+    "lowerBack": "medium"
+   },
+   "equipment": [
+    "bar"
+   ],
+   "regression": "straddle_front_lever",
+   "progression": null,
+   "media": null,
+   "name": {
+    "en": "Front Lever",
+    "ar": "الرافعة الأمامية"
+   },
+   "cues": {
+    "en": [
+     "Legs together, body one straight line",
+     "Pull the bar to the hips with straight arms",
+     "Squeeze glutes and abs"
+    ],
+    "ar": [
+     "الساقان معاً والجسم خط مستقيم",
+     "اسحب البار نحو الوركين بذراعين مستقيمتين",
+     "شدّ المؤخرة والبطن"
+    ]
+   },
+   "mistakes": {
+    "en": [
+     "Sagging hips",
+     "Head tilted far back"
+    ],
+    "ar": [
+     "هبوط الوركين",
+     "إمالة الرأس كثيراً للخلف"
+    ]
+   }
+  }
+ ]
+}
