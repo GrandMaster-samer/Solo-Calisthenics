@@ -3,8 +3,13 @@
 Offline-first, privacy-first calisthenics training app (Flutter, Android 8.0+ / iOS 15+).
 English and Arabic with full RTL. No account, no server, no analytics.
 
-**Status: Phase 1 (MVP) complete.** Onboarding and profiling, exercise library,
-workout logger, rest timer, encrypted local storage, theme, Arabic/English.
+**Status: Phases 1 and 2 complete.**
+
+* Phase 1: onboarding and profiling, exercise library, workout logger, rest timer,
+  encrypted local storage, theme, Arabic/English.
+* Phase 2: weekly planner with a rule-based progression engine, skill tree,
+  progress dashboard, encrypted photo vault with PIN/biometric lock, encrypted
+  backup export and import.
 
 ## Run
 
@@ -53,6 +58,11 @@ lib/
     onboarding/             first-run flow, reused as the profile editor
     exercises/              library, detail, injury filter rules, media widget
     workout/                templates, session repository, controller, logger UI
+    planner/                progression engine, placement, weekly planner, deload
+    skills/                 skill tree (unlock map per chain)
+    progress/               analytics dashboard, photo vault, comparison
+    security/               PIN + biometric lock
+    backup/                 encrypted export / restore
     settings/               key/value settings, reminders
   l10n/                     app_en.arb, app_ar.arb (+ generated code)
 assets/
@@ -70,8 +80,11 @@ tool/                       authoring helpers and screenshot renderer
   `sqlite3` package build hooks in `pubspec.yaml`). The 256-bit key is generated on
   first launch and kept in the platform keystore (`flutter_secure_storage`).
   Android auto-backup is disabled so an encrypted file is never restored without its key.
-* **Tables**: `profiles` (single row), `injuries`, `settings` (key/value),
-  `sessions`, `session_exercises`, `set_logs`. Everything is stored in metric.
+* **Tables** (schema v2): `profiles` (single row), `injuries`, `settings`
+  (key/value, also holds the plan configuration), `sessions`, `session_exercises`,
+  `set_logs`, `chain_progress` (current level per chain), `milestones` (skill
+  unlocks), `progress_photos` (image bytes, so photos are encrypted with everything
+  else). Everything is stored in metric. `test/core/migration_test.dart` covers v1 to v2.
 * **Exercises** are not in the database. They are read from
   `assets/data/exercises.json`, which can be extended without code changes.
   `test/exercises/seed_data_test.dart` validates the file.
@@ -88,6 +101,30 @@ tool/                       authoring helpers and screenshot renderer
 * **Rest timer**: stored as an end timestamp, so it is correct after the screen
   turns off or the app is killed. A local notification is scheduled for the end.
 
+* **Progression engine** (`features/planner/domain/progression_engine.dart`, pure Dart):
+  * Reps: top of the range on every prescribed set for 2 consecutive sessions
+    advances to the next exercise (adds 2 reps at the end of a chain). An average
+    RIR of 3 or more at the top advances after one session.
+  * Holds: hitting the hold goal on every set raises it by 5 s (10 s on long
+    ranges); holding the top of the range for 2 sessions advances.
+  * Missing the bottom of the range on the first set for 2 consecutive sessions
+    lowers the goal, then regresses to the previous exercise.
+  * A session with under 90% of the previous volume is a drop; 2 drops in a row
+    start a lighter week immediately.
+* **Weekly planner** (`weekly_planner.dart`): 2 days full body; 3 days full body
+  (beginner) or push/pull/legs; 4 adds an upper day; 5 and 6 repeat push/pull/legs.
+  Chosen skills go first in the session. Exercises are added in priority order
+  until the session length is used. Injury rules are applied to every prescription.
+* **Deload**: every 4 to 6 weeks (user setting, default 5) or on the drop trigger.
+  About 40% fewer sets, lower half of the range, and no progression decisions.
+* **Placement** (`placement.dart`): push-up, pull-up and plank chains start from the
+  baseline test; other chains from experience level; skill chains start conservatively.
+* **App lock**: PIN stored only as a salted PBKDF2-HMAC-SHA256 hash in the keystore.
+  5 wrong attempts pause entry for 30 seconds. A forgotten PIN cannot be recovered;
+  the lock screen offers erasing all data instead.
+* **Backup**: a complete SQLCipher database re-encrypted with the user's passphrase
+  (`sqlcipher_export`). Restore stages and validates the file before replacing anything.
+
 ## Adding content
 
 * Exercises: edit `assets/data/exercises.json` (or `tool/build_seed.py` and rerun it).
@@ -96,6 +133,4 @@ tool/                       authoring helpers and screenshot renderer
 
 ## Roadmap
 
-* Phase 2: weekly planner and progression engine, skill tree, progress photos
-  vault with app lock, analytics, encrypted backup export/import.
 * Phase 3 (optional cloud): Google sign-in, encrypted cloud backup, coach review.

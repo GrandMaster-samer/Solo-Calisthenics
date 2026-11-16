@@ -602,4 +602,381 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get licenses => 'Open-source licenses';
+
+  @override
+  String get tabSkills => 'Skills';
+
+  @override
+  String get tabProgress => 'Progress';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get planPromoTitle => 'Get your weekly plan';
+
+  @override
+  String get planPromoBody =>
+      'Pick your training days and session length. The plan adapts to your level and joints, and progresses as you log.';
+
+  @override
+  String get planCreate => 'Create my plan';
+
+  @override
+  String get planSetupTitle => 'Weekly plan';
+
+  @override
+  String get planSave => 'Save plan';
+
+  @override
+  String get planDaysPerWeek => 'Training days per week';
+
+  @override
+  String get planSessionLength => 'Session length';
+
+  @override
+  String get planSkills => 'Skills to work on';
+
+  @override
+  String get planSkillsHint =>
+      'Optional. Skill work is placed first in the session while you are fresh.';
+
+  @override
+  String get planDeload => 'Lighter week';
+
+  @override
+  String get planDeloadHint =>
+      'An automatic easier week to recover. It also starts early if your performance drops two sessions in a row.';
+
+  @override
+  String everyWeeks(int weeks) {
+    return 'Every $weeks weeks';
+  }
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get deloadWeek => 'Lighter week';
+
+  @override
+  String get deloadExplainer =>
+      'Lighter week: fewer sets and easier targets so your body recovers. Progress is not judged this week.';
+
+  @override
+  String get todaysWorkout => 'Today\'s workout';
+
+  @override
+  String get nextWorkout => 'Next workout';
+
+  @override
+  String aboutMinutes(int minutes) {
+    return 'About $minutes min';
+  }
+
+  @override
+  String get reviewAndStart => 'Review and start';
+
+  @override
+  String get weekComplete => 'All planned workouts done this week';
+
+  @override
+  String get dayDone => 'Done';
+
+  @override
+  String get dayOpen => 'Not done yet';
+
+  @override
+  String get dayUpper => 'Upper body';
+
+  @override
+  String get progressUpdateTitle => 'Progress update';
+
+  @override
+  String changeUnlocked(String name) {
+    return 'Unlocked: $name';
+  }
+
+  @override
+  String changeGoalUp(String name) {
+    return '$name: goal raised';
+  }
+
+  @override
+  String changeGoalDown(String name) {
+    return '$name: goal lowered for now';
+  }
+
+  @override
+  String changeRegressed(String name) {
+    return 'Back to $name for now, to rebuild';
+  }
+
+  @override
+  String get nodeDone => 'Done';
+
+  @override
+  String get nodeCurrent => 'Current';
+
+  @override
+  String get nodeLocked => 'Locked';
+
+  @override
+  String goalReps(int reps) {
+    return 'goal $reps reps on every set';
+  }
+
+  @override
+  String goalHold(int seconds) {
+    return 'goal $seconds s on every set';
+  }
+
+  @override
+  String unlockedOn(String date) {
+    return 'unlocked $date';
+  }
+
+  @override
+  String get statWorkouts => 'Workouts';
+
+  @override
+  String get statWeekStreak => 'Week streak';
+
+  @override
+  String get statUnlocks => 'Skills unlocked';
+
+  @override
+  String get chartWorkoutsTitle => 'Workouts per week';
+
+  @override
+  String get chartSetsTitle => 'Sets per week';
+
+  @override
+  String get chartLast8Weeks => 'Last 8 weeks. Tap a bar for its week.';
+
+  @override
+  String weekOf(String date) {
+    return 'Week of $date';
+  }
+
+  @override
+  String get strengthTitle => 'Strength gains';
+
+  @override
+  String get strengthHint =>
+      'Best single set, first session compared with the latest.';
+
+  @override
+  String get strengthEmpty =>
+      'Train an exercise in two sessions to see its trend.';
+
+  @override
+  String bestSetFromTo(int first, int latest, String unit) {
+    return '$first → $latest $unit';
+  }
+
+  @override
+  String sessionsCount(int count) {
+    return '$count sessions';
+  }
+
+  @override
+  String get milestonesTitle => 'Skill milestones';
+
+  @override
+  String get milestonesEmpty =>
+      'Unlock a harder exercise and it will show up here.';
+
+  @override
+  String get vaultTitle => 'Progress photos';
+
+  @override
+  String get vaultOpen => 'Open photo vault';
+
+  @override
+  String get vaultHint => 'Encrypted, private, never shown in your gallery.';
+
+  @override
+  String get vaultEmpty =>
+      'No photos yet. Add one with the buttons above. Photos stay encrypted inside the app.';
+
+  @override
+  String get vaultNoPin => 'Set a PIN to lock this vault.';
+
+  @override
+  String get photoFromCamera => 'Take a photo';
+
+  @override
+  String get photoFromGallery => 'Import a photo';
+
+  @override
+  String get photoFailed => 'Could not get the photo.';
+
+  @override
+  String get photoWeightTitle => 'Weight on this day';
+
+  @override
+  String get photoDeleteTitle => 'Delete this photo?';
+
+  @override
+  String get photoDeleteBody => 'This cannot be undone.';
+
+  @override
+  String get compare => 'Compare';
+
+  @override
+  String get compareHint => 'Tap two photos to compare them side by side.';
+
+  @override
+  String get before => 'Before';
+
+  @override
+  String get after => 'After';
+
+  @override
+  String daysApart(num days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days apart',
+      one: '1 day apart',
+      zero: 'Same day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsSecurity => 'Security';
+
+  @override
+  String get setPin => 'Set a PIN';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get removePin => 'Remove PIN';
+
+  @override
+  String get pinSettingHint =>
+      'Locks the photo vault, and the whole app if you choose.';
+
+  @override
+  String get lockWholeApp => 'Lock the whole app';
+
+  @override
+  String get lockWholeAppHint =>
+      'Ask for the PIN every time the app is opened.';
+
+  @override
+  String get useBiometrics => 'Unlock with fingerprint or face';
+
+  @override
+  String get unlockReason => 'Unlock Solo Calisthenics';
+
+  @override
+  String get enterPin => 'Enter your PIN';
+
+  @override
+  String get choosePin => 'Choose a PIN';
+
+  @override
+  String get confirmPin => 'Enter it again to confirm';
+
+  @override
+  String get pinNoRecovery =>
+      '4 to 8 digits. There is no way to recover a forgotten PIN.';
+
+  @override
+  String get pinWrong => 'Wrong PIN';
+
+  @override
+  String get pinMismatch => 'The PINs did not match. Start again.';
+
+  @override
+  String pinTooShort(int count) {
+    return 'Use at least $count digits';
+  }
+
+  @override
+  String pinLockedOut(int seconds) {
+    return 'Too many attempts. Try again in $seconds s.';
+  }
+
+  @override
+  String pinDigitsEntered(int count) {
+    return '$count digits entered';
+  }
+
+  @override
+  String get deleteDigit => 'Delete digit';
+
+  @override
+  String get forgotPin => 'Forgot PIN?';
+
+  @override
+  String get forgotPinBody =>
+      'A forgotten PIN cannot be recovered. You can erase all app data, including workouts and photos, and start over.';
+
+  @override
+  String get eraseEverything => 'Erase everything';
+
+  @override
+  String get backupTitle => 'Backup';
+
+  @override
+  String get backupExport => 'Export encrypted backup';
+
+  @override
+  String get backupExportHint =>
+      'One file with all your data and photos, protected by a passphrase you choose.';
+
+  @override
+  String get backupImport => 'Restore from backup';
+
+  @override
+  String get backupImportHint =>
+      'Replaces everything on this device with a backup file.';
+
+  @override
+  String get backupPassphrase => 'Backup passphrase';
+
+  @override
+  String get backupPassphraseAgain => 'Passphrase again';
+
+  @override
+  String get backupPassphraseHint =>
+      'You need this passphrase to restore. It cannot be recovered if you lose it.';
+
+  @override
+  String backupPassphraseShort(int count) {
+    return 'Use at least $count characters';
+  }
+
+  @override
+  String get backupPassphraseMismatch => 'The passphrases do not match';
+
+  @override
+  String get backupExportFailed => 'The backup could not be created.';
+
+  @override
+  String get backupUnreadable =>
+      'Could not open the backup. Check the file and the passphrase.';
+
+  @override
+  String get backupTooNew =>
+      'This backup was made by a newer version of the app. Update the app first.';
+
+  @override
+  String get backupImportTitle => 'Replace all data?';
+
+  @override
+  String get backupImportBody =>
+      'Everything currently in the app will be replaced by the backup. This cannot be undone.';
+
+  @override
+  String get backupImportConfirm => 'Replace and restore';
 }

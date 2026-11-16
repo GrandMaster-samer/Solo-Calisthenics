@@ -37,3 +37,15 @@ abstract final class Units {
     return '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
   }
 }
+
+/// Replaces Arabic-Indic digits with Western ones. The app shows 0-9 in both
+/// languages, including in dates formatted by the system for Arabic.
+String westernDigits(String s) {
+  const arabic = '٠١٢٣٤٥٦٧٨٩';
+  final out = StringBuffer();
+  for (final ch in s.split('')) {
+    final i = arabic.indexOf(ch);
+    out.write(i < 0 ? ch : '$i');
+  }
+  return out.toString();
+}

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,7 @@ import 'package:solo_calisthenics/features/exercises/data/exercise_repository.da
 import 'package:solo_calisthenics/features/exercises/domain/exercise.dart';
 import 'package:solo_calisthenics/features/profile/application/profile_controller.dart';
 import 'package:solo_calisthenics/features/profile/domain/profile.dart';
+import 'package:solo_calisthenics/features/security/data/app_lock.dart';
 import 'package:solo_calisthenics/features/settings/application/settings_controller.dart';
 import 'package:solo_calisthenics/features/settings/data/settings_repository.dart';
 
@@ -72,6 +74,34 @@ class FakeVolumeButtons implements VolumeButtons {
   Stream<String> get presses => _presses.stream;
 }
 
+class MemorySecretStore implements SecretStore {
+  final values = <String, String>{};
+  @override
+  Future<String?> read(String key) async => values[key];
+  @override
+  Future<void> write(String key, String value) async => values[key] = value;
+  @override
+  Future<void> delete(String key) async => values.remove(key);
+}
+
+class FakeBiometrics implements Biometrics {
+  bool available = false;
+  bool accept = true;
+  @override
+  Future<bool> isAvailable() async => available;
+  @override
+  Future<bool> authenticate(String reason) async => accept;
+}
+
+/// A valid 1x1 PNG, standing in for a camera photo.
+final tinyPng = Uint8List.fromList(const [
+  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52, //
+  0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4,
+  0x89, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00,
+  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE,
+  0x42, 0x60, 0x82,
+]);
+
 const testProfile = UserProfile(
   birthYear: 1995,
   heightCm: 178,
@@ -88,6 +118,8 @@ class TestEnv {
   final notifications = NoopNotificationService();
   final library = loadLibrary();
   final volume = FakeVolumeButtons();
+  final biometrics = FakeBiometrics();
+  late final appLock = AppLock(MemorySecretStore(), biometrics);
 
   List<Override> overrides({
     UserProfile? profile = testProfile,
@@ -99,6 +131,8 @@ class TestEnv {
     notificationServiceProvider.overrideWithValue(notifications),
     clockProvider.overrideWithValue(clock.call),
     volumeButtonsProvider.overrideWithValue(volume),
+    appLockProvider.overrideWithValue(appLock),
+    photoPickerProvider.overrideWithValue(({required bool camera}) async => tinyPng),
     initialSettingsProvider.overrideWithValue(settings),
     initialProfileProvider.overrideWithValue(
       ProfileState(profile: profile, injuries: injuries),
@@ -113,11 +147,12 @@ class TestEnv {
     UserProfile? profile = testProfile,
     List<Injury> injuries = const [],
     String locale = 'en',
+    AppSettings? settings,
   }) => ProviderScope(
     overrides: overrides(
       profile: profile,
       injuries: injuries,
-      settings: AppSettings(localeCode: locale),
+      settings: settings ?? AppSettings(localeCode: locale),
     ),
     child: const SoloApp(),
   );

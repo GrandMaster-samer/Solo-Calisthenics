@@ -594,4 +594,375 @@ class AppL10nAr extends AppL10n {
 
   @override
   String get licenses => 'تراخيص المصادر المفتوحة';
+
+  @override
+  String get tabSkills => 'المهارات';
+
+  @override
+  String get tabProgress => 'التقدّم';
+
+  @override
+  String get optional => 'اختياري';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get planPromoTitle => 'احصل على خطتك الأسبوعية';
+
+  @override
+  String get planPromoBody =>
+      'اختر أيام التمرين ومدة الحصة. تتكيّف الخطة مع مستواك ومفاصلك وتتقدّم كلما سجّلت تمارينك.';
+
+  @override
+  String get planCreate => 'أنشئ خطتي';
+
+  @override
+  String get planSetupTitle => 'الخطة الأسبوعية';
+
+  @override
+  String get planSave => 'حفظ الخطة';
+
+  @override
+  String get planDaysPerWeek => 'أيام التمرين في الأسبوع';
+
+  @override
+  String get planSessionLength => 'مدة الحصة';
+
+  @override
+  String get planSkills => 'المهارات التي تريد العمل عليها';
+
+  @override
+  String get planSkillsHint =>
+      'اختياري. يوضع تمرين المهارة في بداية الحصة وأنت بكامل نشاطك.';
+
+  @override
+  String get planDeload => 'أسبوع التخفيف';
+
+  @override
+  String get planDeloadHint =>
+      'أسبوع أخف تلقائي للتعافي. يبدأ مبكراً أيضاً إذا انخفض أداؤك في حصتين متتاليتين.';
+
+  @override
+  String everyWeeks(int weeks) {
+    return 'كل $weeks أسابيع';
+  }
+
+  @override
+  String get thisWeek => 'هذا الأسبوع';
+
+  @override
+  String get deloadWeek => 'أسبوع تخفيف';
+
+  @override
+  String get deloadExplainer =>
+      'أسبوع تخفيف: مجموعات أقل وأهداف أسهل ليتعافى جسمك. لا يُقيَّم التقدّم هذا الأسبوع.';
+
+  @override
+  String get todaysWorkout => 'تمرين اليوم';
+
+  @override
+  String get nextWorkout => 'التمرين القادم';
+
+  @override
+  String aboutMinutes(int minutes) {
+    return 'نحو $minutes د';
+  }
+
+  @override
+  String get reviewAndStart => 'راجع وابدأ';
+
+  @override
+  String get weekComplete => 'أنجزت كل تمارين هذا الأسبوع';
+
+  @override
+  String get dayDone => 'تم';
+
+  @override
+  String get dayOpen => 'لم يُنجز بعد';
+
+  @override
+  String get dayUpper => 'الجزء العلوي';
+
+  @override
+  String get progressUpdateTitle => 'تحديث التقدّم';
+
+  @override
+  String changeUnlocked(String name) {
+    return 'فُتح تمرين جديد: $name';
+  }
+
+  @override
+  String changeGoalUp(String name) {
+    return '$name: رُفع الهدف';
+  }
+
+  @override
+  String changeGoalDown(String name) {
+    return '$name: خُفّض الهدف مؤقتاً';
+  }
+
+  @override
+  String changeRegressed(String name) {
+    return 'العودة مؤقتاً إلى $name لإعادة البناء';
+  }
+
+  @override
+  String get nodeDone => 'مُنجز';
+
+  @override
+  String get nodeCurrent => 'الحالي';
+
+  @override
+  String get nodeLocked => 'مقفل';
+
+  @override
+  String goalReps(int reps) {
+    return 'الهدف $reps عدّة في كل مجموعة';
+  }
+
+  @override
+  String goalHold(int seconds) {
+    return 'الهدف $seconds ث في كل مجموعة';
+  }
+
+  @override
+  String unlockedOn(String date) {
+    return 'فُتح في $date';
+  }
+
+  @override
+  String get statWorkouts => 'التمارين';
+
+  @override
+  String get statWeekStreak => 'أسابيع متتالية';
+
+  @override
+  String get statUnlocks => 'مهارات مفتوحة';
+
+  @override
+  String get chartWorkoutsTitle => 'التمارين في الأسبوع';
+
+  @override
+  String get chartSetsTitle => 'المجموعات في الأسبوع';
+
+  @override
+  String get chartLast8Weeks => 'آخر 8 أسابيع. اضغط على عمود لمعرفة أسبوعه.';
+
+  @override
+  String weekOf(String date) {
+    return 'أسبوع $date';
+  }
+
+  @override
+  String get strengthTitle => 'تطوّر القوة';
+
+  @override
+  String get strengthHint => 'أفضل مجموعة واحدة: أول حصة مقارنةً بآخر حصة.';
+
+  @override
+  String get strengthEmpty => 'تمرّن على تمرين في حصتين لترى تطوّره.';
+
+  @override
+  String bestSetFromTo(int first, int latest, String unit) {
+    return '$first ← $latest $unit';
+  }
+
+  @override
+  String sessionsCount(int count) {
+    return 'عدد الحصص: $count';
+  }
+
+  @override
+  String get milestonesTitle => 'إنجازات المهارات';
+
+  @override
+  String get milestonesEmpty => 'افتح تمريناً أصعب وسيظهر هنا.';
+
+  @override
+  String get vaultTitle => 'صور التقدّم';
+
+  @override
+  String get vaultOpen => 'افتح خزنة الصور';
+
+  @override
+  String get vaultHint => 'مشفّرة وخاصة ولا تظهر في معرض الصور.';
+
+  @override
+  String get vaultEmpty =>
+      'لا توجد صور بعد. أضف صورة من الأزرار في الأعلى. تبقى الصور مشفّرة داخل التطبيق.';
+
+  @override
+  String get vaultNoPin => 'عيّن رمز PIN لقفل هذه الخزنة.';
+
+  @override
+  String get photoFromCamera => 'التقط صورة';
+
+  @override
+  String get photoFromGallery => 'استورد صورة';
+
+  @override
+  String get photoFailed => 'تعذّر الحصول على الصورة.';
+
+  @override
+  String get photoWeightTitle => 'الوزن في هذا اليوم';
+
+  @override
+  String get photoDeleteTitle => 'حذف هذه الصورة؟';
+
+  @override
+  String get photoDeleteBody => 'لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get compare => 'مقارنة';
+
+  @override
+  String get compareHint => 'اضغط على صورتين لمقارنتهما جنباً إلى جنب.';
+
+  @override
+  String get before => 'قبل';
+
+  @override
+  String get after => 'بعد';
+
+  @override
+  String daysApart(num days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'الفارق بالأيام: $days',
+      zero: 'في اليوم نفسه',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsSecurity => 'الأمان';
+
+  @override
+  String get setPin => 'تعيين رمز PIN';
+
+  @override
+  String get changePin => 'تغيير رمز PIN';
+
+  @override
+  String get removePin => 'إزالة رمز PIN';
+
+  @override
+  String get pinSettingHint => 'يقفل خزنة الصور، والتطبيق كاملاً إن اخترت ذلك.';
+
+  @override
+  String get lockWholeApp => 'قفل التطبيق كاملاً';
+
+  @override
+  String get lockWholeAppHint => 'طلب رمز PIN عند كل فتح للتطبيق.';
+
+  @override
+  String get useBiometrics => 'الفتح بالبصمة أو الوجه';
+
+  @override
+  String get unlockReason => 'افتح سولو كاليسثنكس';
+
+  @override
+  String get enterPin => 'أدخل رمز PIN';
+
+  @override
+  String get choosePin => 'اختر رمز PIN';
+
+  @override
+  String get confirmPin => 'أدخله مرة أخرى للتأكيد';
+
+  @override
+  String get pinNoRecovery =>
+      'من 4 إلى 8 أرقام. لا توجد طريقة لاستعادة رمز منسي.';
+
+  @override
+  String get pinWrong => 'رمز PIN غير صحيح';
+
+  @override
+  String get pinMismatch => 'الرمزان غير متطابقين. ابدأ من جديد.';
+
+  @override
+  String pinTooShort(int count) {
+    return 'استخدم $count أرقام على الأقل';
+  }
+
+  @override
+  String pinLockedOut(int seconds) {
+    return 'محاولات كثيرة. حاول بعد $seconds ث.';
+  }
+
+  @override
+  String pinDigitsEntered(int count) {
+    return 'الأرقام المدخلة: $count';
+  }
+
+  @override
+  String get deleteDigit => 'حذف رقم';
+
+  @override
+  String get forgotPin => 'نسيت رمز PIN؟';
+
+  @override
+  String get forgotPinBody =>
+      'لا يمكن استعادة رمز منسي. يمكنك حذف جميع بيانات التطبيق، بما فيها التمارين والصور، والبدء من جديد.';
+
+  @override
+  String get eraseEverything => 'حذف كل شيء';
+
+  @override
+  String get backupTitle => 'النسخ الاحتياطي';
+
+  @override
+  String get backupExport => 'تصدير نسخة احتياطية مشفّرة';
+
+  @override
+  String get backupExportHint =>
+      'ملف واحد يضم كل بياناتك وصورك، محمي بعبارة مرور تختارها.';
+
+  @override
+  String get backupImport => 'استعادة من نسخة احتياطية';
+
+  @override
+  String get backupImportHint =>
+      'يستبدل كل ما على هذا الجهاز بمحتوى ملف النسخة.';
+
+  @override
+  String get backupPassphrase => 'عبارة مرور النسخة';
+
+  @override
+  String get backupPassphraseAgain => 'عبارة المرور مرة أخرى';
+
+  @override
+  String get backupPassphraseHint =>
+      'ستحتاج إلى هذه العبارة للاستعادة، ولا يمكن استرجاعها إذا فقدتها.';
+
+  @override
+  String backupPassphraseShort(int count) {
+    return 'استخدم $count أحرف على الأقل';
+  }
+
+  @override
+  String get backupPassphraseMismatch => 'العبارتان غير متطابقتين';
+
+  @override
+  String get backupExportFailed => 'تعذّر إنشاء النسخة الاحتياطية.';
+
+  @override
+  String get backupUnreadable =>
+      'تعذّر فتح النسخة. تحقق من الملف وعبارة المرور.';
+
+  @override
+  String get backupTooNew =>
+      'أُنشئت هذه النسخة بإصدار أحدث من التطبيق. حدّث التطبيق أولاً.';
+
+  @override
+  String get backupImportTitle => 'استبدال جميع البيانات؟';
+
+  @override
+  String get backupImportBody =>
+      'سيُستبدل كل ما في التطبيق حالياً بمحتوى النسخة. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get backupImportConfirm => 'استبدال واستعادة';
 }

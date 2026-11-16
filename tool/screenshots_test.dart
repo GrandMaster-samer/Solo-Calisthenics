@@ -11,6 +11,11 @@ import 'package:solo_calisthenics/features/profile/domain/profile.dart';
 import 'package:solo_calisthenics/features/workout/application/active_session_controller.dart';
 import 'package:solo_calisthenics/features/workout/presentation/active_session_screen.dart';
 
+import 'package:solo_calisthenics/features/planner/data/progress_repository.dart';
+import 'package:solo_calisthenics/features/planner/domain/progression_engine.dart';
+import 'package:solo_calisthenics/features/workout/data/workout_repository.dart';
+import 'package:solo_calisthenics/features/workout/domain/workout_models.dart';
+
 import '../test/helpers.dart';
 
 Future<void> loadFont(String family, List<String> paths) async {
@@ -86,6 +91,70 @@ void main() {
       final set = c.read(activeSessionProvider).value!.exercises.expand((e) => e.sets).single;
       await c.read(activeSessionProvider.notifier).setEffort(set.id, rir: 2);
       await shot(tester, '${lang}_6_rest');
+    });
+
+    testWidgets('phase 2 $lang', (tester) async {
+      phone(tester);
+      final env = TestEnv();
+      addTearDown(env.db.close);
+      // Seed some history so the dashboard has something to show.
+      final workouts = WorkoutRepository(env.db);
+      final history = {
+        DateTime(2025, 11, 25): [8, 8, 7],
+        DateTime(2025, 12, 2): [9, 9, 8],
+        DateTime(2025, 12, 4): [10, 9, 9],
+        DateTime(2025, 12, 16): [11, 10, 10],
+        DateTime(2025, 12, 23): [12, 11, 10],
+        DateTime(2025, 12, 26): [12, 12, 11],
+        DateTime(2025, 12, 30): [12, 12, 12],
+      };
+      for (final e in history.entries) {
+        final id = await workouts.createSession(
+          'S',
+          const [
+            PlannedExercise(exerciseId: 'push_up', sets: 3, targetMin: 8, targetMax: 12, restSec: 90),
+            PlannedExercise(exerciseId: 'plank', sets: 2, targetMin: 20, targetMax: 60, restSec: 60),
+          ],
+          now: e.key,
+        );
+        final s = (await workouts.load(id))!;
+        for (final v in e.value) {
+          await workouts.addSet(sessionId: id, sessionExerciseId: s.exercises[0].id, value: v, method: LogMethod.manual, now: e.key, restSec: 0);
+        }
+        await workouts.addSet(sessionId: id, sessionExerciseId: s.exercises[1].id, value: 20 + e.value.first * 2, method: LogMethod.timer, now: e.key, restSec: 0);
+        await workouts.finish(id, now: e.key.add(const Duration(minutes: 35)));
+      }
+      final progress = ProgressRepository(env.db);
+      await progress.saveChainState(const ChainState(chainId: 'planche', exerciseId: 'advanced_tuck_planche', holdTarget: 10), now: env.clock.now);
+      await progress.addMilestone('planche', 'tuck_planche', now: DateTime(2025, 12, 4));
+      await progress.addMilestone('planche', 'advanced_tuck_planche', now: DateTime(2025, 12, 30));
+      await progress.addMilestone('push_up', 'push_up', now: DateTime(2025, 11, 25));
+
+      await tester.pumpWidget(env.app(locale: lang));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('create-plan')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('plan-days-4')));
+      await tester.tap(find.byKey(const Key('plan-skill-planche')));
+      await tester.pumpAndSettle();
+      await shot(tester, '${lang}_7_plan_setup');
+      await tester.tap(find.byKey(const Key('save-plan')));
+      for (var i = 0; i < 4; i++) {
+        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await shot(tester, '${lang}_8_week');
+      await tester.tap(find.byIcon(Icons.account_tree_outlined));
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, -420));
+      await tester.pumpAndSettle();
+      await shot(tester, '${lang}_9_skills');
+      await tester.tap(find.byIcon(Icons.insights));
+      await tester.pumpAndSettle();
+      await shot(tester, '${lang}_a_progress');
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, -560));
+      await tester.pumpAndSettle();
+      await shot(tester, '${lang}_b_progress2');
     });
 
     testWidgets('onboarding $lang', (tester) async {

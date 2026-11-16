@@ -27,8 +27,15 @@ Future<void> settle(WidgetTester tester) =>
 
 /// Scrolls the target into view first, like a user would, then taps it.
 Future<void> tapOn(WidgetTester tester, Finder finder) async {
-  await tester.ensureVisible(finder);
-  await tester.pump();
+  if (finder.evaluate().isEmpty) {
+    // Lazily built list: scroll until the item exists.
+    await tester.scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+  }
+  if (finder.hitTestable().evaluate().isEmpty) {
+    // Only scroll when needed, so the screen is not moved under the user's feet.
+    await tester.ensureVisible(finder);
+    await tester.pump();
+  }
   await tester.tap(finder);
 }
 

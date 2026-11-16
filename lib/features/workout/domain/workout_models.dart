@@ -80,12 +80,22 @@ class WorkoutSession {
     this.pendingCount = 0,
     this.restEndsAt,
     this.restTotalSec,
+    this.planWeek,
+    this.planDayIndex,
+    this.isDeload = false,
   });
   final int id;
   final String name;
   final DateTime startedAt;
   final DateTime? finishedAt;
   final List<SessionExercise> exercises;
+
+  /// Set when started from the weekly plan: the plan week (Monday, yyyy-MM-dd) and day.
+  final String? planWeek;
+  final int? planDayIndex;
+
+  /// Deload sessions are lighter on purpose and never drive progression.
+  final bool isDeload;
 
   /// Index into [exercises] of the exercise on screen.
   final int currentIndex;
@@ -123,6 +133,9 @@ class WorkoutSession {
     pendingCount: pendingCount ?? this.pendingCount,
     restEndsAt: restEndsAt,
     restTotalSec: restTotalSec,
+    planWeek: planWeek,
+    planDayIndex: planDayIndex,
+    isDeload: isDeload,
   );
 }
 
@@ -142,4 +155,12 @@ class SessionSummary {
   final int totalSets;
 
   Duration get duration => finishedAt.difference(startedAt);
+}
+
+/// Links a session to a day of the weekly plan.
+class PlanLink {
+  const PlanLink({required this.week, required this.dayIndex, required this.isDeload});
+  final String week;
+  final int dayIndex;
+  final bool isDeload;
 }

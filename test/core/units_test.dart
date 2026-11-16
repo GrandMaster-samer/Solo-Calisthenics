@@ -3,6 +3,7 @@ import 'package:solo_calisthenics/core/units.dart';
 import 'package:solo_calisthenics/features/settings/data/settings_repository.dart';
 
 void main() {
+  digitTests();
   test('weight converts both ways', () {
     expect(Units.kgToLb(100), closeTo(220.46, 0.01));
     expect(Units.lbToKg(Units.kgToLb(73.5)), closeTo(73.5, 1e-9));
@@ -50,5 +51,13 @@ void main() {
     expect(broken.weightUnit, WeightUnit.kg);
     expect(broken.reminderDays, {2});
     expect(broken.localeCode, isNull);
+  });
+}
+
+// Appended in Phase 2.
+void digitTests() {
+  test('Arabic-Indic digits are shown as Western digits', () {
+    expect(westernDigits('١٧ نوفمبر ٢٠٢٥'), '17 نوفمبر 2025');
+    expect(westernDigits('Dec 4, 2025'), 'Dec 4, 2025');
   });
 }

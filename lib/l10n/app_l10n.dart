@@ -1134,6 +1134,642 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Open-source licenses'**
   String get licenses;
+
+  /// No description provided for @tabSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get tabSkills;
+
+  /// No description provided for @tabProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get tabProgress;
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @planPromoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get your weekly plan'**
+  String get planPromoTitle;
+
+  /// No description provided for @planPromoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your training days and session length. The plan adapts to your level and joints, and progresses as you log.'**
+  String get planPromoBody;
+
+  /// No description provided for @planCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my plan'**
+  String get planCreate;
+
+  /// No description provided for @planSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly plan'**
+  String get planSetupTitle;
+
+  /// No description provided for @planSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save plan'**
+  String get planSave;
+
+  /// No description provided for @planDaysPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Training days per week'**
+  String get planDaysPerWeek;
+
+  /// No description provided for @planSessionLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Session length'**
+  String get planSessionLength;
+
+  /// No description provided for @planSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills to work on'**
+  String get planSkills;
+
+  /// No description provided for @planSkillsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Skill work is placed first in the session while you are fresh.'**
+  String get planSkillsHint;
+
+  /// No description provided for @planDeload.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighter week'**
+  String get planDeload;
+
+  /// No description provided for @planDeloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'An automatic easier week to recover. It also starts early if your performance drops two sessions in a row.'**
+  String get planDeloadHint;
+
+  /// No description provided for @everyWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {weeks} weeks'**
+  String everyWeeks(int weeks);
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @deloadWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighter week'**
+  String get deloadWeek;
+
+  /// No description provided for @deloadExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighter week: fewer sets and easier targets so your body recovers. Progress is not judged this week.'**
+  String get deloadExplainer;
+
+  /// No description provided for @todaysWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s workout'**
+  String get todaysWorkout;
+
+  /// No description provided for @nextWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Next workout'**
+  String get nextWorkout;
+
+  /// No description provided for @aboutMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'About {minutes} min'**
+  String aboutMinutes(int minutes);
+
+  /// No description provided for @reviewAndStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Review and start'**
+  String get reviewAndStart;
+
+  /// No description provided for @weekComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'All planned workouts done this week'**
+  String get weekComplete;
+
+  /// No description provided for @dayDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get dayDone;
+
+  /// No description provided for @dayOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Not done yet'**
+  String get dayOpen;
+
+  /// No description provided for @dayUpper.
+  ///
+  /// In en, this message translates to:
+  /// **'Upper body'**
+  String get dayUpper;
+
+  /// No description provided for @progressUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress update'**
+  String get progressUpdateTitle;
+
+  /// No description provided for @changeUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked: {name}'**
+  String changeUnlocked(String name);
+
+  /// No description provided for @changeGoalUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: goal raised'**
+  String changeGoalUp(String name);
+
+  /// No description provided for @changeGoalDown.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: goal lowered for now'**
+  String changeGoalDown(String name);
+
+  /// No description provided for @changeRegressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to {name} for now, to rebuild'**
+  String changeRegressed(String name);
+
+  /// No description provided for @nodeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get nodeDone;
+
+  /// No description provided for @nodeCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get nodeCurrent;
+
+  /// No description provided for @nodeLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get nodeLocked;
+
+  /// No description provided for @goalReps.
+  ///
+  /// In en, this message translates to:
+  /// **'goal {reps} reps on every set'**
+  String goalReps(int reps);
+
+  /// No description provided for @goalHold.
+  ///
+  /// In en, this message translates to:
+  /// **'goal {seconds} s on every set'**
+  String goalHold(int seconds);
+
+  /// No description provided for @unlockedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'unlocked {date}'**
+  String unlockedOn(String date);
+
+  /// No description provided for @statWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Workouts'**
+  String get statWorkouts;
+
+  /// No description provided for @statWeekStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Week streak'**
+  String get statWeekStreak;
+
+  /// No description provided for @statUnlocks.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills unlocked'**
+  String get statUnlocks;
+
+  /// No description provided for @chartWorkoutsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workouts per week'**
+  String get chartWorkoutsTitle;
+
+  /// No description provided for @chartSetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sets per week'**
+  String get chartSetsTitle;
+
+  /// No description provided for @chartLast8Weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 8 weeks. Tap a bar for its week.'**
+  String get chartLast8Weeks;
+
+  /// No description provided for @weekOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Week of {date}'**
+  String weekOf(String date);
+
+  /// No description provided for @strengthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength gains'**
+  String get strengthTitle;
+
+  /// No description provided for @strengthHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Best single set, first session compared with the latest.'**
+  String get strengthHint;
+
+  /// No description provided for @strengthEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Train an exercise in two sessions to see its trend.'**
+  String get strengthEmpty;
+
+  /// No description provided for @bestSetFromTo.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} → {latest} {unit}'**
+  String bestSetFromTo(int first, int latest, String unit);
+
+  /// No description provided for @sessionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sessions'**
+  String sessionsCount(int count);
+
+  /// No description provided for @milestonesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill milestones'**
+  String get milestonesTitle;
+
+  /// No description provided for @milestonesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock a harder exercise and it will show up here.'**
+  String get milestonesEmpty;
+
+  /// No description provided for @vaultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress photos'**
+  String get vaultTitle;
+
+  /// No description provided for @vaultOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open photo vault'**
+  String get vaultOpen;
+
+  /// No description provided for @vaultHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted, private, never shown in your gallery.'**
+  String get vaultHint;
+
+  /// No description provided for @vaultEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No photos yet. Add one with the buttons above. Photos stay encrypted inside the app.'**
+  String get vaultEmpty;
+
+  /// No description provided for @vaultNoPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN to lock this vault.'**
+  String get vaultNoPin;
+
+  /// No description provided for @photoFromCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get photoFromCamera;
+
+  /// No description provided for @photoFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a photo'**
+  String get photoFromGallery;
+
+  /// No description provided for @photoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get the photo.'**
+  String get photoFailed;
+
+  /// No description provided for @photoWeightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight on this day'**
+  String get photoWeightTitle;
+
+  /// No description provided for @photoDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this photo?'**
+  String get photoDeleteTitle;
+
+  /// No description provided for @photoDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This cannot be undone.'**
+  String get photoDeleteBody;
+
+  /// No description provided for @compare.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare'**
+  String get compare;
+
+  /// No description provided for @compareHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap two photos to compare them side by side.'**
+  String get compareHint;
+
+  /// No description provided for @before.
+  ///
+  /// In en, this message translates to:
+  /// **'Before'**
+  String get before;
+
+  /// No description provided for @after.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get after;
+
+  /// No description provided for @daysApart.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Same day} =1{1 day apart} other{{days} days apart}}'**
+  String daysApart(num days);
+
+  /// No description provided for @settingsSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get settingsSecurity;
+
+  /// No description provided for @setPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get setPin;
+
+  /// No description provided for @changePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get changePin;
+
+  /// No description provided for @removePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PIN'**
+  String get removePin;
+
+  /// No description provided for @pinSettingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Locks the photo vault, and the whole app if you choose.'**
+  String get pinSettingHint;
+
+  /// No description provided for @lockWholeApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock the whole app'**
+  String get lockWholeApp;
+
+  /// No description provided for @lockWholeAppHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for the PIN every time the app is opened.'**
+  String get lockWholeAppHint;
+
+  /// No description provided for @useBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with fingerprint or face'**
+  String get useBiometrics;
+
+  /// No description provided for @unlockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Solo Calisthenics'**
+  String get unlockReason;
+
+  /// No description provided for @enterPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get enterPin;
+
+  /// No description provided for @choosePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a PIN'**
+  String get choosePin;
+
+  /// No description provided for @confirmPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter it again to confirm'**
+  String get confirmPin;
+
+  /// No description provided for @pinNoRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'4 to 8 digits. There is no way to recover a forgotten PIN.'**
+  String get pinNoRecovery;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN'**
+  String get pinWrong;
+
+  /// No description provided for @pinMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The PINs did not match. Start again.'**
+  String get pinMismatch;
+
+  /// No description provided for @pinTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {count} digits'**
+  String pinTooShort(int count);
+
+  /// No description provided for @pinLockedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in {seconds} s.'**
+  String pinLockedOut(int seconds);
+
+  /// No description provided for @pinDigitsEntered.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} digits entered'**
+  String pinDigitsEntered(int count);
+
+  /// No description provided for @deleteDigit.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete digit'**
+  String get deleteDigit;
+
+  /// No description provided for @forgotPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot PIN?'**
+  String get forgotPin;
+
+  /// No description provided for @forgotPinBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A forgotten PIN cannot be recovered. You can erase all app data, including workouts and photos, and start over.'**
+  String get forgotPinBody;
+
+  /// No description provided for @eraseEverything.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase everything'**
+  String get eraseEverything;
+
+  /// No description provided for @backupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get backupTitle;
+
+  /// No description provided for @backupExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export encrypted backup'**
+  String get backupExport;
+
+  /// No description provided for @backupExportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'One file with all your data and photos, protected by a passphrase you choose.'**
+  String get backupExportHint;
+
+  /// No description provided for @backupImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get backupImport;
+
+  /// No description provided for @backupImportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces everything on this device with a backup file.'**
+  String get backupImportHint;
+
+  /// No description provided for @backupPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup passphrase'**
+  String get backupPassphrase;
+
+  /// No description provided for @backupPassphraseAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrase again'**
+  String get backupPassphraseAgain;
+
+  /// No description provided for @backupPassphraseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You need this passphrase to restore. It cannot be recovered if you lose it.'**
+  String get backupPassphraseHint;
+
+  /// No description provided for @backupPassphraseShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {count} characters'**
+  String backupPassphraseShort(int count);
+
+  /// No description provided for @backupPassphraseMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passphrases do not match'**
+  String get backupPassphraseMismatch;
+
+  /// No description provided for @backupExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup could not be created.'**
+  String get backupExportFailed;
+
+  /// No description provided for @backupUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the backup. Check the file and the passphrase.'**
+  String get backupUnreadable;
+
+  /// No description provided for @backupTooNew.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup was made by a newer version of the app. Update the app first.'**
+  String get backupTooNew;
+
+  /// No description provided for @backupImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace all data?'**
+  String get backupImportTitle;
+
+  /// No description provided for @backupImportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything currently in the app will be replaced by the backup. This cannot be undone.'**
+  String get backupImportBody;
+
+  /// No description provided for @backupImportConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace and restore'**
+  String get backupImportConfirm;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

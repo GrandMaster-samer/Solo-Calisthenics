@@ -3,7 +3,9 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../l10n/app_l10n.dart';
 import '../../exercises/presentation/library_screen.dart';
+import '../../progress/presentation/progress_screen.dart';
 import '../../settings/presentation/settings_screen.dart';
+import '../../skills/presentation/skill_tree_screen.dart';
 import '../application/active_session_controller.dart';
 import 'active_session_screen.dart';
 import 'train_screen.dart';
@@ -39,7 +41,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     return Scaffold(
       body: IndexedStack(
         index: _tab,
-        children: const [TrainScreen(), LibraryScreen(), SettingsScreen()],
+        children: const [TrainScreen(), LibraryScreen(), SkillTreeScreen(), ProgressScreen(), SettingsScreen()],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
@@ -53,6 +55,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             icon: const Icon(Icons.menu_book_outlined),
             label: l.tabLibrary,
           ),
+          NavigationDestination(icon: const Icon(Icons.account_tree_outlined), label: l.tabSkills),
+          NavigationDestination(icon: const Icon(Icons.insights), label: l.tabProgress),
           NavigationDestination(
             icon: const Icon(Icons.settings_outlined),
             label: l.tabSettings,

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers.dart';
+import '../../planner/application/planner_controller.dart';
+import '../../planner/application/progression_service.dart';
 import '../../settings/application/settings_controller.dart';
 import '../data/workout_repository.dart';
 import '../domain/workout_models.dart';
@@ -35,10 +37,10 @@ class ActiveSessionController extends AsyncNotifier<WorkoutSession?> {
     state = AsyncData(session?.finishedAt == null ? session : null);
   }
 
-  Future<void> start(String name, List<PlannedExercise> plan) async {
+  Future<void> start(String name, List<PlannedExercise> plan, {PlanLink? link}) async {
     final existing = state.value;
     if (existing != null) await _repo.discard(existing.id);
-    final id = await _repo.createSession(name, plan, now: _now());
+    final id = await _repo.createSession(name, plan, now: _now(), link: link);
     await _reload(id);
   }
 
@@ -185,16 +187,23 @@ class ActiveSessionController extends AsyncNotifier<WorkoutSession?> {
     await _reload(s.id);
   }
 
-  Future<void> finish() async {
+  /// Ends the workout, runs the progression rules on it and returns what changed.
+  Future<List<ProgressionChange>> finish() async {
     final s = state.value;
-    if (s == null) return;
+    if (s == null) return const [];
     await ref.read(notificationServiceProvider).cancelRestEnd();
+    var changes = const <ProgressionChange>[];
     if (s.totalSets == 0) {
       await _repo.discard(s.id); // nothing logged: do not pollute history
     } else {
-      await _repo.finish(s.id, now: _now());
+      final now = _now();
+      await _repo.finish(s.id, now: now);
+      changes = await ref.read(progressionServiceProvider).applyFinishedSession(s, now: now);
     }
     state = const AsyncData(null);
+    ref.invalidate(chainStatesProvider);
+    ref.invalidate(plannerProvider);
+    return changes;
   }
 
   Future<void> discard() async {

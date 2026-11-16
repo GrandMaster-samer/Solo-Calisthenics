@@ -68,7 +68,18 @@ Future<void> _boot() async {
 
   runApp(
     ProviderScope(
+      key: UniqueKey(), // a restart builds a completely fresh app
       overrides: [
+        appControlProvider.overrideWithValue(
+          AppControl(
+            databaseFile: file,
+            keyStore: keyStore,
+            restart: () async {
+              await db.close();
+              await _boot();
+            },
+          ),
+        ),
         databaseProvider.overrideWithValue(db),
         exerciseLibraryProvider.overrideWithValue(library),
         notificationServiceProvider.overrideWithValue(notifications),

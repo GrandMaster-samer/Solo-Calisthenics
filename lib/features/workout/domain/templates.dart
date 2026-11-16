@@ -18,8 +18,8 @@ enum StarterTemplate {
 
 abstract final class TemplateBuilder {
   /// Picks a starting exercise in [chain] from experience alone.
-  // TODO: Phase 2 - place the user from baseline test results and logged
-  // performance (progression engine) instead of this coarse experience mapping.
+  // Starter workouts are only offered before a weekly plan exists; the plan itself
+  // places the user from the baseline test (see planner/domain/placement.dart).
   static Exercise pickForExperience(
     List<Exercise> chain,
     Experience experience,

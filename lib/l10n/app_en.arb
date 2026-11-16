@@ -320,5 +320,236 @@
   "reminderBody": "Your workout is waiting.",
   "privacyTitle": "Privacy",
   "privacyBody": "All data is stored encrypted on this device. Nothing is sent anywhere.",
-  "licenses": "Open-source licenses"
+  "licenses": "Open-source licenses",
+  "tabSkills": "Skills",
+  "tabProgress": "Progress",
+  "optional": "Optional",
+  "delete": "Delete",
+  "planPromoTitle": "Get your weekly plan",
+  "planPromoBody": "Pick your training days and session length. The plan adapts to your level and joints, and progresses as you log.",
+  "planCreate": "Create my plan",
+  "planSetupTitle": "Weekly plan",
+  "planSave": "Save plan",
+  "planDaysPerWeek": "Training days per week",
+  "planSessionLength": "Session length",
+  "planSkills": "Skills to work on",
+  "planSkillsHint": "Optional. Skill work is placed first in the session while you are fresh.",
+  "planDeload": "Lighter week",
+  "planDeloadHint": "An automatic easier week to recover. It also starts early if your performance drops two sessions in a row.",
+  "everyWeeks": "Every {weeks} weeks",
+  "@everyWeeks": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "thisWeek": "This week",
+  "deloadWeek": "Lighter week",
+  "deloadExplainer": "Lighter week: fewer sets and easier targets so your body recovers. Progress is not judged this week.",
+  "todaysWorkout": "Today's workout",
+  "nextWorkout": "Next workout",
+  "aboutMinutes": "About {minutes} min",
+  "@aboutMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewAndStart": "Review and start",
+  "weekComplete": "All planned workouts done this week",
+  "dayDone": "Done",
+  "dayOpen": "Not done yet",
+  "dayUpper": "Upper body",
+  "progressUpdateTitle": "Progress update",
+  "changeUnlocked": "Unlocked: {name}",
+  "@changeUnlocked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changeGoalUp": "{name}: goal raised",
+  "@changeGoalUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changeGoalDown": "{name}: goal lowered for now",
+  "@changeGoalDown": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changeRegressed": "Back to {name} for now, to rebuild",
+  "@changeRegressed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nodeDone": "Done",
+  "nodeCurrent": "Current",
+  "nodeLocked": "Locked",
+  "goalReps": "goal {reps} reps on every set",
+  "@goalReps": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "goalHold": "goal {seconds} s on every set",
+  "@goalHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "unlockedOn": "unlocked {date}",
+  "@unlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "statWorkouts": "Workouts",
+  "statWeekStreak": "Week streak",
+  "statUnlocks": "Skills unlocked",
+  "chartWorkoutsTitle": "Workouts per week",
+  "chartSetsTitle": "Sets per week",
+  "chartLast8Weeks": "Last 8 weeks. Tap a bar for its week.",
+  "weekOf": "Week of {date}",
+  "@weekOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "strengthTitle": "Strength gains",
+  "strengthHint": "Best single set, first session compared with the latest.",
+  "strengthEmpty": "Train an exercise in two sessions to see its trend.",
+  "bestSetFromTo": "{first} → {latest} {unit}",
+  "@bestSetFromTo": {
+    "placeholders": {
+      "first": {
+        "type": "int"
+      },
+      "latest": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionsCount": "{count} sessions",
+  "@sessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "milestonesTitle": "Skill milestones",
+  "milestonesEmpty": "Unlock a harder exercise and it will show up here.",
+  "vaultTitle": "Progress photos",
+  "vaultOpen": "Open photo vault",
+  "vaultHint": "Encrypted, private, never shown in your gallery.",
+  "vaultEmpty": "No photos yet. Add one with the buttons above. Photos stay encrypted inside the app.",
+  "vaultNoPin": "Set a PIN to lock this vault.",
+  "photoFromCamera": "Take a photo",
+  "photoFromGallery": "Import a photo",
+  "photoFailed": "Could not get the photo.",
+  "photoWeightTitle": "Weight on this day",
+  "photoDeleteTitle": "Delete this photo?",
+  "photoDeleteBody": "This cannot be undone.",
+  "compare": "Compare",
+  "compareHint": "Tap two photos to compare them side by side.",
+  "before": "Before",
+  "after": "After",
+  "daysApart": "{days, plural, =0{Same day} =1{1 day apart} other{{days} days apart}}",
+  "@daysApart": {
+    "placeholders": {
+      "days": {
+        "type": "num"
+      }
+    }
+  },
+  "settingsSecurity": "Security",
+  "setPin": "Set a PIN",
+  "changePin": "Change PIN",
+  "removePin": "Remove PIN",
+  "pinSettingHint": "Locks the photo vault, and the whole app if you choose.",
+  "lockWholeApp": "Lock the whole app",
+  "lockWholeAppHint": "Ask for the PIN every time the app is opened.",
+  "useBiometrics": "Unlock with fingerprint or face",
+  "unlockReason": "Unlock Solo Calisthenics",
+  "enterPin": "Enter your PIN",
+  "choosePin": "Choose a PIN",
+  "confirmPin": "Enter it again to confirm",
+  "pinNoRecovery": "4 to 8 digits. There is no way to recover a forgotten PIN.",
+  "pinWrong": "Wrong PIN",
+  "pinMismatch": "The PINs did not match. Start again.",
+  "pinTooShort": "Use at least {count} digits",
+  "@pinTooShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pinLockedOut": "Too many attempts. Try again in {seconds} s.",
+  "@pinLockedOut": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "pinDigitsEntered": "{count} digits entered",
+  "@pinDigitsEntered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteDigit": "Delete digit",
+  "forgotPin": "Forgot PIN?",
+  "forgotPinBody": "A forgotten PIN cannot be recovered. You can erase all app data, including workouts and photos, and start over.",
+  "eraseEverything": "Erase everything",
+  "backupTitle": "Backup",
+  "backupExport": "Export encrypted backup",
+  "backupExportHint": "One file with all your data and photos, protected by a passphrase you choose.",
+  "backupImport": "Restore from backup",
+  "backupImportHint": "Replaces everything on this device with a backup file.",
+  "backupPassphrase": "Backup passphrase",
+  "backupPassphraseAgain": "Passphrase again",
+  "backupPassphraseHint": "You need this passphrase to restore. It cannot be recovered if you lose it.",
+  "backupPassphraseShort": "Use at least {count} characters",
+  "@backupPassphraseShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backupPassphraseMismatch": "The passphrases do not match",
+  "backupExportFailed": "The backup could not be created.",
+  "backupUnreadable": "Could not open the backup. Check the file and the passphrase.",
+  "backupTooNew": "This backup was made by a newer version of the app. Update the app first.",
+  "backupImportTitle": "Replace all data?",
+  "backupImportBody": "Everything currently in the app will be replaced by the backup. This cannot be undone.",
+  "backupImportConfirm": "Replace and restore"
 }

@@ -4,6 +4,12 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Unlock your private progress photos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take progress photos that stay encrypted inside the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Import a progress photo into the encrypted vault.</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>

@@ -15,6 +15,7 @@ import '../../../core/widgets/labels.dart';
 import '../../../l10n/app_l10n.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../exercises/presentation/exercise_detail_screen.dart';
+import '../../planner/domain/progression_engine.dart';
 import '../../profile/application/profile_controller.dart';
 import '../../settings/application/settings_controller.dart';
 import '../../settings/data/settings_repository.dart';
@@ -224,8 +225,46 @@ class _ActiveSessionScreenState extends ConsumerState<ActiveSessionScreen>
       );
       if (ok != true) return;
     }
-    await _controller.finish();
-    if (mounted) Navigator.of(context).pop();
+    if (!mounted) return;
+    final lang = Localizations.localeOf(context).languageCode;
+    final library = ref.read(exerciseLibraryProvider);
+    final changes = await _controller.finish();
+    if (!mounted) return;
+    if (changes.isNotEmpty) {
+      String name(String? id) => library.byId(id ?? '')?.name.of(lang) ?? '';
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(l.progressUpdateTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (final c in changes)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(switch (c.action) {
+                    ProgressionAction.advance => l.changeUnlocked(name(c.newExerciseId)),
+                    ProgressionAction.increaseTarget => l.changeGoalUp(name(c.exerciseId)),
+                    ProgressionAction.decreaseTarget => l.changeGoalDown(name(c.exerciseId)),
+                    ProgressionAction.regress => l.changeRegressed(name(c.newExerciseId)),
+                    ProgressionAction.repeat => '',
+                  }),
+                ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              key: const Key('progress-ok'),
+              onPressed: () => Navigator.pop(context),
+              child: Text(l.ok),
+            ),
+          ],
+        ),
+      );
+      if (!mounted) return;
+    }
+    Navigator.of(context).pop();
   }
 
   Future<void> _discard() async {

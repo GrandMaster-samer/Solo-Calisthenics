@@ -15,11 +15,10 @@ import 'active_session_screen.dart';
 
 /// Review and tweak a workout (sets, rest, order of exercises) before starting it.
 class WorkoutPreviewScreen extends ConsumerStatefulWidget {
-  const WorkoutPreviewScreen({
-    super.key,
-    required this.name,
-    required this.initialPlan,
-  });
+  const WorkoutPreviewScreen({super.key, required this.name, required this.initialPlan, this.link});
+
+  /// Set when this workout is a day of the weekly plan.
+  final PlanLink? link;
   final String name;
   final List<PlannedExercise> initialPlan;
 
@@ -74,7 +73,7 @@ class _WorkoutPreviewScreenState extends ConsumerState<WorkoutPreviewScreen> {
     setState(() => _starting = true);
     // Needed for the rest timer to alert with the screen off. The app works without it.
     await ref.read(notificationServiceProvider).requestPermission();
-    await controller.start(widget.name, _plan);
+    await controller.start(widget.name, _plan, link: widget.link);
     if (!mounted) return;
     Navigator.of(context).popUntil((r) => r.isFirst);
     await Navigator.of(context).push(
@@ -106,6 +105,24 @@ class _WorkoutPreviewScreenState extends ConsumerState<WorkoutPreviewScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          if (widget.link?.isDeload ?? false) ...[
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceElevated,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.warning),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.battery_charging_full, color: AppColors.warning),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(l.deloadExplainer)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           if (warmUp.isNotEmpty) ...[
             WarmUpCard(joints: warmUp),
             const SizedBox(height: 12),

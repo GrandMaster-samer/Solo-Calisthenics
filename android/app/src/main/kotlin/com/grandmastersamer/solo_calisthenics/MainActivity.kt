@@ -1,7 +1,8 @@
 package com.grandmastersamer.solo_calisthenics
 
 import android.view.KeyEvent
-import io.flutter.embedding.android.FlutterActivity
+import android.view.WindowManager
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
@@ -11,7 +12,8 @@ import io.flutter.plugin.common.MethodChannel
  * While capture is enabled, volume key presses are swallowed (volume does not change)
  * and forwarded as "up"/"down" events. Android only; iOS has no supported API for this.
  */
-class MainActivity : FlutterActivity() {
+// FlutterFragmentActivity is required by local_auth (biometric prompt).
+class MainActivity : FlutterFragmentActivity() {
     private var capture = false
     private var sink: EventChannel.EventSink? = null
 
@@ -21,6 +23,19 @@ class MainActivity : FlutterActivity() {
         MethodChannel(messenger, "solo_calisthenics/volume_buttons").setMethodCallHandler { call, result ->
             if (call.method == "setCapture") {
                 capture = call.arguments as? Boolean ?: false
+                result.success(null)
+            } else {
+                result.notImplemented()
+            }
+        }
+        // Blocks screenshots and hides the content in the recent-apps view while locked content is shown.
+        MethodChannel(messenger, "solo_calisthenics/window").setMethodCallHandler { call, result ->
+            if (call.method == "setSecure") {
+                if (call.arguments as? Boolean == true) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                } else {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                }
                 result.success(null)
             } else {
                 result.notImplemented()

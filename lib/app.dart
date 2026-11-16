@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import 'core/theme/app_theme.dart';
 import 'features/onboarding/presentation/onboarding_screen.dart';
 import 'features/profile/application/profile_controller.dart';
+import 'features/security/presentation/lock_gate.dart';
 import 'features/settings/application/settings_controller.dart';
 import 'features/workout/presentation/home_shell.dart';
 import 'l10n/app_l10n.dart';
@@ -42,6 +43,12 @@ class SoloApp extends ConsumerWidget {
         ...GlobalMaterialLocalizations.delegates,
       ],
       theme: buildAppTheme(locale),
+      builder: (context, child) => LockGate(
+        enabled: ref.watch(settingsProvider.select((s) => s.lockWholeApp)),
+        relockOnBackground: true,
+        coverChild: true,
+        child: child!,
+      ),
       home: onboarded ? const HomeShell() : const OnboardingScreen(),
     );
   }

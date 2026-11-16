@@ -1194,6 +1194,43 @@ class $SessionsTable extends Sessions
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _planWeekMeta = const VerificationMeta(
+    'planWeek',
+  );
+  @override
+  late final GeneratedColumn<String> planWeek = GeneratedColumn<String>(
+    'plan_week',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _planDayIndexMeta = const VerificationMeta(
+    'planDayIndex',
+  );
+  @override
+  late final GeneratedColumn<int> planDayIndex = GeneratedColumn<int>(
+    'plan_day_index',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isDeloadMeta = const VerificationMeta(
+    'isDeload',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeload = GeneratedColumn<bool>(
+    'is_deload',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deload" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1204,6 +1241,9 @@ class $SessionsTable extends Sessions
     pendingCount,
     restEndsAt,
     restTotalSec,
+    planWeek,
+    planDayIndex,
+    isDeload,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1278,6 +1318,27 @@ class $SessionsTable extends Sessions
         ),
       );
     }
+    if (data.containsKey('plan_week')) {
+      context.handle(
+        _planWeekMeta,
+        planWeek.isAcceptableOrUnknown(data['plan_week']!, _planWeekMeta),
+      );
+    }
+    if (data.containsKey('plan_day_index')) {
+      context.handle(
+        _planDayIndexMeta,
+        planDayIndex.isAcceptableOrUnknown(
+          data['plan_day_index']!,
+          _planDayIndexMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_deload')) {
+      context.handle(
+        _isDeloadMeta,
+        isDeload.isAcceptableOrUnknown(data['is_deload']!, _isDeloadMeta),
+      );
+    }
     return context;
   }
 
@@ -1319,6 +1380,18 @@ class $SessionsTable extends Sessions
         DriftSqlType.int,
         data['${effectivePrefix}rest_total_sec'],
       ),
+      planWeek: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}plan_week'],
+      ),
+      planDayIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}plan_day_index'],
+      ),
+      isDeload: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deload'],
+      )!,
     );
   }
 
@@ -1337,6 +1410,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
   final int pendingCount;
   final DateTime? restEndsAt;
   final int? restTotalSec;
+  final String? planWeek;
+  final int? planDayIndex;
+  final bool isDeload;
   const SessionRow({
     required this.id,
     required this.name,
@@ -1346,6 +1422,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
     required this.pendingCount,
     this.restEndsAt,
     this.restTotalSec,
+    this.planWeek,
+    this.planDayIndex,
+    required this.isDeload,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1364,6 +1443,13 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
     if (!nullToAbsent || restTotalSec != null) {
       map['rest_total_sec'] = Variable<int>(restTotalSec);
     }
+    if (!nullToAbsent || planWeek != null) {
+      map['plan_week'] = Variable<String>(planWeek);
+    }
+    if (!nullToAbsent || planDayIndex != null) {
+      map['plan_day_index'] = Variable<int>(planDayIndex);
+    }
+    map['is_deload'] = Variable<bool>(isDeload);
     return map;
   }
 
@@ -1383,6 +1469,13 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
       restTotalSec: restTotalSec == null && nullToAbsent
           ? const Value.absent()
           : Value(restTotalSec),
+      planWeek: planWeek == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planWeek),
+      planDayIndex: planDayIndex == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planDayIndex),
+      isDeload: Value(isDeload),
     );
   }
 
@@ -1400,6 +1493,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
       pendingCount: serializer.fromJson<int>(json['pendingCount']),
       restEndsAt: serializer.fromJson<DateTime?>(json['restEndsAt']),
       restTotalSec: serializer.fromJson<int?>(json['restTotalSec']),
+      planWeek: serializer.fromJson<String?>(json['planWeek']),
+      planDayIndex: serializer.fromJson<int?>(json['planDayIndex']),
+      isDeload: serializer.fromJson<bool>(json['isDeload']),
     );
   }
   @override
@@ -1414,6 +1510,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
       'pendingCount': serializer.toJson<int>(pendingCount),
       'restEndsAt': serializer.toJson<DateTime?>(restEndsAt),
       'restTotalSec': serializer.toJson<int?>(restTotalSec),
+      'planWeek': serializer.toJson<String?>(planWeek),
+      'planDayIndex': serializer.toJson<int?>(planDayIndex),
+      'isDeload': serializer.toJson<bool>(isDeload),
     };
   }
 
@@ -1426,6 +1525,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
     int? pendingCount,
     Value<DateTime?> restEndsAt = const Value.absent(),
     Value<int?> restTotalSec = const Value.absent(),
+    Value<String?> planWeek = const Value.absent(),
+    Value<int?> planDayIndex = const Value.absent(),
+    bool? isDeload,
   }) => SessionRow(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -1435,6 +1537,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
     pendingCount: pendingCount ?? this.pendingCount,
     restEndsAt: restEndsAt.present ? restEndsAt.value : this.restEndsAt,
     restTotalSec: restTotalSec.present ? restTotalSec.value : this.restTotalSec,
+    planWeek: planWeek.present ? planWeek.value : this.planWeek,
+    planDayIndex: planDayIndex.present ? planDayIndex.value : this.planDayIndex,
+    isDeload: isDeload ?? this.isDeload,
   );
   SessionRow copyWithCompanion(SessionsCompanion data) {
     return SessionRow(
@@ -1456,6 +1561,11 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
       restTotalSec: data.restTotalSec.present
           ? data.restTotalSec.value
           : this.restTotalSec,
+      planWeek: data.planWeek.present ? data.planWeek.value : this.planWeek,
+      planDayIndex: data.planDayIndex.present
+          ? data.planDayIndex.value
+          : this.planDayIndex,
+      isDeload: data.isDeload.present ? data.isDeload.value : this.isDeload,
     );
   }
 
@@ -1469,7 +1579,10 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
           ..write('currentIndex: $currentIndex, ')
           ..write('pendingCount: $pendingCount, ')
           ..write('restEndsAt: $restEndsAt, ')
-          ..write('restTotalSec: $restTotalSec')
+          ..write('restTotalSec: $restTotalSec, ')
+          ..write('planWeek: $planWeek, ')
+          ..write('planDayIndex: $planDayIndex, ')
+          ..write('isDeload: $isDeload')
           ..write(')'))
         .toString();
   }
@@ -1484,6 +1597,9 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
     pendingCount,
     restEndsAt,
     restTotalSec,
+    planWeek,
+    planDayIndex,
+    isDeload,
   );
   @override
   bool operator ==(Object other) =>
@@ -1496,7 +1612,10 @@ class SessionRow extends DataClass implements Insertable<SessionRow> {
           other.currentIndex == this.currentIndex &&
           other.pendingCount == this.pendingCount &&
           other.restEndsAt == this.restEndsAt &&
-          other.restTotalSec == this.restTotalSec);
+          other.restTotalSec == this.restTotalSec &&
+          other.planWeek == this.planWeek &&
+          other.planDayIndex == this.planDayIndex &&
+          other.isDeload == this.isDeload);
 }
 
 class SessionsCompanion extends UpdateCompanion<SessionRow> {
@@ -1508,6 +1627,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
   final Value<int> pendingCount;
   final Value<DateTime?> restEndsAt;
   final Value<int?> restTotalSec;
+  final Value<String?> planWeek;
+  final Value<int?> planDayIndex;
+  final Value<bool> isDeload;
   const SessionsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -1517,6 +1639,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
     this.pendingCount = const Value.absent(),
     this.restEndsAt = const Value.absent(),
     this.restTotalSec = const Value.absent(),
+    this.planWeek = const Value.absent(),
+    this.planDayIndex = const Value.absent(),
+    this.isDeload = const Value.absent(),
   });
   SessionsCompanion.insert({
     this.id = const Value.absent(),
@@ -1527,6 +1652,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
     this.pendingCount = const Value.absent(),
     this.restEndsAt = const Value.absent(),
     this.restTotalSec = const Value.absent(),
+    this.planWeek = const Value.absent(),
+    this.planDayIndex = const Value.absent(),
+    this.isDeload = const Value.absent(),
   }) : name = Value(name),
        startedAt = Value(startedAt);
   static Insertable<SessionRow> custom({
@@ -1538,6 +1666,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
     Expression<int>? pendingCount,
     Expression<DateTime>? restEndsAt,
     Expression<int>? restTotalSec,
+    Expression<String>? planWeek,
+    Expression<int>? planDayIndex,
+    Expression<bool>? isDeload,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1548,6 +1679,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
       if (pendingCount != null) 'pending_count': pendingCount,
       if (restEndsAt != null) 'rest_ends_at': restEndsAt,
       if (restTotalSec != null) 'rest_total_sec': restTotalSec,
+      if (planWeek != null) 'plan_week': planWeek,
+      if (planDayIndex != null) 'plan_day_index': planDayIndex,
+      if (isDeload != null) 'is_deload': isDeload,
     });
   }
 
@@ -1560,6 +1694,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
     Value<int>? pendingCount,
     Value<DateTime?>? restEndsAt,
     Value<int?>? restTotalSec,
+    Value<String?>? planWeek,
+    Value<int?>? planDayIndex,
+    Value<bool>? isDeload,
   }) {
     return SessionsCompanion(
       id: id ?? this.id,
@@ -1570,6 +1707,9 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
       pendingCount: pendingCount ?? this.pendingCount,
       restEndsAt: restEndsAt ?? this.restEndsAt,
       restTotalSec: restTotalSec ?? this.restTotalSec,
+      planWeek: planWeek ?? this.planWeek,
+      planDayIndex: planDayIndex ?? this.planDayIndex,
+      isDeload: isDeload ?? this.isDeload,
     );
   }
 
@@ -1600,6 +1740,15 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
     if (restTotalSec.present) {
       map['rest_total_sec'] = Variable<int>(restTotalSec.value);
     }
+    if (planWeek.present) {
+      map['plan_week'] = Variable<String>(planWeek.value);
+    }
+    if (planDayIndex.present) {
+      map['plan_day_index'] = Variable<int>(planDayIndex.value);
+    }
+    if (isDeload.present) {
+      map['is_deload'] = Variable<bool>(isDeload.value);
+    }
     return map;
   }
 
@@ -1613,7 +1762,10 @@ class SessionsCompanion extends UpdateCompanion<SessionRow> {
           ..write('currentIndex: $currentIndex, ')
           ..write('pendingCount: $pendingCount, ')
           ..write('restEndsAt: $restEndsAt, ')
-          ..write('restTotalSec: $restTotalSec')
+          ..write('restTotalSec: $restTotalSec, ')
+          ..write('planWeek: $planWeek, ')
+          ..write('planDayIndex: $planDayIndex, ')
+          ..write('isDeload: $isDeload')
           ..write(')'))
         .toString();
   }
@@ -2630,6 +2782,1136 @@ class SetLogsCompanion extends UpdateCompanion<SetLogRow> {
   }
 }
 
+class $ChainProgressTable extends ChainProgress
+    with TableInfo<$ChainProgressTable, ChainProgressRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChainProgressTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _chainIdMeta = const VerificationMeta(
+    'chainId',
+  );
+  @override
+  late final GeneratedColumn<String> chainId = GeneratedColumn<String>(
+    'chain_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exerciseIdMeta = const VerificationMeta(
+    'exerciseId',
+  );
+  @override
+  late final GeneratedColumn<String> exerciseId = GeneratedColumn<String>(
+    'exercise_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _holdTargetMeta = const VerificationMeta(
+    'holdTarget',
+  );
+  @override
+  late final GeneratedColumn<int> holdTarget = GeneratedColumn<int>(
+    'hold_target',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _bonusMeta = const VerificationMeta('bonus');
+  @override
+  late final GeneratedColumn<int> bonus = GeneratedColumn<int>(
+    'bonus',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _successStreakMeta = const VerificationMeta(
+    'successStreak',
+  );
+  @override
+  late final GeneratedColumn<int> successStreak = GeneratedColumn<int>(
+    'success_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _failStreakMeta = const VerificationMeta(
+    'failStreak',
+  );
+  @override
+  late final GeneratedColumn<int> failStreak = GeneratedColumn<int>(
+    'fail_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _dropStreakMeta = const VerificationMeta(
+    'dropStreak',
+  );
+  @override
+  late final GeneratedColumn<int> dropStreak = GeneratedColumn<int>(
+    'drop_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    chainId,
+    exerciseId,
+    holdTarget,
+    bonus,
+    successStreak,
+    failStreak,
+    dropStreak,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'chain_progress';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ChainProgressRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('chain_id')) {
+      context.handle(
+        _chainIdMeta,
+        chainId.isAcceptableOrUnknown(data['chain_id']!, _chainIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_chainIdMeta);
+    }
+    if (data.containsKey('exercise_id')) {
+      context.handle(
+        _exerciseIdMeta,
+        exerciseId.isAcceptableOrUnknown(data['exercise_id']!, _exerciseIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exerciseIdMeta);
+    }
+    if (data.containsKey('hold_target')) {
+      context.handle(
+        _holdTargetMeta,
+        holdTarget.isAcceptableOrUnknown(data['hold_target']!, _holdTargetMeta),
+      );
+    }
+    if (data.containsKey('bonus')) {
+      context.handle(
+        _bonusMeta,
+        bonus.isAcceptableOrUnknown(data['bonus']!, _bonusMeta),
+      );
+    }
+    if (data.containsKey('success_streak')) {
+      context.handle(
+        _successStreakMeta,
+        successStreak.isAcceptableOrUnknown(
+          data['success_streak']!,
+          _successStreakMeta,
+        ),
+      );
+    }
+    if (data.containsKey('fail_streak')) {
+      context.handle(
+        _failStreakMeta,
+        failStreak.isAcceptableOrUnknown(data['fail_streak']!, _failStreakMeta),
+      );
+    }
+    if (data.containsKey('drop_streak')) {
+      context.handle(
+        _dropStreakMeta,
+        dropStreak.isAcceptableOrUnknown(data['drop_streak']!, _dropStreakMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {chainId};
+  @override
+  ChainProgressRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChainProgressRow(
+      chainId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}chain_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      holdTarget: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hold_target'],
+      ),
+      bonus: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}bonus'],
+      )!,
+      successStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}success_streak'],
+      )!,
+      failStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fail_streak'],
+      )!,
+      dropStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}drop_streak'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ChainProgressTable createAlias(String alias) {
+    return $ChainProgressTable(attachedDatabase, alias);
+  }
+}
+
+class ChainProgressRow extends DataClass
+    implements Insertable<ChainProgressRow> {
+  final String chainId;
+  final String exerciseId;
+
+  /// Current per-set hold goal in seconds (holds only).
+  final int? holdTarget;
+
+  /// Extra reps/seconds on top of the library range, earned at the end of a chain.
+  final int bonus;
+  final int successStreak;
+  final int failStreak;
+  final int dropStreak;
+  final DateTime updatedAt;
+  const ChainProgressRow({
+    required this.chainId,
+    required this.exerciseId,
+    this.holdTarget,
+    required this.bonus,
+    required this.successStreak,
+    required this.failStreak,
+    required this.dropStreak,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['chain_id'] = Variable<String>(chainId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    if (!nullToAbsent || holdTarget != null) {
+      map['hold_target'] = Variable<int>(holdTarget);
+    }
+    map['bonus'] = Variable<int>(bonus);
+    map['success_streak'] = Variable<int>(successStreak);
+    map['fail_streak'] = Variable<int>(failStreak);
+    map['drop_streak'] = Variable<int>(dropStreak);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  ChainProgressCompanion toCompanion(bool nullToAbsent) {
+    return ChainProgressCompanion(
+      chainId: Value(chainId),
+      exerciseId: Value(exerciseId),
+      holdTarget: holdTarget == null && nullToAbsent
+          ? const Value.absent()
+          : Value(holdTarget),
+      bonus: Value(bonus),
+      successStreak: Value(successStreak),
+      failStreak: Value(failStreak),
+      dropStreak: Value(dropStreak),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory ChainProgressRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChainProgressRow(
+      chainId: serializer.fromJson<String>(json['chainId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      holdTarget: serializer.fromJson<int?>(json['holdTarget']),
+      bonus: serializer.fromJson<int>(json['bonus']),
+      successStreak: serializer.fromJson<int>(json['successStreak']),
+      failStreak: serializer.fromJson<int>(json['failStreak']),
+      dropStreak: serializer.fromJson<int>(json['dropStreak']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'chainId': serializer.toJson<String>(chainId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'holdTarget': serializer.toJson<int?>(holdTarget),
+      'bonus': serializer.toJson<int>(bonus),
+      'successStreak': serializer.toJson<int>(successStreak),
+      'failStreak': serializer.toJson<int>(failStreak),
+      'dropStreak': serializer.toJson<int>(dropStreak),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  ChainProgressRow copyWith({
+    String? chainId,
+    String? exerciseId,
+    Value<int?> holdTarget = const Value.absent(),
+    int? bonus,
+    int? successStreak,
+    int? failStreak,
+    int? dropStreak,
+    DateTime? updatedAt,
+  }) => ChainProgressRow(
+    chainId: chainId ?? this.chainId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    holdTarget: holdTarget.present ? holdTarget.value : this.holdTarget,
+    bonus: bonus ?? this.bonus,
+    successStreak: successStreak ?? this.successStreak,
+    failStreak: failStreak ?? this.failStreak,
+    dropStreak: dropStreak ?? this.dropStreak,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  ChainProgressRow copyWithCompanion(ChainProgressCompanion data) {
+    return ChainProgressRow(
+      chainId: data.chainId.present ? data.chainId.value : this.chainId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      holdTarget: data.holdTarget.present
+          ? data.holdTarget.value
+          : this.holdTarget,
+      bonus: data.bonus.present ? data.bonus.value : this.bonus,
+      successStreak: data.successStreak.present
+          ? data.successStreak.value
+          : this.successStreak,
+      failStreak: data.failStreak.present
+          ? data.failStreak.value
+          : this.failStreak,
+      dropStreak: data.dropStreak.present
+          ? data.dropStreak.value
+          : this.dropStreak,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChainProgressRow(')
+          ..write('chainId: $chainId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('holdTarget: $holdTarget, ')
+          ..write('bonus: $bonus, ')
+          ..write('successStreak: $successStreak, ')
+          ..write('failStreak: $failStreak, ')
+          ..write('dropStreak: $dropStreak, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    chainId,
+    exerciseId,
+    holdTarget,
+    bonus,
+    successStreak,
+    failStreak,
+    dropStreak,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChainProgressRow &&
+          other.chainId == this.chainId &&
+          other.exerciseId == this.exerciseId &&
+          other.holdTarget == this.holdTarget &&
+          other.bonus == this.bonus &&
+          other.successStreak == this.successStreak &&
+          other.failStreak == this.failStreak &&
+          other.dropStreak == this.dropStreak &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ChainProgressCompanion extends UpdateCompanion<ChainProgressRow> {
+  final Value<String> chainId;
+  final Value<String> exerciseId;
+  final Value<int?> holdTarget;
+  final Value<int> bonus;
+  final Value<int> successStreak;
+  final Value<int> failStreak;
+  final Value<int> dropStreak;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const ChainProgressCompanion({
+    this.chainId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.holdTarget = const Value.absent(),
+    this.bonus = const Value.absent(),
+    this.successStreak = const Value.absent(),
+    this.failStreak = const Value.absent(),
+    this.dropStreak = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChainProgressCompanion.insert({
+    required String chainId,
+    required String exerciseId,
+    this.holdTarget = const Value.absent(),
+    this.bonus = const Value.absent(),
+    this.successStreak = const Value.absent(),
+    this.failStreak = const Value.absent(),
+    this.dropStreak = const Value.absent(),
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : chainId = Value(chainId),
+       exerciseId = Value(exerciseId),
+       updatedAt = Value(updatedAt);
+  static Insertable<ChainProgressRow> custom({
+    Expression<String>? chainId,
+    Expression<String>? exerciseId,
+    Expression<int>? holdTarget,
+    Expression<int>? bonus,
+    Expression<int>? successStreak,
+    Expression<int>? failStreak,
+    Expression<int>? dropStreak,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (chainId != null) 'chain_id': chainId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (holdTarget != null) 'hold_target': holdTarget,
+      if (bonus != null) 'bonus': bonus,
+      if (successStreak != null) 'success_streak': successStreak,
+      if (failStreak != null) 'fail_streak': failStreak,
+      if (dropStreak != null) 'drop_streak': dropStreak,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChainProgressCompanion copyWith({
+    Value<String>? chainId,
+    Value<String>? exerciseId,
+    Value<int?>? holdTarget,
+    Value<int>? bonus,
+    Value<int>? successStreak,
+    Value<int>? failStreak,
+    Value<int>? dropStreak,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ChainProgressCompanion(
+      chainId: chainId ?? this.chainId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      holdTarget: holdTarget ?? this.holdTarget,
+      bonus: bonus ?? this.bonus,
+      successStreak: successStreak ?? this.successStreak,
+      failStreak: failStreak ?? this.failStreak,
+      dropStreak: dropStreak ?? this.dropStreak,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (chainId.present) {
+      map['chain_id'] = Variable<String>(chainId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (holdTarget.present) {
+      map['hold_target'] = Variable<int>(holdTarget.value);
+    }
+    if (bonus.present) {
+      map['bonus'] = Variable<int>(bonus.value);
+    }
+    if (successStreak.present) {
+      map['success_streak'] = Variable<int>(successStreak.value);
+    }
+    if (failStreak.present) {
+      map['fail_streak'] = Variable<int>(failStreak.value);
+    }
+    if (dropStreak.present) {
+      map['drop_streak'] = Variable<int>(dropStreak.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChainProgressCompanion(')
+          ..write('chainId: $chainId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('holdTarget: $holdTarget, ')
+          ..write('bonus: $bonus, ')
+          ..write('successStreak: $successStreak, ')
+          ..write('failStreak: $failStreak, ')
+          ..write('dropStreak: $dropStreak, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MilestonesTable extends Milestones
+    with TableInfo<$MilestonesTable, MilestoneRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MilestonesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _chainIdMeta = const VerificationMeta(
+    'chainId',
+  );
+  @override
+  late final GeneratedColumn<String> chainId = GeneratedColumn<String>(
+    'chain_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exerciseIdMeta = const VerificationMeta(
+    'exerciseId',
+  );
+  @override
+  late final GeneratedColumn<String> exerciseId = GeneratedColumn<String>(
+    'exercise_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _achievedAtMeta = const VerificationMeta(
+    'achievedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> achievedAt = GeneratedColumn<DateTime>(
+    'achieved_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, chainId, exerciseId, achievedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'milestones';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MilestoneRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('chain_id')) {
+      context.handle(
+        _chainIdMeta,
+        chainId.isAcceptableOrUnknown(data['chain_id']!, _chainIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_chainIdMeta);
+    }
+    if (data.containsKey('exercise_id')) {
+      context.handle(
+        _exerciseIdMeta,
+        exerciseId.isAcceptableOrUnknown(data['exercise_id']!, _exerciseIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exerciseIdMeta);
+    }
+    if (data.containsKey('achieved_at')) {
+      context.handle(
+        _achievedAtMeta,
+        achievedAt.isAcceptableOrUnknown(data['achieved_at']!, _achievedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_achievedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MilestoneRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MilestoneRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      chainId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}chain_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      achievedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}achieved_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MilestonesTable createAlias(String alias) {
+    return $MilestonesTable(attachedDatabase, alias);
+  }
+}
+
+class MilestoneRow extends DataClass implements Insertable<MilestoneRow> {
+  final int id;
+  final String chainId;
+  final String exerciseId;
+  final DateTime achievedAt;
+  const MilestoneRow({
+    required this.id,
+    required this.chainId,
+    required this.exerciseId,
+    required this.achievedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['chain_id'] = Variable<String>(chainId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['achieved_at'] = Variable<DateTime>(achievedAt);
+    return map;
+  }
+
+  MilestonesCompanion toCompanion(bool nullToAbsent) {
+    return MilestonesCompanion(
+      id: Value(id),
+      chainId: Value(chainId),
+      exerciseId: Value(exerciseId),
+      achievedAt: Value(achievedAt),
+    );
+  }
+
+  factory MilestoneRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MilestoneRow(
+      id: serializer.fromJson<int>(json['id']),
+      chainId: serializer.fromJson<String>(json['chainId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      achievedAt: serializer.fromJson<DateTime>(json['achievedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'chainId': serializer.toJson<String>(chainId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'achievedAt': serializer.toJson<DateTime>(achievedAt),
+    };
+  }
+
+  MilestoneRow copyWith({
+    int? id,
+    String? chainId,
+    String? exerciseId,
+    DateTime? achievedAt,
+  }) => MilestoneRow(
+    id: id ?? this.id,
+    chainId: chainId ?? this.chainId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    achievedAt: achievedAt ?? this.achievedAt,
+  );
+  MilestoneRow copyWithCompanion(MilestonesCompanion data) {
+    return MilestoneRow(
+      id: data.id.present ? data.id.value : this.id,
+      chainId: data.chainId.present ? data.chainId.value : this.chainId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      achievedAt: data.achievedAt.present
+          ? data.achievedAt.value
+          : this.achievedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MilestoneRow(')
+          ..write('id: $id, ')
+          ..write('chainId: $chainId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('achievedAt: $achievedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, chainId, exerciseId, achievedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MilestoneRow &&
+          other.id == this.id &&
+          other.chainId == this.chainId &&
+          other.exerciseId == this.exerciseId &&
+          other.achievedAt == this.achievedAt);
+}
+
+class MilestonesCompanion extends UpdateCompanion<MilestoneRow> {
+  final Value<int> id;
+  final Value<String> chainId;
+  final Value<String> exerciseId;
+  final Value<DateTime> achievedAt;
+  const MilestonesCompanion({
+    this.id = const Value.absent(),
+    this.chainId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.achievedAt = const Value.absent(),
+  });
+  MilestonesCompanion.insert({
+    this.id = const Value.absent(),
+    required String chainId,
+    required String exerciseId,
+    required DateTime achievedAt,
+  }) : chainId = Value(chainId),
+       exerciseId = Value(exerciseId),
+       achievedAt = Value(achievedAt);
+  static Insertable<MilestoneRow> custom({
+    Expression<int>? id,
+    Expression<String>? chainId,
+    Expression<String>? exerciseId,
+    Expression<DateTime>? achievedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (chainId != null) 'chain_id': chainId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (achievedAt != null) 'achieved_at': achievedAt,
+    });
+  }
+
+  MilestonesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? chainId,
+    Value<String>? exerciseId,
+    Value<DateTime>? achievedAt,
+  }) {
+    return MilestonesCompanion(
+      id: id ?? this.id,
+      chainId: chainId ?? this.chainId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      achievedAt: achievedAt ?? this.achievedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (chainId.present) {
+      map['chain_id'] = Variable<String>(chainId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (achievedAt.present) {
+      map['achieved_at'] = Variable<DateTime>(achievedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MilestonesCompanion(')
+          ..write('id: $id, ')
+          ..write('chainId: $chainId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('achievedAt: $achievedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProgressPhotosTable extends ProgressPhotos
+    with TableInfo<$ProgressPhotosTable, PhotoRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProgressPhotosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _takenAtMeta = const VerificationMeta(
+    'takenAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> takenAt = GeneratedColumn<DateTime>(
+    'taken_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weightKgMeta = const VerificationMeta(
+    'weightKg',
+  );
+  @override
+  late final GeneratedColumn<double> weightKg = GeneratedColumn<double>(
+    'weight_kg',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _bytesMeta = const VerificationMeta('bytes');
+  @override
+  late final GeneratedColumn<Uint8List> bytes = GeneratedColumn<Uint8List>(
+    'bytes',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, takenAt, weightKg, bytes];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'progress_photos';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PhotoRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('taken_at')) {
+      context.handle(
+        _takenAtMeta,
+        takenAt.isAcceptableOrUnknown(data['taken_at']!, _takenAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_takenAtMeta);
+    }
+    if (data.containsKey('weight_kg')) {
+      context.handle(
+        _weightKgMeta,
+        weightKg.isAcceptableOrUnknown(data['weight_kg']!, _weightKgMeta),
+      );
+    }
+    if (data.containsKey('bytes')) {
+      context.handle(
+        _bytesMeta,
+        bytes.isAcceptableOrUnknown(data['bytes']!, _bytesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bytesMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PhotoRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PhotoRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      takenAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}taken_at'],
+      )!,
+      weightKg: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}weight_kg'],
+      ),
+      bytes: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}bytes'],
+      )!,
+    );
+  }
+
+  @override
+  $ProgressPhotosTable createAlias(String alias) {
+    return $ProgressPhotosTable(attachedDatabase, alias);
+  }
+}
+
+class PhotoRow extends DataClass implements Insertable<PhotoRow> {
+  final int id;
+  final DateTime takenAt;
+  final double? weightKg;
+  final Uint8List bytes;
+  const PhotoRow({
+    required this.id,
+    required this.takenAt,
+    this.weightKg,
+    required this.bytes,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['taken_at'] = Variable<DateTime>(takenAt);
+    if (!nullToAbsent || weightKg != null) {
+      map['weight_kg'] = Variable<double>(weightKg);
+    }
+    map['bytes'] = Variable<Uint8List>(bytes);
+    return map;
+  }
+
+  ProgressPhotosCompanion toCompanion(bool nullToAbsent) {
+    return ProgressPhotosCompanion(
+      id: Value(id),
+      takenAt: Value(takenAt),
+      weightKg: weightKg == null && nullToAbsent
+          ? const Value.absent()
+          : Value(weightKg),
+      bytes: Value(bytes),
+    );
+  }
+
+  factory PhotoRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PhotoRow(
+      id: serializer.fromJson<int>(json['id']),
+      takenAt: serializer.fromJson<DateTime>(json['takenAt']),
+      weightKg: serializer.fromJson<double?>(json['weightKg']),
+      bytes: serializer.fromJson<Uint8List>(json['bytes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'takenAt': serializer.toJson<DateTime>(takenAt),
+      'weightKg': serializer.toJson<double?>(weightKg),
+      'bytes': serializer.toJson<Uint8List>(bytes),
+    };
+  }
+
+  PhotoRow copyWith({
+    int? id,
+    DateTime? takenAt,
+    Value<double?> weightKg = const Value.absent(),
+    Uint8List? bytes,
+  }) => PhotoRow(
+    id: id ?? this.id,
+    takenAt: takenAt ?? this.takenAt,
+    weightKg: weightKg.present ? weightKg.value : this.weightKg,
+    bytes: bytes ?? this.bytes,
+  );
+  PhotoRow copyWithCompanion(ProgressPhotosCompanion data) {
+    return PhotoRow(
+      id: data.id.present ? data.id.value : this.id,
+      takenAt: data.takenAt.present ? data.takenAt.value : this.takenAt,
+      weightKg: data.weightKg.present ? data.weightKg.value : this.weightKg,
+      bytes: data.bytes.present ? data.bytes.value : this.bytes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PhotoRow(')
+          ..write('id: $id, ')
+          ..write('takenAt: $takenAt, ')
+          ..write('weightKg: $weightKg, ')
+          ..write('bytes: $bytes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, takenAt, weightKg, $driftBlobEquality.hash(bytes));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PhotoRow &&
+          other.id == this.id &&
+          other.takenAt == this.takenAt &&
+          other.weightKg == this.weightKg &&
+          $driftBlobEquality.equals(other.bytes, this.bytes));
+}
+
+class ProgressPhotosCompanion extends UpdateCompanion<PhotoRow> {
+  final Value<int> id;
+  final Value<DateTime> takenAt;
+  final Value<double?> weightKg;
+  final Value<Uint8List> bytes;
+  const ProgressPhotosCompanion({
+    this.id = const Value.absent(),
+    this.takenAt = const Value.absent(),
+    this.weightKg = const Value.absent(),
+    this.bytes = const Value.absent(),
+  });
+  ProgressPhotosCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime takenAt,
+    this.weightKg = const Value.absent(),
+    required Uint8List bytes,
+  }) : takenAt = Value(takenAt),
+       bytes = Value(bytes);
+  static Insertable<PhotoRow> custom({
+    Expression<int>? id,
+    Expression<DateTime>? takenAt,
+    Expression<double>? weightKg,
+    Expression<Uint8List>? bytes,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (takenAt != null) 'taken_at': takenAt,
+      if (weightKg != null) 'weight_kg': weightKg,
+      if (bytes != null) 'bytes': bytes,
+    });
+  }
+
+  ProgressPhotosCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime>? takenAt,
+    Value<double?>? weightKg,
+    Value<Uint8List>? bytes,
+  }) {
+    return ProgressPhotosCompanion(
+      id: id ?? this.id,
+      takenAt: takenAt ?? this.takenAt,
+      weightKg: weightKg ?? this.weightKg,
+      bytes: bytes ?? this.bytes,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (takenAt.present) {
+      map['taken_at'] = Variable<DateTime>(takenAt.value);
+    }
+    if (weightKg.present) {
+      map['weight_kg'] = Variable<double>(weightKg.value);
+    }
+    if (bytes.present) {
+      map['bytes'] = Variable<Uint8List>(bytes.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProgressPhotosCompanion(')
+          ..write('id: $id, ')
+          ..write('takenAt: $takenAt, ')
+          ..write('weightKg: $weightKg, ')
+          ..write('bytes: $bytes')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2641,6 +3923,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this,
   );
   late final $SetLogsTable setLogs = $SetLogsTable(this);
+  late final $ChainProgressTable chainProgress = $ChainProgressTable(this);
+  late final $MilestonesTable milestones = $MilestonesTable(this);
+  late final $ProgressPhotosTable progressPhotos = $ProgressPhotosTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2652,6 +3937,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     sessions,
     sessionExercises,
     setLogs,
+    chainProgress,
+    milestones,
+    progressPhotos,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3284,6 +4572,9 @@ typedef $$SessionsTableCreateCompanionBuilder = SessionsCompanion Function({
   Value<int> pendingCount,
   Value<DateTime?> restEndsAt,
   Value<int?> restTotalSec,
+  Value<String?> planWeek,
+  Value<int?> planDayIndex,
+  Value<bool> isDeload,
 });
 typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
   Value<int> id,
@@ -3294,6 +4585,9 @@ typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
   Value<int> pendingCount,
   Value<DateTime?> restEndsAt,
   Value<int?> restTotalSec,
+  Value<String?> planWeek,
+  Value<int?> planDayIndex,
+  Value<bool> isDeload,
 });
 
 final class $$SessionsTableReferences
@@ -3367,6 +4661,21 @@ class $$SessionsTableFilterComposer
 
   ColumnFilters<int> get restTotalSec => $composableBuilder(
     column: $table.restTotalSec,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get planWeek => $composableBuilder(
+    column: $table.planWeek,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get planDayIndex => $composableBuilder(
+    column: $table.planDayIndex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeload => $composableBuilder(
+    column: $table.isDeload,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3444,6 +4753,21 @@ class $$SessionsTableOrderingComposer
     column: $table.restTotalSec,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get planWeek => $composableBuilder(
+    column: $table.planWeek,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get planDayIndex => $composableBuilder(
+    column: $table.planDayIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeload => $composableBuilder(
+    column: $table.isDeload,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SessionsTableAnnotationComposer
@@ -3488,6 +4812,17 @@ class $$SessionsTableAnnotationComposer
     column: $table.restTotalSec,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get planWeek =>
+      $composableBuilder(column: $table.planWeek, builder: (column) => column);
+
+  GeneratedColumn<int> get planDayIndex => $composableBuilder(
+    column: $table.planDayIndex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isDeload =>
+      $composableBuilder(column: $table.isDeload, builder: (column) => column);
 
   Expression<T> sessionExercisesRefs<T extends Object>(
     Expression<T> Function($$SessionExercisesTableAnnotationComposer a) f,
@@ -3551,6 +4886,9 @@ class $$SessionsTableTableManager
                 Value<int> pendingCount = const Value.absent(),
                 Value<DateTime?> restEndsAt = const Value.absent(),
                 Value<int?> restTotalSec = const Value.absent(),
+                Value<String?> planWeek = const Value.absent(),
+                Value<int?> planDayIndex = const Value.absent(),
+                Value<bool> isDeload = const Value.absent(),
               }) => SessionsCompanion(
                 id: id,
                 name: name,
@@ -3560,6 +4898,9 @@ class $$SessionsTableTableManager
                 pendingCount: pendingCount,
                 restEndsAt: restEndsAt,
                 restTotalSec: restTotalSec,
+                planWeek: planWeek,
+                planDayIndex: planDayIndex,
+                isDeload: isDeload,
               ),
           createCompanionCallback:
               ({
@@ -3571,6 +4912,9 @@ class $$SessionsTableTableManager
                 Value<int> pendingCount = const Value.absent(),
                 Value<DateTime?> restEndsAt = const Value.absent(),
                 Value<int?> restTotalSec = const Value.absent(),
+                Value<String?> planWeek = const Value.absent(),
+                Value<int?> planDayIndex = const Value.absent(),
+                Value<bool> isDeload = const Value.absent(),
               }) => SessionsCompanion.insert(
                 id: id,
                 name: name,
@@ -3580,6 +4924,9 @@ class $$SessionsTableTableManager
                 pendingCount: pendingCount,
                 restEndsAt: restEndsAt,
                 restTotalSec: restTotalSec,
+                planWeek: planWeek,
+                planDayIndex: planDayIndex,
+                isDeload: isDeload,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -4479,6 +5826,655 @@ typedef $$SetLogsTableProcessedTableManager =
       SetLogRow,
       PrefetchHooks Function({bool sessionExerciseId})
     >;
+typedef $$ChainProgressTableCreateCompanionBuilder =
+    ChainProgressCompanion Function({
+      required String chainId,
+      required String exerciseId,
+      Value<int?> holdTarget,
+      Value<int> bonus,
+      Value<int> successStreak,
+      Value<int> failStreak,
+      Value<int> dropStreak,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$ChainProgressTableUpdateCompanionBuilder =
+    ChainProgressCompanion Function({
+      Value<String> chainId,
+      Value<String> exerciseId,
+      Value<int?> holdTarget,
+      Value<int> bonus,
+      Value<int> successStreak,
+      Value<int> failStreak,
+      Value<int> dropStreak,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$ChainProgressTableFilterComposer
+    extends Composer<_$AppDatabase, $ChainProgressTable> {
+  $$ChainProgressTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get chainId => $composableBuilder(
+    column: $table.chainId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get holdTarget => $composableBuilder(
+    column: $table.holdTarget,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get bonus => $composableBuilder(
+    column: $table.bonus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get successStreak => $composableBuilder(
+    column: $table.successStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get failStreak => $composableBuilder(
+    column: $table.failStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dropStreak => $composableBuilder(
+    column: $table.dropStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ChainProgressTableOrderingComposer
+    extends Composer<_$AppDatabase, $ChainProgressTable> {
+  $$ChainProgressTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get chainId => $composableBuilder(
+    column: $table.chainId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get holdTarget => $composableBuilder(
+    column: $table.holdTarget,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get bonus => $composableBuilder(
+    column: $table.bonus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get successStreak => $composableBuilder(
+    column: $table.successStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get failStreak => $composableBuilder(
+    column: $table.failStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dropStreak => $composableBuilder(
+    column: $table.dropStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ChainProgressTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChainProgressTable> {
+  $$ChainProgressTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get chainId =>
+      $composableBuilder(column: $table.chainId, builder: (column) => column);
+
+  GeneratedColumn<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get holdTarget => $composableBuilder(
+    column: $table.holdTarget,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get bonus =>
+      $composableBuilder(column: $table.bonus, builder: (column) => column);
+
+  GeneratedColumn<int> get successStreak => $composableBuilder(
+    column: $table.successStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get failStreak => $composableBuilder(
+    column: $table.failStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dropStreak => $composableBuilder(
+    column: $table.dropStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$ChainProgressTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ChainProgressTable,
+          ChainProgressRow,
+          $$ChainProgressTableFilterComposer,
+          $$ChainProgressTableOrderingComposer,
+          $$ChainProgressTableAnnotationComposer,
+          $$ChainProgressTableCreateCompanionBuilder,
+          $$ChainProgressTableUpdateCompanionBuilder,
+          (
+            ChainProgressRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ChainProgressTable,
+              ChainProgressRow
+            >,
+          ),
+          ChainProgressRow,
+          PrefetchHooks Function()
+        > {
+  $$ChainProgressTableTableManager(_$AppDatabase db, $ChainProgressTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ChainProgressTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChainProgressTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChainProgressTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> chainId = const Value.absent(),
+                Value<String> exerciseId = const Value.absent(),
+                Value<int?> holdTarget = const Value.absent(),
+                Value<int> bonus = const Value.absent(),
+                Value<int> successStreak = const Value.absent(),
+                Value<int> failStreak = const Value.absent(),
+                Value<int> dropStreak = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChainProgressCompanion(
+                chainId: chainId,
+                exerciseId: exerciseId,
+                holdTarget: holdTarget,
+                bonus: bonus,
+                successStreak: successStreak,
+                failStreak: failStreak,
+                dropStreak: dropStreak,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String chainId,
+                required String exerciseId,
+                Value<int?> holdTarget = const Value.absent(),
+                Value<int> bonus = const Value.absent(),
+                Value<int> successStreak = const Value.absent(),
+                Value<int> failStreak = const Value.absent(),
+                Value<int> dropStreak = const Value.absent(),
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ChainProgressCompanion.insert(
+                chainId: chainId,
+                exerciseId: exerciseId,
+                holdTarget: holdTarget,
+                bonus: bonus,
+                successStreak: successStreak,
+                failStreak: failStreak,
+                dropStreak: dropStreak,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ChainProgressTable, ChainProgressRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $ChainProgressTable,
+                    ChainProgressRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ChainProgressTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ChainProgressTable,
+      ChainProgressRow,
+      $$ChainProgressTableFilterComposer,
+      $$ChainProgressTableOrderingComposer,
+      $$ChainProgressTableAnnotationComposer,
+      $$ChainProgressTableCreateCompanionBuilder,
+      $$ChainProgressTableUpdateCompanionBuilder,
+      (
+        ChainProgressRow,
+        BaseReferences<_$AppDatabase, $ChainProgressTable, ChainProgressRow>,
+      ),
+      ChainProgressRow,
+      PrefetchHooks Function()
+    >;
+typedef $$MilestonesTableCreateCompanionBuilder = MilestonesCompanion Function({
+  Value<int> id,
+  required String chainId,
+  required String exerciseId,
+  required DateTime achievedAt,
+});
+typedef $$MilestonesTableUpdateCompanionBuilder = MilestonesCompanion Function({
+  Value<int> id,
+  Value<String> chainId,
+  Value<String> exerciseId,
+  Value<DateTime> achievedAt,
+});
+
+class $$MilestonesTableFilterComposer
+    extends Composer<_$AppDatabase, $MilestonesTable> {
+  $$MilestonesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get chainId => $composableBuilder(
+    column: $table.chainId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get achievedAt => $composableBuilder(
+    column: $table.achievedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MilestonesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MilestonesTable> {
+  $$MilestonesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get chainId => $composableBuilder(
+    column: $table.chainId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get achievedAt => $composableBuilder(
+    column: $table.achievedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MilestonesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MilestonesTable> {
+  $$MilestonesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get chainId =>
+      $composableBuilder(column: $table.chainId, builder: (column) => column);
+
+  GeneratedColumn<String> get exerciseId => $composableBuilder(
+    column: $table.exerciseId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get achievedAt => $composableBuilder(
+    column: $table.achievedAt,
+    builder: (column) => column,
+  );
+}
+
+class $$MilestonesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MilestonesTable,
+          MilestoneRow,
+          $$MilestonesTableFilterComposer,
+          $$MilestonesTableOrderingComposer,
+          $$MilestonesTableAnnotationComposer,
+          $$MilestonesTableCreateCompanionBuilder,
+          $$MilestonesTableUpdateCompanionBuilder,
+          (
+            MilestoneRow,
+            BaseReferences<_$AppDatabase, $MilestonesTable, MilestoneRow>,
+          ),
+          MilestoneRow,
+          PrefetchHooks Function()
+        > {
+  $$MilestonesTableTableManager(_$AppDatabase db, $MilestonesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MilestonesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MilestonesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MilestonesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> chainId = const Value.absent(),
+                Value<String> exerciseId = const Value.absent(),
+                Value<DateTime> achievedAt = const Value.absent(),
+              }) => MilestonesCompanion(
+                id: id,
+                chainId: chainId,
+                exerciseId: exerciseId,
+                achievedAt: achievedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String chainId,
+                required String exerciseId,
+                required DateTime achievedAt,
+              }) => MilestonesCompanion.insert(
+                id: id,
+                chainId: chainId,
+                exerciseId: exerciseId,
+                achievedAt: achievedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MilestonesTable, MilestoneRow>(table),
+                  BaseReferences<_$AppDatabase, $MilestonesTable, MilestoneRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MilestonesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MilestonesTable,
+      MilestoneRow,
+      $$MilestonesTableFilterComposer,
+      $$MilestonesTableOrderingComposer,
+      $$MilestonesTableAnnotationComposer,
+      $$MilestonesTableCreateCompanionBuilder,
+      $$MilestonesTableUpdateCompanionBuilder,
+      (
+        MilestoneRow,
+        BaseReferences<_$AppDatabase, $MilestonesTable, MilestoneRow>,
+      ),
+      MilestoneRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ProgressPhotosTableCreateCompanionBuilder =
+    ProgressPhotosCompanion Function({
+      Value<int> id,
+      required DateTime takenAt,
+      Value<double?> weightKg,
+      required Uint8List bytes,
+    });
+typedef $$ProgressPhotosTableUpdateCompanionBuilder =
+    ProgressPhotosCompanion Function({
+      Value<int> id,
+      Value<DateTime> takenAt,
+      Value<double?> weightKg,
+      Value<Uint8List> bytes,
+    });
+
+class $$ProgressPhotosTableFilterComposer
+    extends Composer<_$AppDatabase, $ProgressPhotosTable> {
+  $$ProgressPhotosTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get takenAt => $composableBuilder(
+    column: $table.takenAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get weightKg => $composableBuilder(
+    column: $table.weightKg,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get bytes => $composableBuilder(
+    column: $table.bytes,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ProgressPhotosTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProgressPhotosTable> {
+  $$ProgressPhotosTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get takenAt => $composableBuilder(
+    column: $table.takenAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get weightKg => $composableBuilder(
+    column: $table.weightKg,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get bytes => $composableBuilder(
+    column: $table.bytes,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ProgressPhotosTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProgressPhotosTable> {
+  $$ProgressPhotosTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get takenAt =>
+      $composableBuilder(column: $table.takenAt, builder: (column) => column);
+
+  GeneratedColumn<double> get weightKg =>
+      $composableBuilder(column: $table.weightKg, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get bytes =>
+      $composableBuilder(column: $table.bytes, builder: (column) => column);
+}
+
+class $$ProgressPhotosTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProgressPhotosTable,
+          PhotoRow,
+          $$ProgressPhotosTableFilterComposer,
+          $$ProgressPhotosTableOrderingComposer,
+          $$ProgressPhotosTableAnnotationComposer,
+          $$ProgressPhotosTableCreateCompanionBuilder,
+          $$ProgressPhotosTableUpdateCompanionBuilder,
+          (
+            PhotoRow,
+            BaseReferences<_$AppDatabase, $ProgressPhotosTable, PhotoRow>,
+          ),
+          PhotoRow,
+          PrefetchHooks Function()
+        > {
+  $$ProgressPhotosTableTableManager(
+    _$AppDatabase db,
+    $ProgressPhotosTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProgressPhotosTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProgressPhotosTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProgressPhotosTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime> takenAt = const Value.absent(),
+                Value<double?> weightKg = const Value.absent(),
+                Value<Uint8List> bytes = const Value.absent(),
+              }) => ProgressPhotosCompanion(
+                id: id,
+                takenAt: takenAt,
+                weightKg: weightKg,
+                bytes: bytes,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime takenAt,
+                Value<double?> weightKg = const Value.absent(),
+                required Uint8List bytes,
+              }) => ProgressPhotosCompanion.insert(
+                id: id,
+                takenAt: takenAt,
+                weightKg: weightKg,
+                bytes: bytes,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ProgressPhotosTable, PhotoRow>(table),
+                  BaseReferences<_$AppDatabase, $ProgressPhotosTable, PhotoRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ProgressPhotosTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProgressPhotosTable,
+      PhotoRow,
+      $$ProgressPhotosTableFilterComposer,
+      $$ProgressPhotosTableOrderingComposer,
+      $$ProgressPhotosTableAnnotationComposer,
+      $$ProgressPhotosTableCreateCompanionBuilder,
+      $$ProgressPhotosTableUpdateCompanionBuilder,
+      (PhotoRow, BaseReferences<_$AppDatabase, $ProgressPhotosTable, PhotoRow>),
+      PhotoRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4495,4 +6491,10 @@ class $AppDatabaseManager {
       $$SessionExercisesTableTableManager(_db, _db.sessionExercises);
   $$SetLogsTableTableManager get setLogs =>
       $$SetLogsTableTableManager(_db, _db.setLogs);
+  $$ChainProgressTableTableManager get chainProgress =>
+      $$ChainProgressTableTableManager(_db, _db.chainProgress);
+  $$MilestonesTableTableManager get milestones =>
+      $$MilestonesTableTableManager(_db, _db.milestones);
+  $$ProgressPhotosTableTableManager get progressPhotos =>
+      $$ProgressPhotosTableTableManager(_db, _db.progressPhotos);
 }

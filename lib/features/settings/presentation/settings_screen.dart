@@ -5,9 +5,25 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/units.dart';
 import '../../../l10n/app_l10n.dart';
+import '../../backup/presentation/backup_actions.dart';
 import '../../onboarding/presentation/onboarding_screen.dart';
+import '../../security/presentation/lock_gate.dart';
 import '../application/settings_controller.dart';
 import '../data/settings_repository.dart';
+
+final _biometricsAvailableProvider =
+    FutureProvider<bool>((ref) => ref.watch(appLockProvider).biometrics.isAvailable());
+
+/// Asks for the current PIN on a full-screen route. Returns true when accepted.
+Future<bool> _confirmPin(BuildContext context) async {
+  final ok = await Navigator.of(context).push<bool>(
+    MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (context) => PinEntryScreen(onUnlocked: () => Navigator.of(context).pop(true)),
+    ),
+  );
+  return ok ?? false;
+}
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -19,6 +35,7 @@ class SettingsScreen extends ConsumerWidget {
     final controller = ref.read(settingsProvider.notifier);
     final volume = ref.watch(volumeButtonsProvider);
     final weekdays = l.weekdaysShort.split(',');
+    final hasPin = ref.watch(hasPinProvider).value ?? false;
 
     Future<void> applyReminders(AppSettings next) async {
       final notifications = ref.read(notificationServiceProvider);
@@ -161,10 +178,10 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.schedule),
             title: Text(l.reminderTime),
             trailing: Text(
-              TimeOfDay(
+              westernDigits(TimeOfDay(
                 hour: s.reminderMinutes ~/ 60,
                 minute: s.reminderMinutes % 60,
-              ).format(context),
+              ).format(context)),
               style: const TextStyle(fontSize: 16),
             ),
             onTap: () async {
@@ -181,6 +198,61 @@ class SettingsScreen extends ConsumerWidget {
                 );
               }
             },
+          ),
+          header(l.settingsSecurity),
+          ListTile(
+            key: const Key('pin-setting'),
+            leading: const Icon(Icons.pin_outlined),
+            title: Text(hasPin ? l.changePin : l.setPin),
+            subtitle: Text(l.pinSettingHint),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () async {
+              // Changing an existing PIN requires entering it first.
+              if (hasPin && !await _confirmPin(context)) return;
+              if (!context.mounted) return;
+              await Navigator.of(context).push(MaterialPageRoute<bool>(builder: (_) => const PinSetupScreen()));
+            },
+          ),
+          if (hasPin) ...[
+            ListTile(
+              key: const Key('remove-pin'),
+              leading: const Icon(Icons.lock_open),
+              title: Text(l.removePin),
+              onTap: () async {
+                if (!await _confirmPin(context)) return;
+                await ref.read(appLockProvider).clearPin();
+                await controller.change((c) => c.copyWith(lockWholeApp: false, biometricUnlock: false));
+                ref.invalidate(hasPinProvider);
+              },
+            ),
+            SwitchListTile(
+              key: const Key('lock-whole-app'),
+              title: Text(l.lockWholeApp),
+              subtitle: Text(l.lockWholeAppHint),
+              value: s.lockWholeApp,
+              onChanged: (v) => controller.change((c) => c.copyWith(lockWholeApp: v)),
+            ),
+            if (ref.watch(_biometricsAvailableProvider).value ?? false)
+              SwitchListTile(
+                title: Text(l.useBiometrics),
+                value: s.biometricUnlock,
+                onChanged: (v) => controller.change((c) => c.copyWith(biometricUnlock: v)),
+              ),
+          ],
+          header(l.backupTitle),
+          ListTile(
+            key: const Key('backup-export'),
+            leading: const Icon(Icons.upload_file_outlined),
+            title: Text(l.backupExport),
+            subtitle: Text(l.backupExportHint),
+            onTap: () => exportBackup(context, ref),
+          ),
+          ListTile(
+            key: const Key('backup-import'),
+            leading: const Icon(Icons.download_outlined),
+            title: Text(l.backupImport),
+            subtitle: Text(l.backupImportHint),
+            onTap: () => importBackup(context, ref),
           ),
           header(l.settingsAbout),
           ListTile(

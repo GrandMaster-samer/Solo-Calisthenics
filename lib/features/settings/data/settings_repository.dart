@@ -14,6 +14,8 @@ class AppSettings {
     this.volumeButtons = true,
     this.reminderDays = const {},
     this.reminderMinutes = 18 * 60,
+    this.lockWholeApp = false,
+    this.biometricUnlock = false,
   });
 
   /// null = follow the system language.
@@ -33,6 +35,12 @@ class AppSettings {
   /// Reminder time as minutes after midnight.
   final int reminderMinutes;
 
+  /// With a PIN set the photo vault is always locked; this also locks the whole app.
+  final bool lockWholeApp;
+
+  /// Offer fingerprint / face unlock before the PIN.
+  final bool biometricUnlock;
+
   AppSettings copyWith({
     String? Function()? localeCode,
     WeightUnit? weightUnit,
@@ -43,6 +51,8 @@ class AppSettings {
     bool? volumeButtons,
     Set<int>? reminderDays,
     int? reminderMinutes,
+    bool? lockWholeApp,
+    bool? biometricUnlock,
   }) => AppSettings(
     localeCode: localeCode != null ? localeCode() : this.localeCode,
     weightUnit: weightUnit ?? this.weightUnit,
@@ -53,6 +63,8 @@ class AppSettings {
     volumeButtons: volumeButtons ?? this.volumeButtons,
     reminderDays: reminderDays ?? this.reminderDays,
     reminderMinutes: reminderMinutes ?? this.reminderMinutes,
+    lockWholeApp: lockWholeApp ?? this.lockWholeApp,
+    biometricUnlock: biometricUnlock ?? this.biometricUnlock,
   );
 
   Map<String, String> toMap() => {
@@ -65,6 +77,8 @@ class AppSettings {
     'volumeButtons': '$volumeButtons',
     'reminderDays': (reminderDays.toList()..sort()).join(','),
     'reminderMinutes': '$reminderMinutes',
+    'lockWholeApp': '$lockWholeApp',
+    'biometricUnlock': '$biometricUnlock',
   };
 
   /// Tolerant of missing or unknown values so old installs keep working.
@@ -91,6 +105,8 @@ class AppSettings {
           .toSet(),
       reminderMinutes:
           int.tryParse(m['reminderMinutes'] ?? '') ?? d.reminderMinutes,
+      lockWholeApp: flag('lockWholeApp', d.lockWholeApp),
+      biometricUnlock: flag('biometricUnlock', d.biometricUnlock),
     );
   }
 }

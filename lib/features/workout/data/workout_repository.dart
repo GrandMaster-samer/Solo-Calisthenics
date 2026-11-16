@@ -13,11 +13,18 @@ class WorkoutRepository {
     String name,
     List<PlannedExercise> plan, {
     required DateTime now,
+    PlanLink? link,
   }) {
     return _db.transaction(() async {
-      final id = await _db
-          .into(_db.sessions)
-          .insert(SessionsCompanion.insert(name: name, startedAt: now));
+      final id = await _db.into(_db.sessions).insert(
+            SessionsCompanion.insert(
+              name: name,
+              startedAt: now,
+              planWeek: Value(link?.week),
+              planDayIndex: Value(link?.dayIndex),
+              isDeload: Value(link?.isDeload ?? false),
+            ),
+          );
       for (var i = 0; i < plan.length; i++) {
         final p = plan[i];
         await _db
@@ -76,6 +83,9 @@ class WorkoutRepository {
       pendingCount: row.pendingCount,
       restEndsAt: row.restEndsAt,
       restTotalSec: row.restTotalSec,
+      planWeek: row.planWeek,
+      planDayIndex: row.planDayIndex,
+      isDeload: row.isDeload,
       exercises: [
         for (final e in exRows)
           SessionExercise(
@@ -230,5 +240,13 @@ class WorkoutRepository {
       );
     }
     return result;
+  }
+
+  /// Plan day indexes that already have a finished session in [week].
+  Future<Set<int>> completedPlanDays(String week) async {
+    final rows = await (_db.select(_db.sessions)
+          ..where((s) => s.planWeek.equals(week) & s.finishedAt.isNotNull() & s.planDayIndex.isNotNull()))
+        .get();
+    return {for (final r in rows) r.planDayIndex!};
   }
 }
