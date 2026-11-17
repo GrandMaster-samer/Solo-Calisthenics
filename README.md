@@ -1,20 +1,43 @@
+<p align="center"><img src="docs/social-preview.png" alt="Solo Calisthenics: offline-first training app with a smart progression engine" width="100%"></p>
+
 # Solo Calisthenics
 
-Offline-first, privacy-first calisthenics training app (Flutter, Android 8.0+ / iOS 15+).
-English and Arabic with full RTL. No account, no server, no analytics.
+<p>
+<img src="https://img.shields.io/badge/Flutter-0B1F3A?style=flat-square&logo=flutter&logoColor=14B8A6" alt="Flutter">
+<img src="https://img.shields.io/badge/Dart-0B1F3A?style=flat-square&logo=dart&logoColor=14B8A6" alt="Dart">
+<img src="https://img.shields.io/badge/state-Riverpod-14B8A6?style=flat-square&labelColor=0B1F3A" alt="Riverpod">
+<img src="https://img.shields.io/badge/storage-Drift%20%2B%20SQLCipher-14B8A6?style=flat-square&labelColor=0B1F3A" alt="Drift and SQLCipher">
+<img src="https://img.shields.io/badge/i18n-English%20%7C%20العربية-F59E0B?style=flat-square&labelColor=0B1F3A" alt="English and Arabic">
+<img src="https://img.shields.io/badge/license-MIT-F59E0B?style=flat-square&labelColor=0B1F3A" alt="MIT license">
+</p>
 
-**Status: Phases 1, 2 and 3 are written.** Phase 3 is optional and hidden unless
-the build is given a Supabase project (see `supabase/README.md`).
+An offline-first, privacy-first calisthenics training app for Android 8.0+ and iOS 15+.
+It builds a weekly plan from your level, goals and injuries, then **adapts it automatically** as you log sets.
+It has full **English and Arabic (RTL)** support, no account, no server and no analytics.
 
-* Phase 1: onboarding and profiling, exercise library, workout logger, rest timer,
-  encrypted local storage, theme, Arabic/English.
-* Phase 2: weekly planner with a rule-based progression engine, skill tree,
-  progress dashboard, encrypted photo vault with PIN/biometric lock, encrypted
-  backup export and import.
-* Phase 3 (optional cloud): Google sign-in, passphrase-encrypted cloud backup,
-  coach review (30-second 720p clips, feedback inbox, coach inbox). All server
-  access goes through the `CloudBackend` interface; coach review is gated by
-  `Entitlements` so payments can be added later without touching the screens.
+## Highlights
+
+- **Progression engine (pure Dart, unit-tested).** It advances, holds or regresses each exercise from your logged reps and holds, and schedules deload weeks.
+- **Injury-aware.** Exercises that stress an injured joint are filtered, swapped for a safer regression, or capped.
+- **Encrypted by default.** A Drift database on SQLCipher, with the key in the platform keystore, a PIN/biometric app lock and encrypted backups.
+- **Crash-safe sessions.** Every set is saved immediately. The rest timer survives the screen turning off or the app being killed.
+- **80 exercises in 15 progression chains**, plus a skill tree, a progress dashboard and a private photo vault.
+- **Optional cloud (Supabase):** Google sign-in, passphrase-encrypted backup and coach review, all behind a `CloudBackend` interface.
+
+## Screenshots
+
+| Weekly plan | Logging a set | Skill tree | Progress | Arabic (RTL) |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/en_8_week.png" width="160" alt="Weekly plan"> | <img src="docs/screenshots/en_5_logging.png" width="160" alt="Logging a set"> | <img src="docs/screenshots/en_9_skills.png" width="160" alt="Skill tree"> | <img src="docs/screenshots/en_a_progress.png" width="160" alt="Progress dashboard"> | <img src="docs/screenshots/ar_5_logging.png" width="160" alt="Arabic logging screen"> |
+
+<!-- Add a short screen recording here later: docs/demo.gif -->
+
+## What I learned
+
+- Designing a feature-first architecture (domain / data / application / presentation) that stays testable.
+- Writing business rules (progression, deload, injury filter) as pure functions with unit tests.
+- Mobile security basics: key storage, at-rest encryption, PIN hashing (PBKDF2) and safe backup/restore.
+- Building a fully bilingual RTL interface with Flutter localization.
 
 ## Run
 
@@ -144,3 +167,11 @@ tool/                       authoring helpers and screenshot renderer
 * Payments for coach review (`Entitlements`).
 * Server-side scheduled clip cleanup (Edge Function).
 * Voice counting; real exercise clips.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE). The bundled fonts (Inter, IBM Plex Sans Arabic) use the SIL Open Font License; see `assets/fonts/`.
+
+---
+
+Built by [Samer Monzer](https://github.com/GrandMaster-samer) · [LinkedIn](https://www.linkedin.com/in/samer-monzer-51266727a)
