@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/app_info.dart';
 import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/units.dart';
@@ -271,6 +272,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Image.asset(
+              AppInfo.logoFull,
+              key: const Key('welcome-logo'),
+              height: 116,
+              semanticLabel: l.appName,
+              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            ),
+          ),
+        ),
         _title(l.welcomeTitle, l.welcomeBody),
         Text(l.language, style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: 8),

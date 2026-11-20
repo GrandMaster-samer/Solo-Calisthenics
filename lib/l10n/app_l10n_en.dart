@@ -1142,4 +1142,14 @@ class AppL10nEn extends AppL10n {
   String illustrationOf(String name) {
     return 'Drawing of $name';
   }
+
+  @override
+  String madeBy(String name) {
+    return 'Made by $name';
+  }
+
+  @override
+  String versionLabel(String version) {
+    return 'Version $version';
+  }
 }

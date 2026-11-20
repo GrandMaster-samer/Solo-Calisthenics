@@ -1124,4 +1124,14 @@ class AppL10nAr extends AppL10n {
   String illustrationOf(String name) {
     return 'رسم توضيحي لتمرين $name';
   }
+
+  @override
+  String madeBy(String name) {
+    return 'من تطوير $name';
+  }
+
+  @override
+  String versionLabel(String version) {
+    return 'الإصدار $version';
+  }
 }

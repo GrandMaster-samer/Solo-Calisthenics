@@ -641,5 +641,21 @@
         "type": "String"
       }
     }
+  },
+  "madeBy": "Made by {name}",
+  "@madeBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

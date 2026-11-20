@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/app_info.dart';
 import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/units.dart';
@@ -269,6 +270,24 @@ class SettingsScreen extends ConsumerWidget {
           const CloudAccountSection(),
           header(l.settingsAbout),
           ListTile(
+            key: const Key('about-app'),
+            leading: Image.asset(
+              AppInfo.logoMark,
+              width: 40,
+              height: 40,
+              excludeFromSemantics: true,
+              errorBuilder: (_, _, _) => const SizedBox(width: 40),
+            ),
+            title: Text(
+              l.appName,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+            subtitle: Text(
+              '${l.versionLabel(AppInfo.version)}\n${l.madeBy(AppInfo.developer)}',
+            ),
+            isThreeLine: true,
+          ),
+          ListTile(
             leading: const Icon(Icons.health_and_safety_outlined),
             title: Text(l.disclaimerTitle),
             onTap: () => showDialog<void>(
@@ -293,8 +312,17 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.description_outlined),
             title: Text(l.licenses),
-            onTap: () =>
-                showLicensePage(context: context, applicationName: l.appName),
+            onTap: () => showLicensePage(
+              context: context,
+              applicationName: l.appName,
+              applicationVersion: AppInfo.version,
+              applicationLegalese:
+                  '© ${AppInfo.copyrightYear} ${AppInfo.developer}',
+              applicationIcon: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(AppInfo.logoMark, width: 64, height: 64),
+              ),
+            ),
           ),
         ],
       ),

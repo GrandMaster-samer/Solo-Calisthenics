@@ -10,12 +10,28 @@ void main() {
   final set = library.illustrations;
   final l = set.lengths;
 
-  test('every exercise has a drawing, and every drawing belongs to an exercise', () {
-    expect(set.byExercise.keys.toSet(), library.exercises.map((e) => e.id).toSet());
-  });
+  test(
+    'every exercise has a drawing, and every drawing belongs to an exercise',
+    () {
+      expect(
+        set.byExercise.keys.toSet(),
+        library.exercises.map((e) => e.id).toSet(),
+      );
+    },
+  );
 
   test('drawings are well formed: one anchor per drawing, all angles, valid cover, sane timing', () {
-    const known = {'floor', 'bar', 'lowBar', 'post', 'wall', 'bench', 'dipBars', 'pad', 'band'};
+    const known = {
+      'floor',
+      'bar',
+      'lowBar',
+      'post',
+      'wall',
+      'bench',
+      'dipBars',
+      'pad',
+      'band',
+    };
     for (final MapEntry(key: id, value: ill) in set.byExercise.entries) {
       expect(ill.poses.map((p) => p.anchor).toSet().length, 1, reason: id);
       for (final p in ill.poses) {
@@ -41,9 +57,21 @@ void main() {
     for (final MapEntry(key: id, value: ill) in set.byExercise.entries) {
       for (var i = 0; i <= 20; i++) {
         final j = ill.poseAt(ill.loopMs * i / 20).joints(l);
-        expect(dist(j['shoulder']!, j['nearElbow']!), closeTo(l.upper, 1e-6), reason: id);
-        expect(dist(j['nearKnee']!, j['nearAnkle']!), closeTo(l.shin, 1e-6), reason: id);
-        expect(dist(j['hip']!, j['farKnee']!), closeTo(l.thigh, 1e-6), reason: id);
+        expect(
+          dist(j['shoulder']!, j['nearElbow']!),
+          closeTo(l.upper, 1e-6),
+          reason: id,
+        );
+        expect(
+          dist(j['nearKnee']!, j['nearAnkle']!),
+          closeTo(l.shin, 1e-6),
+          reason: id,
+        );
+        expect(
+          dist(j['hip']!, j['farKnee']!),
+          closeTo(l.thigh, 1e-6),
+          reason: id,
+        );
       }
     }
   });
@@ -66,8 +94,14 @@ void main() {
     }
     // ... and the body is a straight line from heel to neck.
     final j = push.poses.first.joints(l);
-    final a = math.atan2(j['neck']!.dy - j['hip']!.dy, j['neck']!.dx - j['hip']!.dx);
-    final b = math.atan2(j['hip']!.dy - j['nearAnkle']!.dy, j['hip']!.dx - j['nearAnkle']!.dx);
+    final a = math.atan2(
+      j['neck']!.dy - j['hip']!.dy,
+      j['neck']!.dx - j['hip']!.dx,
+    );
+    final b = math.atan2(
+      j['hip']!.dy - j['nearAnkle']!.dy,
+      j['hip']!.dx - j['nearAnkle']!.dx,
+    );
     expect(a, closeTo(b, 1e-6));
   });
 
@@ -78,7 +112,10 @@ void main() {
     expect(at(0)['nu'], ill.poses.first['nu']);
     expect(at(ill.holdMs - 1.0)['nu'], ill.poses.first['nu']);
     final midForward = at(ill.holdMs + ill.forwardMs / 2)['nu'];
-    expect(midForward, closeTo((ill.poses.first['nu'] + ill.poses.last['nu']) / 2, 0.01));
+    expect(
+      midForward,
+      closeTo((ill.poses.first['nu'] + ill.poses.last['nu']) / 2, 0.01),
+    );
     expect(at(ill.holdMs + ill.forwardMs + 1.0)['nu'], ill.poses.last['nu']);
     expect(at(ill.loopMs - 1.0)['nu'], closeTo(ill.poses.first['nu'], 0.01));
     expect(at(ill.loopMs + 1.0)['nu'], ill.poses.first['nu'], reason: 'loops');

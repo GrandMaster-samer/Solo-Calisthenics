@@ -323,5 +323,7 @@
   "feedbackWrite": "ملاحظات على الأداء",
   "feedbackSend": "إرسال الملاحظات",
   "feedbackDeletesClip": "إرسال الملاحظات يحذف المقطع من الخادم.",
-  "illustrationOf": "رسم توضيحي لتمرين {name}"
+  "illustrationOf": "رسم توضيحي لتمرين {name}",
+  "madeBy": "من تطوير {name}",
+  "versionLabel": "الإصدار {version}"
 }

@@ -2040,6 +2040,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Drawing of {name}'**
   String illustrationOf(String name);
+
+  /// No description provided for @madeBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Made by {name}'**
+  String madeBy(String name);
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String versionLabel(String version);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

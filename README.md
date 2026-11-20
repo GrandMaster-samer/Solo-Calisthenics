@@ -138,6 +138,24 @@ tool/                       authoring helpers and screenshot renderer
 * **Backup**: a complete SQLCipher database re-encrypted with the user's passphrase
   (`sqlcipher_export`). Restore stages and validates the file before replacing anything.
 
+## Logo and app icon
+
+The logo source is `branding/source_logo.jpg`. `python3 tool/make_branding.py`
+builds the in-app logos (`assets/branding/`) and the icon and launch-screen images
+(`branding/`). Then regenerate the platform files:
+
+```bash
+dart run flutter_launcher_icons
+```
+
+```bash
+dart run flutter_native_splash:create
+```
+
+`flutter_launcher_icons` also edits `ios/Runner.xcodeproj/project.pbxproj`
+(`ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`); revert that hunk.
+The developer name and version shown in Settings > About live in `lib/core/app_info.dart`.
+
 ## Adding content
 
 * Exercise drawings: edit `tool/build_illustrations.py` and run it; it rewrites
