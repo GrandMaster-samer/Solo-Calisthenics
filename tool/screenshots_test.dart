@@ -21,7 +21,9 @@ import '../test/helpers.dart';
 Future<void> loadFont(String family, List<String> paths) async {
   final loader = FontLoader(family);
   for (final p in paths) {
-    loader.addFont(Future.value(ByteData.sublistView(File(p).readAsBytesSync())));
+    loader.addFont(
+      Future.value(ByteData.sublistView(File(p).readAsBytesSync())),
+    );
   }
   await loader.load();
 }
@@ -31,14 +33,20 @@ void main() {
     final flutterRoot = Platform.environment['FLUTTER_ROOT']!;
     await loadFont('Inter', ['assets/fonts/Inter.ttf']);
     await loadFont('IBMPlexSansArabic', [
-      for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold']) 'assets/fonts/IBMPlexSansArabic-$w.ttf',
+      for (final w in ['Regular', 'Medium', 'SemiBold', 'Bold'])
+        'assets/fonts/IBMPlexSansArabic-$w.ttf',
     ]);
-    await loadFont('MaterialIcons', ['$flutterRoot/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf']);
+    await loadFont('MaterialIcons', [
+      '$flutterRoot/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+    ]);
   });
 
   Future<void> shot(WidgetTester tester, String name) async {
     await tester.pump(const Duration(milliseconds: 400));
-    await expectLater(find.byType(MaterialApp), matchesGoldenFile('screenshots/$name.png'));
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('screenshots/$name.png'),
+    );
   }
 
   void phone(WidgetTester tester) {
@@ -77,7 +85,9 @@ void main() {
       await shot(tester, '${lang}_4_preview');
       await tester.tap(find.byKey(const Key('start-workout')));
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.chevron_right)); // a rep-based exercise
+      await tester.tap(
+        find.byIcon(Icons.chevron_right),
+      ); // a rep-based exercise
       await tester.pump(const Duration(milliseconds: 300));
       for (var i = 0; i < 7; i++) {
         await tester.tap(find.byKey(const Key('tap-zone')));
@@ -87,8 +97,15 @@ void main() {
       await tester.tap(find.byKey(const Key('done-set')));
       await tester.pump(const Duration(milliseconds: 300));
       env.clock.advance(const Duration(seconds: 23));
-      final c = ProviderScope.containerOf(tester.element(find.byType(ActiveSessionScreen)));
-      final set = c.read(activeSessionProvider).value!.exercises.expand((e) => e.sets).single;
+      final c = ProviderScope.containerOf(
+        tester.element(find.byType(ActiveSessionScreen)),
+      );
+      final set = c
+          .read(activeSessionProvider)
+          .value!
+          .exercises
+          .expand((e) => e.sets)
+          .single;
       await c.read(activeSessionProvider.notifier).setEffort(set.id, rir: 2);
       await shot(tester, '${lang}_6_rest');
     });
@@ -109,26 +126,67 @@ void main() {
         DateTime(2025, 12, 30): [12, 12, 12],
       };
       for (final e in history.entries) {
-        final id = await workouts.createSession(
-          'S',
-          const [
-            PlannedExercise(exerciseId: 'push_up', sets: 3, targetMin: 8, targetMax: 12, restSec: 90),
-            PlannedExercise(exerciseId: 'plank', sets: 2, targetMin: 20, targetMax: 60, restSec: 60),
-          ],
-          now: e.key,
-        );
+        final id = await workouts.createSession('S', const [
+          PlannedExercise(
+            exerciseId: 'push_up',
+            sets: 3,
+            targetMin: 8,
+            targetMax: 12,
+            restSec: 90,
+          ),
+          PlannedExercise(
+            exerciseId: 'plank',
+            sets: 2,
+            targetMin: 20,
+            targetMax: 60,
+            restSec: 60,
+          ),
+        ], now: e.key);
         final s = (await workouts.load(id))!;
         for (final v in e.value) {
-          await workouts.addSet(sessionId: id, sessionExerciseId: s.exercises[0].id, value: v, method: LogMethod.manual, now: e.key, restSec: 0);
+          await workouts.addSet(
+            sessionId: id,
+            sessionExerciseId: s.exercises[0].id,
+            value: v,
+            method: LogMethod.manual,
+            now: e.key,
+            restSec: 0,
+          );
         }
-        await workouts.addSet(sessionId: id, sessionExerciseId: s.exercises[1].id, value: 20 + e.value.first * 2, method: LogMethod.timer, now: e.key, restSec: 0);
+        await workouts.addSet(
+          sessionId: id,
+          sessionExerciseId: s.exercises[1].id,
+          value: 20 + e.value.first * 2,
+          method: LogMethod.timer,
+          now: e.key,
+          restSec: 0,
+        );
         await workouts.finish(id, now: e.key.add(const Duration(minutes: 35)));
       }
       final progress = ProgressRepository(env.db);
-      await progress.saveChainState(const ChainState(chainId: 'planche', exerciseId: 'advanced_tuck_planche', holdTarget: 10), now: env.clock.now);
-      await progress.addMilestone('planche', 'tuck_planche', now: DateTime(2025, 12, 4));
-      await progress.addMilestone('planche', 'advanced_tuck_planche', now: DateTime(2025, 12, 30));
-      await progress.addMilestone('push_up', 'push_up', now: DateTime(2025, 11, 25));
+      await progress.saveChainState(
+        const ChainState(
+          chainId: 'planche',
+          exerciseId: 'advanced_tuck_planche',
+          holdTarget: 10,
+        ),
+        now: env.clock.now,
+      );
+      await progress.addMilestone(
+        'planche',
+        'tuck_planche',
+        now: DateTime(2025, 12, 4),
+      );
+      await progress.addMilestone(
+        'planche',
+        'advanced_tuck_planche',
+        now: DateTime(2025, 12, 30),
+      );
+      await progress.addMilestone(
+        'push_up',
+        'push_up',
+        now: DateTime(2025, 11, 25),
+      );
 
       await tester.pumpWidget(env.app(locale: lang));
       await tester.pumpAndSettle();

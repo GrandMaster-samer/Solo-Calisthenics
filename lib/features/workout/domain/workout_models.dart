@@ -159,7 +159,11 @@ class SessionSummary {
 
 /// Links a session to a day of the weekly plan.
 class PlanLink {
-  const PlanLink({required this.week, required this.dayIndex, required this.isDeload});
+  const PlanLink({
+    required this.week,
+    required this.dayIndex,
+    required this.isDeload,
+  });
   final String week;
   final int dayIndex;
   final bool isDeload;

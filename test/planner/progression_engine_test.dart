@@ -18,15 +18,14 @@ ProgressionResult run(
   Performance? previous,
   String? next = 'hard',
   String? prev = 'easy',
-}) =>
-    ProgressionEngine.evaluate(
-      state: s,
-      exercise: exercise ?? reps,
-      performance: p,
-      previous: previous,
-      nextExerciseId: next,
-      previousExerciseId: prev,
-    );
+}) => ProgressionEngine.evaluate(
+  state: s,
+  exercise: exercise ?? reps,
+  performance: p,
+  previous: previous,
+  nextExerciseId: next,
+  previousExerciseId: prev,
+);
 
 void main() {
   const start = ChainState(chainId: 'chain', exerciseId: 'mid');
@@ -40,13 +39,16 @@ void main() {
       expect(r.state.exerciseId, 'mid');
     });
 
-    test('top of the range on all sets for 2 consecutive sessions: advance', () {
-      final first = run(start, perf([10, 10, 10])).state;
-      final r = run(first, perf([10, 11, 10]));
-      expect(r.action, ProgressionAction.advance);
-      expect(r.state.exerciseId, 'hard');
-      expect(r.state.successStreak, 0, reason: 'new exercise starts clean');
-    });
+    test(
+      'top of the range on all sets for 2 consecutive sessions: advance',
+      () {
+        final first = run(start, perf([10, 10, 10])).state;
+        final r = run(first, perf([10, 11, 10]));
+        expect(r.action, ProgressionAction.advance);
+        expect(r.state.exerciseId, 'hard');
+        expect(r.state.successStreak, 0, reason: 'new exercise starts clean');
+      },
+    );
 
     test('the two sessions must be consecutive', () {
       var s = run(start, perf([10, 10, 10])).state;
@@ -70,7 +72,10 @@ void main() {
     });
 
     test('RIR below 3 at the top still needs two sessions', () {
-      expect(run(start, perf([10, 10, 10], rir: 1)).action, ProgressionAction.repeat);
+      expect(
+        run(start, perf([10, 10, 10], rir: 1)).action,
+        ProgressionAction.repeat,
+      );
     });
 
     test('end of the chain: add reps instead of advancing', () {
@@ -81,7 +86,10 @@ void main() {
       expect(r.state.bonus, ProgressionEngine.repStep);
       expect(ProgressionEngine.range(reps, r.state), (min: 7, max: 12));
       // The old top is no longer enough.
-      expect(run(r.state, perf([10, 10, 10]), next: null).state.successStreak, 0);
+      expect(
+        run(r.state, perf([10, 10, 10]), next: null).state.successStreak,
+        0,
+      );
     });
 
     test('below the bottom of the range twice in a row: regress', () {
@@ -137,18 +145,28 @@ void main() {
       expect(ProgressionEngine.holdGoal(hold, r.state), 5);
     });
 
-    test('holding the top of the range for 2 consecutive sessions advances', () {
-      final atTop = holdStart.copyWith(holdTarget: () => 10);
-      final first = run(atTop, perf([10, 10, 10]), exercise: hold);
-      expect(first.action, ProgressionAction.repeat);
-      final r = run(first.state, perf([12, 10, 10]), exercise: hold);
-      expect(r.action, ProgressionAction.advance);
-      expect(r.state.exerciseId, 'hard');
-      expect(r.state.holdTarget, isNull, reason: 'the next exercise starts at its own minimum');
-    });
+    test(
+      'holding the top of the range for 2 consecutive sessions advances',
+      () {
+        final atTop = holdStart.copyWith(holdTarget: () => 10);
+        final first = run(atTop, perf([10, 10, 10]), exercise: hold);
+        expect(first.action, ProgressionAction.repeat);
+        final r = run(first.state, perf([12, 10, 10]), exercise: hold);
+        expect(r.action, ProgressionAction.advance);
+        expect(r.state.exerciseId, 'hard');
+        expect(
+          r.state.holdTarget,
+          isNull,
+          reason: 'the next exercise starts at its own minimum',
+        );
+      },
+    );
 
     test('3x10s -> 3x20s style stepping uses 10 s steps on long ranges', () {
-      final long = fakeExercise('long', type: ExerciseType.hold); // 5-10 default
+      final long = fakeExercise(
+        'long',
+        type: ExerciseType.hold,
+      ); // 5-10 default
       expect(ProgressionEngine.holdStep(long), 5);
       final plank = loadLibrary().byId('plank')!; // 20-60 s
       expect(ProgressionEngine.holdStep(plank), 10);
@@ -185,7 +203,10 @@ void main() {
 
     test('a steady or better session resets the drop streak', () {
       final s = start.copyWith(dropStreak: 1);
-      expect(run(s, perf([8, 8, 7]), previous: perf([8, 8, 8])).state.dropStreak, 0);
+      expect(
+        run(s, perf([8, 8, 7]), previous: perf([8, 8, 8])).state.dropStreak,
+        0,
+      );
     });
 
     test('no previous session: no drop', () {

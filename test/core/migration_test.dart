@@ -44,9 +44,18 @@ void main() {
 
     // New tables work.
     final repo = ProgressRepository(db);
-    await repo.saveChainState(const ChainState(chainId: 'push_up', exerciseId: 'push_up'), now: DateTime(2026));
+    await repo.saveChainState(
+      const ChainState(chainId: 'push_up', exerciseId: 'push_up'),
+      now: DateTime(2026),
+    );
     expect((await repo.chainStates()).keys, ['push_up']);
     expect(await repo.milestones(), isEmpty);
-    expect((await db.customSelect('PRAGMA user_version').getSingle()).data.values.single, 2);
+    expect(
+      (await db.customSelect('PRAGMA user_version').getSingle())
+          .data
+          .values
+          .single,
+      2,
+    );
   });
 }

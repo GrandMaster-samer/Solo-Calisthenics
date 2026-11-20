@@ -1137,4 +1137,9 @@ class AppL10nEn extends AppL10n {
   @override
   String get feedbackDeletesClip =>
       'Sending the feedback deletes the clip from the server.';
+
+  @override
+  String illustrationOf(String name) {
+    return 'Drawing of $name';
+  }
 }

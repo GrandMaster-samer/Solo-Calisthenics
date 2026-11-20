@@ -19,7 +19,8 @@ class SecureSecretStore implements SecretStore {
   @override
   Future<String?> read(String key) => _storage.read(key: key);
   @override
-  Future<void> write(String key, String value) => _storage.write(key: key, value: value);
+  Future<void> write(String key, String value) =>
+      _storage.write(key: key, value: value);
   @override
   Future<void> delete(String key) => _storage.delete(key: key);
 }
@@ -45,7 +46,10 @@ class DeviceBiometrics implements Biometrics {
   @override
   Future<bool> authenticate(String reason) async {
     try {
-      return await _auth.authenticate(localizedReason: reason, biometricOnly: true);
+      return await _auth.authenticate(
+        localizedReason: reason,
+        biometricOnly: true,
+      );
     } on Object {
       return false; // cancelled, not enrolled, locked out: fall back to the PIN
     }
@@ -72,16 +76,23 @@ class AppLock {
   DateTime? _lockedUntil;
 
   static bool isValidPin(String pin) =>
-      pin.length >= minPinLength && pin.length <= maxPinLength && RegExp(r'^\d+$').hasMatch(pin);
+      pin.length >= minPinLength &&
+      pin.length <= maxPinLength &&
+      RegExp(r'^\d+$').hasMatch(pin);
 
   Future<bool> hasPin() async => await _store.read(_key) != null;
 
   Future<void> setPin(String pin) async {
-    if (!isValidPin(pin)) throw ArgumentError('PIN must be $minPinLength-$maxPinLength digits');
+    if (!isValidPin(pin)) {
+      throw ArgumentError('PIN must be $minPinLength-$maxPinLength digits');
+    }
     final r = Random.secure();
     final salt = Uint8List.fromList(List.generate(16, (_) => r.nextInt(256)));
     final hash = pbkdf2(utf8.encode(pin), salt, iterations);
-    await _store.write(_key, '$iterations:${base64Encode(salt)}:${base64Encode(hash)}');
+    await _store.write(
+      _key,
+      '$iterations:${base64Encode(salt)}:${base64Encode(hash)}',
+    );
     _failed = 0;
     _lockedUntil = null;
   }
@@ -91,7 +102,9 @@ class AppLock {
   /// Time left before another attempt is allowed, or zero.
   Duration lockoutRemaining(DateTime now) {
     final until = _lockedUntil;
-    return until == null || !until.isAfter(now) ? Duration.zero : until.difference(now);
+    return until == null || !until.isAfter(now)
+        ? Duration.zero
+        : until.difference(now);
   }
 
   Future<bool> verify(String pin, {required DateTime now}) async {
@@ -100,7 +113,11 @@ class AppLock {
     if (stored == null) return false;
     final parts = stored.split(':');
     if (parts.length != 3) return false;
-    final hash = pbkdf2(utf8.encode(pin), base64Decode(parts[1]), int.parse(parts[0]));
+    final hash = pbkdf2(
+      utf8.encode(pin),
+      base64Decode(parts[1]),
+      int.parse(parts[0]),
+    );
     final ok = _constantTimeEquals(hash, base64Decode(parts[2]));
     if (ok) {
       _failed = 0;
@@ -139,7 +156,8 @@ class AppLock {
 /// Best effort; a no-op where unsupported.
 Future<void> setSecureWindow(bool secure) async {
   try {
-    await const MethodChannel('solo_calisthenics/window').invokeMethod<void>('setSecure', secure);
+    await const MethodChannel('solo_calisthenics/window')
+        .invokeMethod<void>('setSecure', secure);
   } on Object {
     // Not available (iOS, tests).
   }

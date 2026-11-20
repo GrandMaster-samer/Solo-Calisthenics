@@ -633,5 +633,13 @@
   "coachInboxEmpty": "No clips waiting for review.",
   "feedbackWrite": "Technique feedback",
   "feedbackSend": "Send feedback",
-  "feedbackDeletesClip": "Sending the feedback deletes the clip from the server."
+  "feedbackDeletesClip": "Sending the feedback deletes the clip from the server.",
+  "illustrationOf": "Drawing of {name}",
+  "@illustrationOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

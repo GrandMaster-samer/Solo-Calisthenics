@@ -2034,6 +2034,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Sending the feedback deletes the clip from the server.'**
   String get feedbackDeletesClip;
+
+  /// No description provided for @illustrationOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Drawing of {name}'**
+  String illustrationOf(String name);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

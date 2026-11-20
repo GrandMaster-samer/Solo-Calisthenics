@@ -37,7 +37,11 @@ class ActiveSessionController extends AsyncNotifier<WorkoutSession?> {
     state = AsyncData(session?.finishedAt == null ? session : null);
   }
 
-  Future<void> start(String name, List<PlannedExercise> plan, {PlanLink? link}) async {
+  Future<void> start(
+    String name,
+    List<PlannedExercise> plan, {
+    PlanLink? link,
+  }) async {
     final existing = state.value;
     if (existing != null) await _repo.discard(existing.id);
     final id = await _repo.createSession(name, plan, now: _now(), link: link);
@@ -198,7 +202,9 @@ class ActiveSessionController extends AsyncNotifier<WorkoutSession?> {
     } else {
       final now = _now();
       await _repo.finish(s.id, now: now);
-      changes = await ref.read(progressionServiceProvider).applyFinishedSession(s, now: now);
+      changes = await ref
+          .read(progressionServiceProvider)
+          .applyFinishedSession(s, now: now);
     }
     state = const AsyncData(null);
     ref.invalidate(chainStatesProvider);

@@ -10,7 +10,9 @@ import '../../settings/application/settings_controller.dart';
 import '../data/app_lock.dart';
 
 /// Whether a PIN is set. Invalidate after setting or removing the PIN.
-final hasPinProvider = FutureProvider<bool>((ref) => ref.watch(appLockProvider).hasPin());
+final hasPinProvider = FutureProvider<bool>(
+  (ref) => ref.watch(appLockProvider).hasPin(),
+);
 
 /// Shows [child] only after the PIN (or biometrics) has been accepted.
 /// Does nothing when no PIN is set or [enabled] is false.
@@ -36,7 +38,8 @@ class LockGate extends ConsumerStatefulWidget {
   ConsumerState<LockGate> createState() => _LockGateState();
 }
 
-class _LockGateState extends ConsumerState<LockGate> with WidgetsBindingObserver {
+class _LockGateState extends ConsumerState<LockGate>
+    with WidgetsBindingObserver {
   bool _unlocked = false;
 
   @override
@@ -53,7 +56,9 @@ class _LockGateState extends ConsumerState<LockGate> with WidgetsBindingObserver
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (widget.relockOnBackground && state == AppLifecycleState.paused && _unlocked) {
+    if (widget.relockOnBackground &&
+        state == AppLifecycleState.paused &&
+        _unlocked) {
       setState(() => _unlocked = false);
     }
   }
@@ -62,7 +67,8 @@ class _LockGateState extends ConsumerState<LockGate> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     final hasPin = ref.watch(hasPinProvider);
     if (!widget.enabled) {
-      _unlocked = true; // turning the lock on later must not lock the open screen
+      _unlocked =
+          true; // turning the lock on later must not lock the open screen
       return widget.child;
     }
     // Content that was open before a PIN existed stays open: creating a PIN
@@ -127,7 +133,10 @@ class _PinEntryScreenState extends ConsumerState<PinEntryScreen> {
 
   Future<void> _biometric() async {
     final reason = AppL10n.of(context).unlockReason;
-    if (await ref.read(appLockProvider).biometrics.authenticate(reason) && mounted) widget.onUnlocked();
+    if (await ref.read(appLockProvider).biometrics.authenticate(reason) &&
+        mounted) {
+      widget.onUnlocked();
+    }
   }
 
   Future<void> _submit() async {
@@ -152,7 +161,9 @@ class _PinEntryScreenState extends ConsumerState<PinEntryScreen> {
       setState(() {
         _busy = false;
         _pin = '';
-        _error = after > Duration.zero ? l.pinLockedOut(after.inSeconds) : l.pinWrong;
+        _error = after > Duration.zero
+            ? l.pinLockedOut(after.inSeconds)
+            : l.pinWrong;
       });
     }
   }
@@ -184,7 +195,10 @@ class _PinEntryScreenState extends ConsumerState<PinEntryScreen> {
                 TextButton(
                   key: const Key('forgot-pin'),
                   onPressed: () => setState(() => _confirmErase = true),
-                  child: Text(l.forgotPin, style: const TextStyle(color: AppColors.textSecondary)),
+                  child: Text(
+                    l.forgotPin,
+                    style: const TextStyle(color: AppColors.textSecondary),
+                  ),
                 )
               else ...[
                 Padding(
@@ -198,11 +212,17 @@ class _PinEntryScreenState extends ConsumerState<PinEntryScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(onPressed: () => setState(() => _confirmErase = false), child: Text(l.cancel)),
+                    TextButton(
+                      onPressed: () => setState(() => _confirmErase = false),
+                      child: Text(l.cancel),
+                    ),
                     TextButton(
                       key: const Key('erase-all'),
                       onPressed: _erase,
-                      child: Text(l.eraseEverything, style: const TextStyle(color: AppColors.error)),
+                      child: Text(
+                        l.eraseEverything,
+                        style: const TextStyle(color: AppColors.error),
+                      ),
                     ),
                   ],
                 ),
@@ -305,7 +325,8 @@ class PinPad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppL10n.of(context);
-    Widget key(String label, {VoidCallback? onTap, IconData? icon, Key? k}) => Padding(
+    Widget key(String label, {VoidCallback? onTap, IconData? icon, Key? k}) =>
+        Padding(
           padding: const EdgeInsets.all(6),
           child: SizedBox(
             width: 76,
@@ -320,7 +341,10 @@ class PinPad extends StatelessWidget {
                 child: Center(
                   child: icon != null
                       ? Icon(icon, semanticLabel: label)
-                      : Text(label, style: numericStyle(26, weight: FontWeight.w600)),
+                      : Text(
+                          label,
+                          style: numericStyle(26, weight: FontWeight.w600),
+                        ),
                 ),
               ),
             ),
@@ -339,9 +363,17 @@ class PinPad extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.lock_outline, size: 40, color: AppColors.primary),
+                const Icon(
+                  Icons.lock_outline,
+                  size: 40,
+                  color: AppColors.primary,
+                ),
                 const SizedBox(height: 12),
-                Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 if (subtitle != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
@@ -357,14 +389,23 @@ class PinPad extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      for (var i = 0; i < (pin.length < AppLock.minPinLength ? AppLock.minPinLength : pin.length); i++)
+                      for (
+                        var i = 0;
+                        i <
+                            (pin.length < AppLock.minPinLength
+                                ? AppLock.minPinLength
+                                : pin.length);
+                        i++
+                      )
                         Container(
                           width: 14,
                           height: 14,
                           margin: const EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: i < pin.length ? AppColors.primary : AppColors.surfaceElevated,
+                            color: i < pin.length
+                                ? AppColors.primary
+                                : AppColors.surfaceElevated,
                           ),
                         ),
                     ],
@@ -375,7 +416,11 @@ class PinPad extends StatelessWidget {
                   child: Center(
                     child: error == null
                         ? null
-                        : Text(error!, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.error)),
+                        : Text(
+                            error!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: AppColors.error),
+                          ),
                   ),
                 ),
                 Directionality(
@@ -389,7 +434,10 @@ class PinPad extends StatelessWidget {
                       ])
                         Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: [for (final d in row) key(d, k: Key('pin-$d'), onTap: () => add(d))],
+                          children: [
+                            for (final d in row)
+                              key(d, k: Key('pin-$d'), onTap: () => add(d)),
+                          ],
                         ),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -398,21 +446,35 @@ class PinPad extends StatelessWidget {
                             l.deleteDigit,
                             icon: Icons.backspace_outlined,
                             k: const Key('pin-back'),
-                            onTap: pin.isEmpty ? null : () => onChanged(pin.substring(0, pin.length - 1)),
+                            onTap: pin.isEmpty
+                                ? null
+                                : () => onChanged(
+                                    pin.substring(0, pin.length - 1),
+                                  ),
                           ),
-                          key('0', k: const Key('pin-0'), onTap: () => add('0')),
+                          key(
+                            '0',
+                            k: const Key('pin-0'),
+                            onTap: () => add('0'),
+                          ),
                           key(
                             l.ok,
                             icon: Icons.check,
                             k: const Key('pin-ok'),
-                            onTap: pin.length >= AppLock.minPinLength ? onSubmit : null,
+                            onTap: pin.length >= AppLock.minPinLength
+                                ? onSubmit
+                                : null,
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                if (extra != null) Padding(padding: const EdgeInsets.only(top: 12), child: extra),
+                if (extra != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: extra,
+                  ),
               ],
             ),
           ),

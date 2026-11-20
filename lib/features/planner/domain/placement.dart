@@ -5,7 +5,15 @@ import '../../profile/domain/profile.dart';
 /// to experience level when a test result is missing.
 abstract final class Placement {
   /// Skill chains start conservatively: nobody is placed deep into them without proof.
-  static const skillChains = {'handstand', 'planche', 'front_lever', 'muscle_up', 'l_sit', 'dragon_flag', 'hspu'};
+  static const skillChains = {
+    'handstand',
+    'planche',
+    'front_lever',
+    'muscle_up',
+    'l_sit',
+    'dragon_flag',
+    'hspu',
+  };
 
   static Exercise start(List<Exercise> chain, UserProfile profile) {
     assert(chain.isNotEmpty);
@@ -33,30 +41,33 @@ abstract final class Placement {
   }
 
   static String? _pushUp(int? max) => switch (max) {
-        null => null,
-        < 1 => 'wall_push_up',
-        < 5 => 'incline_push_up',
-        < 10 => 'knee_push_up',
-        < 20 => 'push_up',
-        < 30 => 'diamond_push_up',
-        < 40 => 'decline_push_up',
-        _ => 'archer_push_up',
-      };
+    null => null,
+    < 1 => 'wall_push_up',
+    < 5 => 'incline_push_up',
+    < 10 => 'knee_push_up',
+    < 20 => 'push_up',
+    < 30 => 'diamond_push_up',
+    < 40 => 'decline_push_up',
+    _ => 'archer_push_up',
+  };
 
   static String? _pullUp(int? max, int? deadHangSec) => switch (max) {
-        null => deadHangSec == null ? null : (deadHangSec < 20 ? 'dead_hang' : 'scapular_pull_up'),
-        < 1 => (deadHangSec ?? 0) < 20 ? 'dead_hang' : 'scapular_pull_up',
-        < 3 => 'negative_pull_up',
-        < 6 => 'chin_up',
-        < 12 => 'pull_up',
-        _ => 'l_sit_pull_up',
-      };
+    null =>
+      deadHangSec == null
+          ? null
+          : (deadHangSec < 20 ? 'dead_hang' : 'scapular_pull_up'),
+    < 1 => (deadHangSec ?? 0) < 20 ? 'dead_hang' : 'scapular_pull_up',
+    < 3 => 'negative_pull_up',
+    < 6 => 'chin_up',
+    < 12 => 'pull_up',
+    _ => 'l_sit_pull_up',
+  };
 
   static String? _plank(int? sec) => switch (sec) {
-        null => null,
-        < 20 => 'knee_plank',
-        < 60 => 'plank',
-        < 90 => 'side_plank',
-        _ => 'hollow_body_hold',
-      };
+    null => null,
+    < 20 => 'knee_plank',
+    < 60 => 'plank',
+    < 90 => 'side_plank',
+    _ => 'hollow_body_hold',
+  };
 }

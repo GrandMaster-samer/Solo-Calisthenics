@@ -140,6 +140,10 @@ tool/                       authoring helpers and screenshot renderer
 
 ## Adding content
 
+* Exercise drawings: edit `tool/build_illustrations.py` and run it; it rewrites
+  `assets/data/illustrations.json`. Pass an output path to also get a PNG preview.
+  `flutter test tool/illustrations_sheet_test.dart --update-goldens` renders all of
+  them with the app's own painter into `tool/screenshots/illustrations_sheet.png`.
 * Exercises: edit `assets/data/exercises.json` (or `tool/build_seed.py` and rerun it).
 * Translations: edit `tool/build_arb.py`, run it, then `flutter gen-l10n`.
 * Clips: see `assets/media/README.md`.
@@ -150,4 +154,4 @@ tool/                       authoring helpers and screenshot renderer
   implementation is compile-checked only so far).
 * Payments for coach review (`Entitlements`).
 * Server-side scheduled clip cleanup (Edge Function).
-* Voice counting; real exercise clips.
+* Voice counting; optional recorded clips to replace the drawings.

@@ -55,7 +55,8 @@ class Sessions extends Table {
   IntColumn get restTotalSec => integer().nullable()();
 
   // v2: set when the session was started from the weekly plan.
-  TextColumn get planWeek => text().nullable()(); // Monday of the week, yyyy-MM-dd
+  TextColumn get planWeek =>
+      text().nullable()(); // Monday of the week, yyyy-MM-dd
   IntColumn get planDayIndex => integer().nullable()();
   BoolColumn get isDeload => boolean().withDefault(const Constant(false))();
 }
@@ -148,16 +149,16 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onUpgrade: (m, from, to) async {
-          if (from < 2) {
-            await m.addColumn(sessions, sessions.planWeek);
-            await m.addColumn(sessions, sessions.planDayIndex);
-            await m.addColumn(sessions, sessions.isDeload);
-            await m.createTable(chainProgress);
-            await m.createTable(milestones);
-            await m.createTable(progressPhotos);
-          }
-        },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.addColumn(sessions, sessions.planWeek);
+        await m.addColumn(sessions, sessions.planDayIndex);
+        await m.addColumn(sessions, sessions.isDeload);
+        await m.createTable(chainProgress);
+        await m.createTable(milestones);
+        await m.createTable(progressPhotos);
+      }
+    },
     beforeOpen: (details) async => customStatement('PRAGMA foreign_keys = ON'),
   );
 }

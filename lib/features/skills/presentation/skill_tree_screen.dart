@@ -8,6 +8,7 @@ import '../../../core/widgets/labels.dart';
 import '../../../l10n/app_l10n.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../exercises/presentation/exercise_detail_screen.dart';
+import '../../exercises/presentation/exercise_illustration.dart';
 import '../../exercises/presentation/exercise_media.dart';
 import '../../planner/application/planner_controller.dart';
 import '../../planner/domain/progression_engine.dart';
@@ -29,9 +30,12 @@ class _SkillTreeScreenState extends ConsumerState<SkillTreeScreen> {
     final l = AppL10n.of(context);
     final lang = Localizations.localeOf(context).languageCode;
     final library = ref.watch(exerciseLibraryProvider);
-    final states = ref.watch(chainStatesProvider).value ?? const <String, ChainState>{};
+    final states =
+        ref.watch(chainStatesProvider).value ?? const <String, ChainState>{};
     final milestones = ref.watch(milestonesProvider).value ?? const [];
-    final unlockedAt = {for (final m in milestones.reversed) m.exerciseId: m.achievedAt};
+    final unlockedAt = {
+      for (final m in milestones.reversed) m.exerciseId: m.achievedAt,
+    };
 
     return Scaffold(
       appBar: AppBar(title: Text(l.tabSkills)),
@@ -44,7 +48,12 @@ class _SkillTreeScreenState extends ConsumerState<SkillTreeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               children: [
                 // Skills first: statics are what people come to this screen for.
-                for (final p in [MovementPattern.statics, ...MovementPattern.values.where((p) => p != MovementPattern.statics)])
+                for (final p in [
+                  MovementPattern.statics,
+                  ...MovementPattern.values.where(
+                    (p) => p != MovementPattern.statics,
+                  ),
+                ])
                   Padding(
                     padding: const EdgeInsetsDirectional.only(end: 8),
                     child: ChoiceChip(
@@ -54,7 +63,9 @@ class _SkillTreeScreenState extends ConsumerState<SkillTreeScreen> {
                       label: Text(l.pattern(p)),
                       selected: _pattern == p,
                       labelStyle: TextStyle(
-                        color: _pattern == p ? AppColors.background : AppColors.textPrimary,
+                        color: _pattern == p
+                            ? AppColors.background
+                            : AppColors.textPrimary,
                         fontWeight: FontWeight.w600,
                       ),
                       onSelected: (_) => setState(() => _pattern = p),
@@ -68,68 +79,95 @@ class _SkillTreeScreenState extends ConsumerState<SkillTreeScreen> {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
               children: [
                 for (final chain in library.chainsFor(_pattern))
-                  Builder(builder: (context) {
-                    final exercises = library.chain(chain.id);
-                    final state = states[chain.id];
-                    final current = exercises.where((e) => e.id == state?.exerciseId).firstOrNull;
-                    final currentLevel = current?.level ?? 1;
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    chain.name.of(lang),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(fontWeight: FontWeight.w700),
+                  Builder(
+                    builder: (context) {
+                      final exercises = library.chain(chain.id);
+                      final state = states[chain.id];
+                      final current = exercises
+                          .where((e) => e.id == state?.exerciseId)
+                          .firstOrNull;
+                      final currentLevel = current?.level ?? 1;
+                      return Card(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      chain.name.of(lang),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.only(end: 8),
-                                  child: Text(
-                                    l.levelInChain(currentLevel, exercises.length),
-                                    style: const TextStyle(color: AppColors.textSecondary),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                      end: 8,
+                                    ),
+                                    child: Text(
+                                      l.levelInChain(
+                                        currentLevel,
+                                        exercises.length,
+                                      ),
+                                      style: const TextStyle(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
                                   ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: LinearProgressIndicator(
+                                  value:
+                                      (currentLevel - 1) /
+                                      (exercises.length - 1).clamp(1, 99),
+                                  minHeight: 6,
+                                  backgroundColor: AppColors.surfaceElevated,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: LinearProgressIndicator(
-                                value: (currentLevel - 1) / (exercises.length - 1).clamp(1, 99),
-                                minHeight: 6,
-                                backgroundColor: AppColors.surfaceElevated,
                               ),
-                            ),
-                            const SizedBox(height: 12),
-                            for (final e in exercises)
-                              _Node(
-                                exercise: e,
-                                status: e.level < currentLevel
-                                    ? _NodeStatus.done
-                                    : (e.level == currentLevel ? _NodeStatus.current : _NodeStatus.locked),
-                                isFirst: e.level == 1,
-                                isLast: e.level == exercises.length,
-                                unlockedAt: unlockedAt[e.id],
-                                goal: e.level == currentLevel && state != null
-                                    ? (e.isHold
-                                        ? l.goalHold(ProgressionEngine.holdGoal(e, state))
-                                        : l.goalReps(ProgressionEngine.range(e, state).max))
-                                    : null,
-                              ),
-                          ],
+                              const SizedBox(height: 12),
+                              for (final e in exercises)
+                                _Node(
+                                  exercise: e,
+                                  status: e.level < currentLevel
+                                      ? _NodeStatus.done
+                                      : (e.level == currentLevel
+                                            ? _NodeStatus.current
+                                            : _NodeStatus.locked),
+                                  isFirst: e.level == 1,
+                                  isLast: e.level == exercises.length,
+                                  unlockedAt: unlockedAt[e.id],
+                                  goal: e.level == currentLevel && state != null
+                                      ? (e.isHold
+                                            ? l.goalHold(
+                                                ProgressionEngine.holdGoal(
+                                                  e,
+                                                  state,
+                                                ),
+                                              )
+                                            : l.goalReps(
+                                                ProgressionEngine.range(
+                                                  e,
+                                                  state,
+                                                ).max,
+                                              ))
+                                      : null,
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
               ],
             ),
           ),
@@ -170,21 +208,30 @@ class _Node extends StatelessWidget {
     final icon = switch (status) {
       _NodeStatus.done => Icons.check,
       _NodeStatus.current => isLast ? Icons.emoji_events : Icons.play_arrow,
-      _NodeStatus.locked => isLast ? Icons.emoji_events_outlined : Icons.lock_outline,
+      _NodeStatus.locked =>
+        isLast ? Icons.emoji_events_outlined : Icons.lock_outline,
     };
     final statusText = switch (status) {
       _NodeStatus.done => l.nodeDone,
-      _NodeStatus.current => goal == null ? l.nodeCurrent : '${l.nodeCurrent} · $goal',
+      _NodeStatus.current =>
+        goal == null ? l.nodeCurrent : '${l.nodeCurrent} · $goal',
       _NodeStatus.locked => l.nodeLocked,
     };
     final line = Expanded(
-      child: Container(width: 3, color: status == _NodeStatus.locked ? const Color(0xFF2A2F37) : AppColors.success),
+      child: Container(
+        width: 3,
+        color: status == _NodeStatus.locked
+            ? const Color(0xFF2A2F37)
+            : AppColors.success,
+      ),
     );
     return InkWell(
       key: Key('skill-node-${exercise.id}'),
       borderRadius: BorderRadius.circular(12),
       onTap: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => ExerciseDetailScreen(exerciseId: exercise.id)),
+        MaterialPageRoute<void>(
+          builder: (_) => ExerciseDetailScreen(exerciseId: exercise.id),
+        ),
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -200,13 +247,17 @@ class _Node extends StatelessWidget {
                     height: status == _NodeStatus.current ? 36 : 28,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: status == _NodeStatus.locked ? AppColors.surfaceElevated : color,
+                      color: status == _NodeStatus.locked
+                          ? AppColors.surfaceElevated
+                          : color,
                       border: Border.all(color: color, width: 2),
                     ),
                     child: Icon(
                       icon,
                       size: status == _NodeStatus.current ? 20 : 16,
-                      color: status == _NodeStatus.locked ? AppColors.textSecondary : AppColors.background,
+                      color: status == _NodeStatus.locked
+                          ? AppColors.textSecondary
+                          : AppColors.background,
                     ),
                   ),
                   isLast
@@ -214,7 +265,9 @@ class _Node extends StatelessWidget {
                       : Expanded(
                           child: Container(
                             width: 3,
-                            color: status == _NodeStatus.done ? AppColors.success : const Color(0xFF2A2F37),
+                            color: status == _NodeStatus.done
+                                ? AppColors.success
+                                : const Color(0xFF2A2F37),
                           ),
                         ),
                 ],
@@ -231,22 +284,39 @@ class _Node extends StatelessWidget {
                     Text(
                       exercise.name.of(lang),
                       style: TextStyle(
-                        fontWeight: status == _NodeStatus.current ? FontWeight.w700 : FontWeight.w500,
+                        fontWeight: status == _NodeStatus.current
+                            ? FontWeight.w700
+                            : FontWeight.w500,
                         fontSize: status == _NodeStatus.current ? 16 : 15,
-                        color: status == _NodeStatus.locked ? AppColors.textSecondary : AppColors.textPrimary,
+                        color: status == _NodeStatus.locked
+                            ? AppColors.textSecondary
+                            : AppColors.textPrimary,
                       ),
                     ),
                     Text(
                       unlockedAt != null && status != _NodeStatus.locked
                           ? '$statusText · ${l.unlockedOn(westernDigits(MaterialLocalizations.of(context).formatShortDate(unlockedAt!)))}'
                           : statusText,
-                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8),
+              child: Opacity(
+                opacity: status == _NodeStatus.locked ? 0.5 : 1,
+                child: ExerciseThumbnail(
+                  exerciseId: exercise.id,
+                  width: 58,
+                  height: 40,
+                ),
+              ),
+            ),
           ],
         ),
       ),

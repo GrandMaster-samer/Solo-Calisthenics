@@ -9,6 +9,7 @@ import '../../profile/application/profile_controller.dart';
 import '../domain/exercise.dart';
 import '../domain/injury_filter.dart';
 import 'exercise_detail_screen.dart';
+import 'exercise_illustration.dart';
 import 'exercise_media.dart';
 
 /// Exercise library grouped by movement pattern and progression chain.
@@ -184,10 +185,32 @@ class _ExerciseTile extends StatelessWidget {
       child: ListTile(
         key: Key('exercise-${exercise.id}'),
         minVerticalPadding: 10,
-        leading: CircleAvatar(
-          backgroundColor: AppColors.surfaceElevated,
-          foregroundColor: AppColors.textPrimary,
-          child: Text('${exercise.level}'),
+        leading: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            ExerciseThumbnail(exerciseId: exercise.id),
+            // Level in the progression chain.
+            PositionedDirectional(
+              top: -4,
+              start: -4,
+              child: Container(
+                width: 20,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: AppColors.background,
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  '${exercise.level}',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         title: Text(
           exercise.name.of(lang),

@@ -1119,4 +1119,9 @@ class AppL10nAr extends AppL10n {
 
   @override
   String get feedbackDeletesClip => 'إرسال الملاحظات يحذف المقطع من الخادم.';
+
+  @override
+  String illustrationOf(String name) {
+    return 'رسم توضيحي لتمرين $name';
+  }
 }

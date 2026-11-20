@@ -14,7 +14,10 @@ import '../data/clip_source.dart';
 import '../domain/cloud_backend.dart';
 
 /// Builds the player for a clip link. Overridden in tests, where there is no video engine.
-final clipPlayerBuilderProvider = Provider<Widget Function(Uri url)>((ref) => (url) => _ClipPlayer(url: url));
+final clipPlayerBuilderProvider = Provider<Widget Function(Uri url)>(
+  (ref) =>
+      (url) => _ClipPlayer(url: url),
+);
 
 /// Athlete side of coach review: send a clip, read feedback. Coaches also get the inbox.
 class CoachHubScreen extends ConsumerStatefulWidget {
@@ -47,7 +50,9 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
     final backend = ref.read(cloudBackendProvider);
     if (backend?.currentUser == null) return;
     try {
-      final removed = await backend!.purgeExpiredClips(now: ref.read(clockProvider)());
+      final removed = await backend!.purgeExpiredClips(
+        now: ref.read(clockProvider)(),
+      );
       if (removed > 0) {
         ref.invalidate(mySubmissionsProvider);
         ref.invalidate(reviewQueueProvider);
@@ -72,7 +77,9 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
       final clip = await ref.read(clipSourceProvider).pick(camera: camera);
       if (clip != null && mounted) setState(() => _clip = clip);
     } on ClipTooLongException {
-      messenger.showSnackBar(SnackBar(content: Text(l.clipTooLong(CloudLimits.maxClipSeconds))));
+      messenger.showSnackBar(
+        SnackBar(content: Text(l.clipTooLong(CloudLimits.maxClipSeconds))),
+      );
     } on Object {
       messenger.showSnackBar(SnackBar(content: Text(l.clipFailed)));
     } finally {
@@ -87,8 +94,14 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
     final clip = _clip!;
     setState(() => _busy = true);
     try {
-      await backend.submitClip(clip: clip, exerciseId: _exerciseId!, note: _note.text.trim());
-      if (clip.existsSync()) clip.deleteSync(); // the uploaded copy is the only one kept
+      await backend.submitClip(
+        clip: clip,
+        exerciseId: _exerciseId!,
+        note: _note.text.trim(),
+      );
+      if (clip.existsSync()) {
+        clip.deleteSync(); // the uploaded copy is the only one kept
+      }
       ref.invalidate(mySubmissionsProvider);
       ref.invalidate(reviewQueueProvider);
       _note.clear();
@@ -100,7 +113,9 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
       }
       messenger.showSnackBar(SnackBar(content: Text(l.clipSent)));
     } on CloudFileTooLargeException {
-      messenger.showSnackBar(SnackBar(content: Text(l.clipTooLong(CloudLimits.maxClipSeconds))));
+      messenger.showSnackBar(
+        SnackBar(content: Text(l.clipTooLong(CloudLimits.maxClipSeconds))),
+      );
     } on Object {
       messenger.showSnackBar(SnackBar(content: Text(l.cloudFailed)));
     } finally {
@@ -128,7 +143,11 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.rate_review_outlined, size: 56, color: AppColors.secondary),
+              const Icon(
+                Icons.rate_review_outlined,
+                size: 56,
+                color: AppColors.secondary,
+              ),
               const SizedBox(height: 12),
               Text(l.coachSignInNeeded, textAlign: TextAlign.center),
               const SizedBox(height: 16),
@@ -140,7 +159,9 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
                     try {
                       await backend.signInWithGoogle();
                     } on Object {
-                      messenger.showSnackBar(SnackBar(content: Text(l.cloudFailed)));
+                      messenger.showSnackBar(
+                        SnackBar(content: Text(l.cloudFailed)),
+                      );
                     }
                   },
                   icon: const Icon(Icons.login),
@@ -160,19 +181,31 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
               clipBehavior: Clip.antiAlias,
               child: ListTile(
                 key: const Key('open-coach-inbox'),
-                leading: const Icon(Icons.inbox_outlined, color: AppColors.primary),
+                leading: const Icon(
+                  Icons.inbox_outlined,
+                  color: AppColors.primary,
+                ),
                 title: Text(l.coachInbox),
                 subtitle: Text(l.coachInboxWaiting(queue.length)),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context)
-                    .push(MaterialPageRoute<void>(builder: (_) => const CoachInboxScreen())),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const CoachInboxScreen(),
+                  ),
+                ),
               ),
             ),
           const SizedBox(height: 16),
-          Text(l.clipNewTitle, style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+          Text(
+            l.clipNewTitle,
+            style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 4),
           Text(
-            l.clipRules(CloudLimits.maxClipSeconds, CloudLimits.clipRetentionDays),
+            l.clipRules(
+              CloudLimits.maxClipSeconds,
+              CloudLimits.clipRetentionDays,
+            ),
             style: const TextStyle(color: AppColors.textSecondary),
           ),
           const SizedBox(height: 12),
@@ -180,7 +213,11 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
             key: const Key('clip-exercise'),
             onPressed: _busy ? null : _pickExercise,
             icon: const Icon(Icons.fitness_center),
-            label: Text(_exerciseId == null ? l.clipChooseExercise : library.byId(_exerciseId!)!.name.of(lang)),
+            label: Text(
+              _exerciseId == null
+                  ? l.clipChooseExercise
+                  : library.byId(_exerciseId!)!.name.of(lang),
+            ),
           ),
           const SizedBox(height: 8),
           Row(
@@ -209,7 +246,11 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
               padding: const EdgeInsets.only(top: 8),
               child: Row(
                 children: [
-                  const Icon(Icons.check_circle, color: AppColors.success, size: 20),
+                  const Icon(
+                    Icons.check_circle,
+                    color: AppColors.success,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(child: Text(l.clipReady)),
                 ],
@@ -228,15 +269,23 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
           const SizedBox(height: 8),
           FilledButton.icon(
             key: const Key('clip-send'),
-            onPressed: _busy || _clip == null || _exerciseId == null ? null : _send,
+            onPressed: _busy || _clip == null || _exerciseId == null
+                ? null
+                : _send,
             icon: const Icon(Icons.send),
             label: Text(l.clipSend),
           ),
           const SizedBox(height: 28),
-          Text(l.feedbackInbox, style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+          Text(
+            l.feedbackInbox,
+            style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 8),
           if (submissions.isEmpty)
-            Text(l.feedbackEmpty, style: const TextStyle(color: AppColors.textSecondary))
+            Text(
+              l.feedbackEmpty,
+              style: const TextStyle(color: AppColors.textSecondary),
+            )
           else
             for (final s in submissions)
               Card(
@@ -251,28 +300,52 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              library.byId(s.exerciseId)?.name.of(lang) ?? s.exerciseId,
-                              style: const TextStyle(fontWeight: FontWeight.w700),
+                              library.byId(s.exerciseId)?.name.of(lang) ??
+                                  s.exerciseId,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                           // Status has an icon and a word, not only a color.
                           Icon(
-                            s.status == SubmissionStatus.reviewed ? Icons.mark_chat_read_outlined : Icons.schedule,
+                            s.status == SubmissionStatus.reviewed
+                                ? Icons.mark_chat_read_outlined
+                                : Icons.schedule,
                             size: 18,
-                            color: s.status == SubmissionStatus.reviewed ? AppColors.success : AppColors.warning,
+                            color: s.status == SubmissionStatus.reviewed
+                                ? AppColors.success
+                                : AppColors.warning,
                           ),
                           const SizedBox(width: 4),
-                          Text(s.status == SubmissionStatus.reviewed ? l.statusReviewed : l.statusWaiting),
+                          Text(
+                            s.status == SubmissionStatus.reviewed
+                                ? l.statusReviewed
+                                : l.statusWaiting,
+                          ),
                         ],
                       ),
                       Text(
                         westernDigits(dates.formatMediumDate(s.createdAt)),
-                        style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 13,
+                        ),
                       ),
-                      if (s.note.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 6), child: Text(s.note)),
+                      if (s.note.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(s.note),
+                        ),
                       if (s.feedback != null) ...[
                         const Divider(height: 20),
-                        Text(l.coachSays, style: const TextStyle(color: AppColors.secondary, fontWeight: FontWeight.w700)),
+                        Text(
+                          l.coachSays,
+                          style: const TextStyle(
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                         const SizedBox(height: 4),
                         Text(s.feedback!),
                       ],
@@ -283,7 +356,10 @@ class _CoachHubScreenState extends ConsumerState<CoachHubScreen> {
         ],
       );
     }
-    return Scaffold(appBar: AppBar(title: Text(l.coachReview)), body: body);
+    return Scaffold(
+      appBar: AppBar(title: Text(l.coachReview)),
+      body: body,
+    );
   }
 }
 
@@ -301,7 +377,12 @@ class CoachInboxScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.coachInbox)),
       body: queue.isEmpty
-          ? Center(child: Text(l.coachInboxEmpty, style: const TextStyle(color: AppColors.textSecondary)))
+          ? Center(
+              child: Text(
+                l.coachInboxEmpty,
+                style: const TextStyle(color: AppColors.textSecondary),
+              ),
+            )
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
@@ -311,15 +392,24 @@ class CoachInboxScreen extends ConsumerWidget {
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
                       key: Key('queue-${s.id}'),
-                      leading: const Icon(Icons.play_circle_outline, color: AppColors.secondary),
-                      title: Text(library.byId(s.exerciseId)?.name.of(lang) ?? s.exerciseId),
+                      leading: const Icon(
+                        Icons.play_circle_outline,
+                        color: AppColors.secondary,
+                      ),
+                      title: Text(
+                        library.byId(s.exerciseId)?.name.of(lang) ??
+                            s.exerciseId,
+                      ),
                       subtitle: Text(
                         '${westernDigits(dates.formatMediumDate(s.createdAt))}'
                         '${s.note.isEmpty ? '' : '\n${s.note}'}',
                       ),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute<void>(builder: (_) => ReviewScreen(submission: s))),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => ReviewScreen(submission: s),
+                        ),
+                      ),
                     ),
                   ),
               ],
@@ -339,7 +429,9 @@ class ReviewScreen extends ConsumerStatefulWidget {
 
 class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   final _feedback = TextEditingController();
-  late final Future<Uri> _url = ref.read(cloudBackendProvider)!.clipUrl(widget.submission);
+  late final Future<Uri> _url = ref
+      .read(cloudBackendProvider)!
+      .clipUrl(widget.submission);
   bool _busy = false;
 
   @override
@@ -353,7 +445,9 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final messenger = ScaffoldMessenger.of(context);
     setState(() => _busy = true);
     try {
-      await ref.read(cloudBackendProvider)!.sendFeedback(widget.submission.id, _feedback.text.trim());
+      await ref
+          .read(cloudBackendProvider)!
+          .sendFeedback(widget.submission.id, _feedback.text.trim());
       ref.invalidate(reviewQueueProvider);
       ref.invalidate(mySubmissionsProvider);
       if (mounted) Navigator.of(context).pop();
@@ -368,7 +462,9 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final l = AppL10n.of(context);
     final lang = Localizations.localeOf(context).languageCode;
     final s = widget.submission;
-    final name = ref.watch(exerciseLibraryProvider).byId(s.exerciseId)?.name.of(lang) ?? s.exerciseId;
+    final name =
+        ref.watch(exerciseLibraryProvider).byId(s.exerciseId)?.name.of(lang) ??
+        s.exerciseId;
     final player = ref.watch(clipPlayerBuilderProvider);
     return Scaffold(
       appBar: AppBar(title: Text(name)),
@@ -387,7 +483,12 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                       ? player(snap.data!)
                       : Center(
                           child: snap.hasError
-                              ? Text(l.clipUnavailable, style: const TextStyle(color: AppColors.textSecondary))
+                              ? Text(
+                                  l.clipUnavailable,
+                                  style: const TextStyle(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                )
                               : const CircularProgressIndicator(),
                         ),
                 ),
@@ -396,7 +497,13 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           ),
           if (s.note.isNotEmpty) ...[
             const SizedBox(height: 12),
-            Text(l.clipNote, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+            Text(
+              l.clipNote,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 13,
+              ),
+            ),
             Text(s.note),
           ],
           const SizedBox(height: 16),
@@ -407,10 +514,19 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             minLines: 4,
             maxLines: 10,
             onChanged: (_) => setState(() {}),
-            decoration: InputDecoration(labelText: l.feedbackWrite, alignLabelWithHint: true),
+            decoration: InputDecoration(
+              labelText: l.feedbackWrite,
+              alignLabelWithHint: true,
+            ),
           ),
           const SizedBox(height: 8),
-          Text(l.feedbackDeletesClip, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+          Text(
+            l.feedbackDeletesClip,
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 13,
+            ),
+          ),
           const SizedBox(height: 12),
           FilledButton.icon(
             key: const Key('feedback-send'),
@@ -433,7 +549,8 @@ class _ClipPlayer extends StatefulWidget {
 }
 
 class _ClipPlayerState extends State<_ClipPlayer> {
-  late final VideoPlayerController _controller = VideoPlayerController.networkUrl(widget.url);
+  late final VideoPlayerController _controller =
+      VideoPlayerController.networkUrl(widget.url);
   bool _ready = false;
   bool _failed = false;
 
@@ -441,12 +558,15 @@ class _ClipPlayerState extends State<_ClipPlayer> {
   void initState() {
     super.initState();
     _controller.setLooping(true);
-    _controller.initialize().then((_) {
-      if (mounted) setState(() => _ready = true);
-      _controller.play();
-    }).catchError((Object _) {
-      if (mounted) setState(() => _failed = true);
-    });
+    _controller
+        .initialize()
+        .then((_) {
+          if (mounted) setState(() => _ready = true);
+          _controller.play();
+        })
+        .catchError((Object _) {
+          if (mounted) setState(() => _failed = true);
+        });
   }
 
   @override
@@ -459,17 +579,34 @@ class _ClipPlayerState extends State<_ClipPlayer> {
   Widget build(BuildContext context) {
     final l = AppL10n.of(context);
     if (_failed) {
-      return Center(child: Text(l.clipUnavailable, style: const TextStyle(color: AppColors.textSecondary)));
+      return Center(
+        child: Text(
+          l.clipUnavailable,
+          style: const TextStyle(color: AppColors.textSecondary),
+        ),
+      );
     }
     if (!_ready) return const Center(child: CircularProgressIndicator());
     return GestureDetector(
-      onTap: () => setState(() => _controller.value.isPlaying ? _controller.pause() : _controller.play()),
+      onTap: () => setState(
+        () => _controller.value.isPlaying
+            ? _controller.pause()
+            : _controller.play(),
+      ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          AspectRatio(aspectRatio: _controller.value.aspectRatio, child: VideoPlayer(_controller)),
+          AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          ),
           if (!_controller.value.isPlaying)
-            Icon(Icons.play_arrow, size: 64, color: Colors.white, semanticLabel: l.clipPlay),
+            Icon(
+              Icons.play_arrow,
+              size: 64,
+              color: Colors.white,
+              semanticLabel: l.clipPlay,
+            ),
           Positioned(
             left: 0,
             right: 0,

@@ -14,7 +14,11 @@ abstract final class CloudLimits {
 }
 
 class CloudUser {
-  const CloudUser({required this.id, required this.email, this.isCoach = false});
+  const CloudUser({
+    required this.id,
+    required this.email,
+    this.isCoach = false,
+  });
   final String id;
   final String email;
 
@@ -55,7 +59,8 @@ class Submission {
   final String? feedback;
   final DateTime? reviewedAt;
 
-  bool isExpired(DateTime now) => now.difference(createdAt).inDays >= CloudLimits.clipRetentionDays;
+  bool isExpired(DateTime now) =>
+      now.difference(createdAt).inDays >= CloudLimits.clipRetentionDays;
 }
 
 class NotSignedInException implements Exception {
@@ -89,7 +94,11 @@ abstract interface class CloudBackend {
   Future<void> downloadBackup(File into);
 
   // ---- Coach review ----
-  Future<Submission> submitClip({required File clip, required String exerciseId, required String note});
+  Future<Submission> submitClip({
+    required File clip,
+    required String exerciseId,
+    required String note,
+  });
   Future<List<Submission>> mySubmissions();
 
   /// Coach only: clips waiting for review, oldest first.

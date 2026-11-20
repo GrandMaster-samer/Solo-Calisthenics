@@ -16,7 +16,8 @@ class CloudAccountSection extends ConsumerStatefulWidget {
   const CloudAccountSection({super.key});
 
   @override
-  ConsumerState<CloudAccountSection> createState() => _CloudAccountSectionState();
+  ConsumerState<CloudAccountSection> createState() =>
+      _CloudAccountSectionState();
 }
 
 class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
@@ -47,7 +48,9 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
       messenger.showSnackBar(SnackBar(content: Text(l.cloudBackupDone)));
     } on CloudFileTooLargeException catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text(l.cloudBackupTooLarge(e.limit ~/ (1024 * 1024)))),
+        SnackBar(
+          content: Text(l.cloudBackupTooLarge(e.limit ~/ (1024 * 1024))),
+        ),
       );
     } on Object {
       messenger.showSnackBar(SnackBar(content: Text(l.cloudFailed)));
@@ -67,7 +70,10 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
         title: Text(l.backupImportTitle),
         content: Text(l.backupImportBody),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l.cancel),
+          ),
           TextButton(
             key: const Key('cloud-restore-confirm'),
             onPressed: () => Navigator.pop(context, true),
@@ -82,7 +88,10 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
     final db = ref.read(databaseProvider);
     try {
       final service = await ref.read(cloudBackupServiceProvider.future);
-      await service!.downloadAndStage(passphrase, currentSchemaVersion: db.schemaVersion);
+      await service!.downloadAndStage(
+        passphrase,
+        currentSchemaVersion: db.schemaVersion,
+      );
     } on BackupTooNewException {
       messenger.showSnackBar(SnackBar(content: Text(l.backupTooNew)));
       if (mounted) setState(() => _busy = false);
@@ -115,19 +124,30 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-          child: Text(l.cloudTitle, style: const TextStyle(color: AppColors.secondary, fontWeight: FontWeight.w700)),
+          child: Text(
+            l.cloudTitle,
+            style: const TextStyle(
+              color: AppColors.secondary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ),
         if (_busy) const LinearProgressIndicator(),
         if (user == null) ...[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(l.cloudOptionalHint, style: const TextStyle(color: AppColors.textSecondary)),
+            child: Text(
+              l.cloudOptionalHint,
+              style: const TextStyle(color: AppColors.textSecondary),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: OutlinedButton.icon(
               key: const Key('cloud-sign-in'),
-              onPressed: _busy ? null : () => _guard(backend.signInWithGoogle, l.cloudFailed),
+              onPressed: _busy
+                  ? null
+                  : () => _guard(backend.signInWithGoogle, l.cloudFailed),
               icon: const Icon(Icons.login),
               label: Text(l.signInGoogle),
             ),
@@ -145,7 +165,9 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
             subtitle: Text(
               info == null
                   ? l.cloudBackupNone
-                  : l.cloudBackupLast(westernDigits(dates.formatMediumDate(info.updatedAt))),
+                  : l.cloudBackupLast(
+                      westernDigits(dates.formatMediumDate(info.updatedAt)),
+                    ),
             ),
             enabled: !_busy,
             onTap: _upload,
@@ -168,7 +190,10 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
           ),
           ListTile(
             key: const Key('cloud-delete-data'),
-            leading: const Icon(Icons.delete_forever_outlined, color: AppColors.error),
+            leading: const Icon(
+              Icons.delete_forever_outlined,
+              color: AppColors.error,
+            ),
             title: Text(l.cloudDeleteData),
             subtitle: Text(l.cloudDeleteDataHint),
             enabled: !_busy,
@@ -179,11 +204,17 @@ class _CloudAccountSectionState extends ConsumerState<CloudAccountSection> {
                   title: Text(l.cloudDeleteData),
                   content: Text(l.cloudDeleteDataBody),
                   actions: [
-                    TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: Text(l.cancel),
+                    ),
                     TextButton(
                       key: const Key('cloud-delete-confirm'),
                       onPressed: () => Navigator.pop(context, true),
-                      child: Text(l.delete, style: const TextStyle(color: AppColors.error)),
+                      child: Text(
+                        l.delete,
+                        style: const TextStyle(color: AppColors.error),
+                      ),
                     ),
                   ],
                 ),

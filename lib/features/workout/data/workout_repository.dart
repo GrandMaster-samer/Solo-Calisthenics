@@ -16,7 +16,9 @@ class WorkoutRepository {
     PlanLink? link,
   }) {
     return _db.transaction(() async {
-      final id = await _db.into(_db.sessions).insert(
+      final id = await _db
+          .into(_db.sessions)
+          .insert(
             SessionsCompanion.insert(
               name: name,
               startedAt: now,
@@ -244,9 +246,14 @@ class WorkoutRepository {
 
   /// Plan day indexes that already have a finished session in [week].
   Future<Set<int>> completedPlanDays(String week) async {
-    final rows = await (_db.select(_db.sessions)
-          ..where((s) => s.planWeek.equals(week) & s.finishedAt.isNotNull() & s.planDayIndex.isNotNull()))
-        .get();
+    final rows =
+        await (_db.select(_db.sessions)..where(
+              (s) =>
+                  s.planWeek.equals(week) &
+                  s.finishedAt.isNotNull() &
+                  s.planDayIndex.isNotNull(),
+            ))
+            .get();
     return {for (final r in rows) r.planDayIndex!};
   }
 }

@@ -28,14 +28,19 @@ Future<String?> askPassphrase(BuildContext context, {required bool confirm}) {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (confirm)
-              Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(l.backupPassphraseHint)),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Text(l.backupPassphraseHint),
+              ),
             TextFormField(
               key: const Key('passphrase'),
               controller: first,
               obscureText: true,
               autofocus: true,
               decoration: InputDecoration(labelText: l.backupPassphrase),
-              validator: (v) => confirm && (v ?? '').length < BackupService.minPassphraseLength
+              validator: (v) =>
+                  confirm &&
+                      (v ?? '').length < BackupService.minPassphraseLength
                   ? l.backupPassphraseShort(BackupService.minPassphraseLength)
                   : ((v ?? '').isEmpty ? l.invalidValue : null),
             ),
@@ -46,18 +51,24 @@ Future<String?> askPassphrase(BuildContext context, {required bool confirm}) {
                 controller: second,
                 obscureText: true,
                 decoration: InputDecoration(labelText: l.backupPassphraseAgain),
-                validator: (v) => v != first.text ? l.backupPassphraseMismatch : null,
+                validator: (v) =>
+                    v != first.text ? l.backupPassphraseMismatch : null,
               ),
             ],
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancel)),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l.cancel),
+        ),
         TextButton(
           key: const Key('passphrase-ok'),
           onPressed: () {
-            if (form.currentState!.validate()) Navigator.pop(context, first.text);
+            if (form.currentState!.validate()) {
+              Navigator.pop(context, first.text);
+            }
           },
           child: Text(l.ok),
         ),
@@ -77,16 +88,30 @@ Future<void> exportBackup(BuildContext context, WidgetRef ref) async {
   final hexKey = await control.keyStore.read();
   if (hexKey == null) return;
   final database = control.databaseFile;
-  final out = File(p.join((await getTemporaryDirectory()).path, BackupService.fileName(ref.read(clockProvider)())));
+  final out = File(
+    p.join(
+      (await getTemporaryDirectory()).path,
+      BackupService.fileName(ref.read(clockProvider)()),
+    ),
+  );
   try {
     await Isolate.run(
-      () => BackupService.export(database: database, hexKey: hexKey, passphrase: passphrase, out: out),
+      () => BackupService.export(
+        database: database,
+        hexKey: hexKey,
+        passphrase: passphrase,
+        out: out,
+      ),
     );
-    await SharePlus.instance.share(ShareParams(files: [XFile(out.path)], subject: l.backupTitle));
+    await SharePlus.instance.share(
+      ShareParams(files: [XFile(out.path)], subject: l.backupTitle),
+    );
   } on Object {
     messenger.showSnackBar(SnackBar(content: Text(l.backupExportFailed)));
   } finally {
-    if (out.existsSync()) out.deleteSync(); // the user's copy is the only one that should remain
+    if (out.existsSync()) {
+      out.deleteSync(); // the user's copy is the only one that should remain
+    }
   }
 }
 
@@ -105,7 +130,10 @@ Future<void> importBackup(BuildContext context, WidgetRef ref) async {
       title: Text(l.backupImportTitle),
       content: Text(l.backupImportBody),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(l.cancel),
+        ),
         TextButton(
           key: const Key('import-confirm'),
           onPressed: () => Navigator.pop(context, true),

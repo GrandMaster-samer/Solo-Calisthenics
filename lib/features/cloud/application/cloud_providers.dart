@@ -19,7 +19,9 @@ final cloudUserProvider = StreamProvider<CloudUser?>((ref) {
   return backend == null ? Stream.value(null) : backend.userChanges;
 });
 
-final entitlementsProvider = Provider<Entitlements>((ref) => const FreeEntitlements());
+final entitlementsProvider = Provider<Entitlements>(
+  (ref) => const FreeEntitlements(),
+);
 final clipSourceProvider = Provider<ClipSource>((ref) => DeviceClipSource());
 
 final cloudBackupInfoProvider = FutureProvider<CloudBackupInfo?>((ref) async {
@@ -37,7 +39,9 @@ final mySubmissionsProvider = FutureProvider<List<Submission>>((ref) async {
 final reviewQueueProvider = FutureProvider<List<Submission>>((ref) async {
   final user = ref.watch(cloudUserProvider).value;
   final backend = ref.watch(cloudBackendProvider);
-  return user == null || !user.isCoach || backend == null ? const [] : backend.reviewQueue();
+  return user == null || !user.isCoach || backend == null
+      ? const []
+      : backend.reviewQueue();
 });
 
 /// Runs CPU-heavy work off the UI thread. Tests replace it with a direct call.
@@ -61,7 +65,8 @@ class CloudBackupService {
   final Directory tempDirectory;
   final HeavyRunner runner;
 
-  File get _temp => File(p.join(tempDirectory.path, 'cloud.${BackupService.fileExtension}'));
+  File get _temp =>
+      File(p.join(tempDirectory.path, 'cloud.${BackupService.fileExtension}'));
 
   Future<void> upload(String passphrase) async {
     final hexKey = await keyStore.read();
@@ -69,9 +74,18 @@ class CloudBackupService {
     final out = _temp;
     final database = databaseFile;
     try {
-      await runner(() => BackupService.export(database: database, hexKey: hexKey, passphrase: passphrase, out: out));
+      await runner(
+        () => BackupService.export(
+          database: database,
+          hexKey: hexKey,
+          passphrase: passphrase,
+          out: out,
+        ),
+      );
       final size = out.lengthSync();
-      if (size > CloudLimits.maxBackupBytes) throw CloudFileTooLargeException(size, CloudLimits.maxBackupBytes);
+      if (size > CloudLimits.maxBackupBytes) {
+        throw CloudFileTooLargeException(size, CloudLimits.maxBackupBytes);
+      }
       await backend.uploadBackup(out);
     } finally {
       if (out.existsSync()) out.deleteSync();
@@ -81,7 +95,10 @@ class CloudBackupService {
   /// Downloads the cloud backup and stages it next to the database. Throws
   /// [BackupUnreadableException] on a wrong passphrase; nothing is replaced until
   /// [BackupService.commitRestore] is called with the database closed.
-  Future<void> downloadAndStage(String passphrase, {required int currentSchemaVersion}) async {
+  Future<void> downloadAndStage(
+    String passphrase, {
+    required int currentSchemaVersion,
+  }) async {
     final hexKey = await keyStore.read();
     if (hexKey == null) throw StateError('database key missing');
     final file = _temp;
@@ -104,10 +121,15 @@ class CloudBackupService {
 }
 
 /// Temp directory for cloud backup work; overridden in tests.
-final cloudTempDirectoryProvider = Provider<Future<Directory> Function()>((ref) => () async => Directory.systemTemp);
+final cloudTempDirectoryProvider = Provider<Future<Directory> Function()>(
+  (ref) =>
+      () async => Directory.systemTemp,
+);
 final heavyRunnerProvider = Provider<HeavyRunner>((ref) => isolateRunner);
 
-final cloudBackupServiceProvider = FutureProvider<CloudBackupService?>((ref) async {
+final cloudBackupServiceProvider = FutureProvider<CloudBackupService?>((
+  ref,
+) async {
   final backend = ref.watch(cloudBackendProvider);
   if (backend == null) return null;
   final control = ref.watch(appControlProvider);

@@ -255,6 +255,7 @@ T = {
 "coachInboxEmpty": ("No clips waiting for review.", "لا توجد مقاطع بانتظار المراجعة."),
 "feedbackWrite": ("Technique feedback", "ملاحظات على الأداء"), "feedbackSend": ("Send feedback", "إرسال الملاحظات"),
 "feedbackDeletesClip": ("Sending the feedback deletes the clip from the server.", "إرسال الملاحظات يحذف المقطع من الخادم."),
+"illustrationOf": ("Drawing of {name}", "رسم توضيحي لتمرين {name}", {"name": S}),
 }
 en = {"@@locale": "en"}; ar = {"@@locale": "ar"}
 for k, v in T.items():

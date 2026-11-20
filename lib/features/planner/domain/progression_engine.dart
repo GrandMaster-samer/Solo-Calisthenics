@@ -30,24 +30,34 @@ class ChainState {
   /// Consecutive sessions with a clear volume drop (feeds the deload trigger).
   final int dropStreak;
 
-  ChainState copyWith({int? Function()? holdTarget, int? bonus, int? successStreak, int? failStreak, int? dropStreak}) =>
-      ChainState(
-        chainId: chainId,
-        exerciseId: exerciseId,
-        holdTarget: holdTarget != null ? holdTarget() : this.holdTarget,
-        bonus: bonus ?? this.bonus,
-        successStreak: successStreak ?? this.successStreak,
-        failStreak: failStreak ?? this.failStreak,
-        dropStreak: dropStreak ?? this.dropStreak,
-      );
+  ChainState copyWith({
+    int? Function()? holdTarget,
+    int? bonus,
+    int? successStreak,
+    int? failStreak,
+    int? dropStreak,
+  }) => ChainState(
+    chainId: chainId,
+    exerciseId: exerciseId,
+    holdTarget: holdTarget != null ? holdTarget() : this.holdTarget,
+    bonus: bonus ?? this.bonus,
+    successStreak: successStreak ?? this.successStreak,
+    failStreak: failStreak ?? this.failStreak,
+    dropStreak: dropStreak ?? this.dropStreak,
+  );
 
   /// Fresh state on another exercise of the same chain.
-  ChainState moveTo(String exerciseId) => ChainState(chainId: chainId, exerciseId: exerciseId);
+  ChainState moveTo(String exerciseId) =>
+      ChainState(chainId: chainId, exerciseId: exerciseId);
 }
 
 /// What the user did for one exercise in one session.
 class Performance {
-  const Performance({required this.values, required this.targetSets, this.avgRir});
+  const Performance({
+    required this.values,
+    required this.targetSets,
+    this.avgRir,
+  });
 
   /// Reps (or seconds) per logged set, in order.
   final List<int> values;
@@ -127,41 +137,86 @@ abstract final class ProgressionEngine {
     String? previousExerciseId,
   }) {
     assert(exercise.id == state.exerciseId);
-    if (performance.values.isEmpty) return ProgressionResult(ProgressionAction.repeat, state);
+    if (performance.values.isEmpty) {
+      return ProgressionResult(ProgressionAction.repeat, state);
+    }
 
     // Volume trend, used by the deload trigger.
-    final dropped = previous != null && previous.volume > 0 && performance.volume < previous.volume * dropRatio;
-    final tracked = state.copyWith(dropStreak: dropped ? state.dropStreak + 1 : 0);
+    final dropped =
+        previous != null &&
+        previous.volume > 0 &&
+        performance.volume < previous.volume * dropRatio;
+    final tracked = state.copyWith(
+      dropStreak: dropped ? state.dropStreak + 1 : 0,
+    );
 
     final result = exercise.isHold
-        ? _hold(tracked, exercise, performance, nextExerciseId, previousExerciseId)
-        : _reps(tracked, exercise, performance, nextExerciseId, previousExerciseId);
+        ? _hold(
+            tracked,
+            exercise,
+            performance,
+            nextExerciseId,
+            previousExerciseId,
+          )
+        : _reps(
+            tracked,
+            exercise,
+            performance,
+            nextExerciseId,
+            previousExerciseId,
+          );
     // A change of exercise starts a clean slate, including the drop streak.
     return result;
   }
 
   static bool _easy(Performance p) => p.avgRir != null && p.avgRir! >= easyRir;
 
-  static ProgressionResult _advanceOrGrow(ChainState s, String? nextId, int step, int newTop) {
-    if (nextId != null) return ProgressionResult(ProgressionAction.advance, s.moveTo(nextId));
+  static ProgressionResult _advanceOrGrow(
+    ChainState s,
+    String? nextId,
+    int step,
+    int newTop,
+  ) {
+    if (nextId != null) {
+      return ProgressionResult(ProgressionAction.advance, s.moveTo(nextId));
+    }
     // End of the chain: keep the exercise and raise the range.
     return ProgressionResult(
       ProgressionAction.increaseTarget,
-      s.copyWith(bonus: s.bonus + step, successStreak: 0, failStreak: 0, holdTarget: () => newTop + step),
+      s.copyWith(
+        bonus: s.bonus + step,
+        successStreak: 0,
+        failStreak: 0,
+        holdTarget: () => newTop + step,
+      ),
     );
   }
 
-  static ProgressionResult _reps(ChainState s, Exercise e, Performance p, String? nextId, String? prevId) {
+  static ProgressionResult _reps(
+    ChainState s,
+    Exercise e,
+    Performance p,
+    String? nextId,
+    String? prevId,
+  ) {
     final r = range(e, s);
-    final hitTop = p.completedAllSets && p.values.take(p.targetSets).every((v) => v >= r.max);
+    final hitTop =
+        p.completedAllSets &&
+        p.values.take(p.targetSets).every((v) => v >= r.max);
     if (hitTop) {
       final streak = s.successStreak + 1;
       if (streak >= sessionsToAdvance || _easy(p)) {
         final res = _advanceOrGrow(s, nextId, repStep, r.max);
         // Rep exercises have no hold target.
-        return ProgressionResult(res.action, res.state.copyWith(holdTarget: () => null));
+        return ProgressionResult(
+          res.action,
+          res.state.copyWith(holdTarget: () => null),
+        );
       }
-      return ProgressionResult(ProgressionAction.repeat, s.copyWith(successStreak: streak, failStreak: 0));
+      return ProgressionResult(
+        ProgressionAction.repeat,
+        s.copyWith(successStreak: streak, failStreak: 0),
+      );
     }
 
     // Could not reach the bottom of the range even on the first, freshest set.
@@ -172,28 +227,54 @@ abstract final class ProgressionEngine {
         if (s.bonus > 0) {
           return ProgressionResult(
             ProgressionAction.decreaseTarget,
-            s.copyWith(bonus: (s.bonus - repStep).clamp(0, s.bonus), successStreak: 0, failStreak: 0),
+            s.copyWith(
+              bonus: (s.bonus - repStep).clamp(0, s.bonus),
+              successStreak: 0,
+              failStreak: 0,
+            ),
           );
         }
-        if (prevId != null) return ProgressionResult(ProgressionAction.regress, s.moveTo(prevId));
+        if (prevId != null) {
+          return ProgressionResult(ProgressionAction.regress, s.moveTo(prevId));
+        }
       }
-      return ProgressionResult(ProgressionAction.repeat, s.copyWith(successStreak: 0, failStreak: fails));
+      return ProgressionResult(
+        ProgressionAction.repeat,
+        s.copyWith(successStreak: 0, failStreak: fails),
+      );
     }
-    return ProgressionResult(ProgressionAction.repeat, s.copyWith(successStreak: 0, failStreak: 0));
+    return ProgressionResult(
+      ProgressionAction.repeat,
+      s.copyWith(successStreak: 0, failStreak: 0),
+    );
   }
 
-  static ProgressionResult _hold(ChainState s, Exercise e, Performance p, String? nextId, String? prevId) {
+  static ProgressionResult _hold(
+    ChainState s,
+    Exercise e,
+    Performance p,
+    String? nextId,
+    String? prevId,
+  ) {
     final r = range(e, s);
     final goal = holdGoal(e, s);
     final step = holdStep(e);
-    final hit = p.completedAllSets && p.values.take(p.targetSets).every((v) => v >= goal);
+    final hit =
+        p.completedAllSets &&
+        p.values.take(p.targetSets).every((v) => v >= goal);
     if (hit) {
       if (goal >= r.max) {
         final streak = s.successStreak + 1;
-        if (streak >= sessionsToAdvance || _easy(p)) return _advanceOrGrow(s, nextId, step, r.max);
+        if (streak >= sessionsToAdvance || _easy(p)) {
+          return _advanceOrGrow(s, nextId, step, r.max);
+        }
         return ProgressionResult(
           ProgressionAction.repeat,
-          s.copyWith(successStreak: streak, failStreak: 0, holdTarget: () => goal),
+          s.copyWith(
+            successStreak: streak,
+            failStreak: 0,
+            holdTarget: () => goal,
+          ),
         );
       }
       final next = (goal + step).clamp(r.min, r.max);
@@ -211,10 +292,16 @@ abstract final class ProgressionEngine {
         if (goal > r.min) {
           return ProgressionResult(
             ProgressionAction.decreaseTarget,
-            s.copyWith(holdTarget: () => (goal - step).clamp(r.min, r.max), successStreak: 0, failStreak: 0),
+            s.copyWith(
+              holdTarget: () => (goal - step).clamp(r.min, r.max),
+              successStreak: 0,
+              failStreak: 0,
+            ),
           );
         }
-        if (prevId != null) return ProgressionResult(ProgressionAction.regress, s.moveTo(prevId));
+        if (prevId != null) {
+          return ProgressionResult(ProgressionAction.regress, s.moveTo(prevId));
+        }
       }
       return ProgressionResult(
         ProgressionAction.repeat,

@@ -1,7 +1,9 @@
 # Exercise media pipeline
 
-Every exercise shows a clearly labeled placeholder until you add your own clip.
-No third-party or copyrighted media ships with the app.
+Every exercise already has its own animated drawing (a stick figure moving through
+one rep, drawn by the app from `assets/data/illustrations.json`, authored with
+`tool/build_illustrations.py`). A clip you add replaces the drawing for that
+exercise on its detail page. No third-party or copyrighted media ships with the app.
 
 ## Add a clip
 

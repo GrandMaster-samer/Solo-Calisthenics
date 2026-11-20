@@ -5,7 +5,8 @@ import 'package:solo_calisthenics/features/security/data/app_lock.dart';
 
 import '../helpers.dart';
 
-String hex(List<int> b) => b.map((x) => x.toRadixString(16).padLeft(2, '0')).join();
+String hex(List<int> b) =>
+    b.map((x) => x.toRadixString(16).padLeft(2, '0')).join();
 
 void main() {
   test('PBKDF2-HMAC-SHA256 matches the published test vectors', () {
@@ -27,32 +28,35 @@ void main() {
     expect(AppLock.isValidPin('12a4'), isFalse);
   });
 
-  test('set, verify, change and remove; the PIN itself is never stored', () async {
-    final store = MemorySecretStore();
-    final lock = AppLock(store, FakeBiometrics());
-    final now = DateTime(2026);
-    expect(await lock.hasPin(), isFalse);
-    expect(await lock.verify('1234', now: now), isFalse);
+  test(
+    'set, verify, change and remove; the PIN itself is never stored',
+    () async {
+      final store = MemorySecretStore();
+      final lock = AppLock(store, FakeBiometrics());
+      final now = DateTime(2026);
+      expect(await lock.hasPin(), isFalse);
+      expect(await lock.verify('1234', now: now), isFalse);
 
-    await lock.setPin('4821');
-    expect(await lock.hasPin(), isTrue);
-    expect(store.values.values.single.contains('4821'), isFalse);
-    expect(await lock.verify('4821', now: now), isTrue);
-    expect(await lock.verify('4822', now: now), isFalse);
+      await lock.setPin('4821');
+      expect(await lock.hasPin(), isTrue);
+      expect(store.values.values.single.contains('4821'), isFalse);
+      expect(await lock.verify('4821', now: now), isTrue);
+      expect(await lock.verify('4822', now: now), isFalse);
 
-    // Same PIN, new salt: stored value differs.
-    final before = store.values.values.single;
-    await lock.setPin('4821');
-    expect(store.values.values.single, isNot(before));
+      // Same PIN, new salt: stored value differs.
+      final before = store.values.values.single;
+      await lock.setPin('4821');
+      expect(store.values.values.single, isNot(before));
 
-    await lock.setPin('999999');
-    expect(await lock.verify('4821', now: now), isFalse);
-    expect(await lock.verify('999999', now: now), isTrue);
+      await lock.setPin('999999');
+      expect(await lock.verify('4821', now: now), isFalse);
+      expect(await lock.verify('999999', now: now), isTrue);
 
-    await lock.clearPin();
-    expect(await lock.hasPin(), isFalse);
-    await expectLater(lock.setPin('12'), throwsArgumentError);
-  });
+      await lock.clearPin();
+      expect(await lock.hasPin(), isFalse);
+      await expectLater(lock.setPin('12'), throwsArgumentError);
+    },
+  );
 
   test('five wrong attempts pause further tries for 30 seconds, even with the right PIN', () async {
     final lock = AppLock(MemorySecretStore(), FakeBiometrics());

@@ -34,6 +34,7 @@ flutter run --release
 - [ ] **Kill test:** mid-workout, with a few taps counted and a rest running, swipe the app away from recent apps. Reopen it. You are back in the workout with the same sets, counter and rest.
 - [ ] Airplane mode on: everything above still works.
 - [ ] Settings, reminders: pick today and a time two minutes ahead. The reminder arrives.
+- [ ] Library rows show a small drawing per exercise; an exercise page shows the figure moving through a rep. With the system's "remove animations" setting on, it shows a still image instead.
 - [ ] Fonts look right in both languages; timer digits do not jump sideways as they change.
 
 ## Phase 2
@@ -62,6 +63,5 @@ flutter run --release
 
 ## Known limits (not bugs)
 
-- Exercise visuals are labelled placeholders until you add clips (`assets/media/README.md`).
 - A forgotten PIN or backup passphrase cannot be recovered.
 - iPhone has no volume-button counting; use the tap zone.

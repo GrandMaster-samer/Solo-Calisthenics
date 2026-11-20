@@ -11,7 +11,10 @@ class FakeCloudBackend implements CloudBackend {
   final DateTime Function() clock;
 
   /// Who "Sign in with Google" signs in as.
-  CloudUser nextUser = const CloudUser(id: 'athlete-1', email: 'athlete@example.com');
+  CloudUser nextUser = const CloudUser(
+    id: 'athlete-1',
+    email: 'athlete@example.com',
+  );
   bool failNextCall = false;
 
   final backups = <String, List<int>>{}; // user id -> stored bytes
@@ -67,7 +70,10 @@ class FakeCloudBackend implements CloudBackend {
     _maybeFail();
     final bytes = encryptedBackup.readAsBytesSync();
     if (bytes.length > CloudLimits.maxBackupBytes) {
-      throw CloudFileTooLargeException(bytes.length, CloudLimits.maxBackupBytes);
+      throw CloudFileTooLargeException(
+        bytes.length,
+        CloudLimits.maxBackupBytes,
+      );
     }
     backups[_me.id] = bytes;
     backupTimes[_me.id] = clock();
@@ -76,7 +82,12 @@ class FakeCloudBackend implements CloudBackend {
   @override
   Future<CloudBackupInfo?> backupInfo() async {
     final bytes = backups[_me.id];
-    return bytes == null ? null : CloudBackupInfo(updatedAt: backupTimes[_me.id]!, sizeBytes: bytes.length);
+    return bytes == null
+        ? null
+        : CloudBackupInfo(
+            updatedAt: backupTimes[_me.id]!,
+            sizeBytes: bytes.length,
+          );
   }
 
   @override
@@ -88,7 +99,11 @@ class FakeCloudBackend implements CloudBackend {
   }
 
   @override
-  Future<Submission> submitClip({required File clip, required String exerciseId, required String note}) async {
+  Future<Submission> submitClip({
+    required File clip,
+    required String exerciseId,
+    required String note,
+  }) async {
     _maybeFail();
     final bytes = clip.readAsBytesSync();
     if (bytes.length > CloudLimits.maxClipBytes) {
@@ -112,11 +127,14 @@ class FakeCloudBackend implements CloudBackend {
 
   @override
   Future<List<Submission>> mySubmissions() async =>
-      _rows.where((s) => s.userId == _me.id).toList()..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      _rows.where((s) => s.userId == _me.id).toList()
+        ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
   @override
   Future<List<Submission>> reviewQueue() async {
-    if (!_me.isCoach) return const []; // row-level security: athletes see only their own
+    if (!_me.isCoach) {
+      return const []; // row-level security: athletes see only their own
+    }
     return _rows.where((s) => s.status == SubmissionStatus.pending).toList()
       ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
   }
@@ -124,23 +142,32 @@ class FakeCloudBackend implements CloudBackend {
   @override
   Future<Uri> clipUrl(Submission submission) async {
     final path = submission.videoPath;
-    if (path == null || !clips.containsKey(path)) throw StateError('clip already deleted');
-    if (!_me.isCoach && submission.userId != _me.id) throw StateError('forbidden');
+    if (path == null || !clips.containsKey(path)) {
+      throw StateError('clip already deleted');
+    }
+    if (!_me.isCoach && submission.userId != _me.id) {
+      throw StateError('forbidden');
+    }
     return Uri.parse('https://fake.invalid/$path?token=short-lived');
   }
 
-  Submission _copy(Submission s, {SubmissionStatus? status, String? feedback, DateTime? reviewedAt, bool dropClip = false}) =>
-      Submission(
-        id: s.id,
-        userId: s.userId,
-        exerciseId: s.exerciseId,
-        note: s.note,
-        status: status ?? s.status,
-        createdAt: s.createdAt,
-        videoPath: dropClip ? null : s.videoPath,
-        feedback: feedback ?? s.feedback,
-        reviewedAt: reviewedAt ?? s.reviewedAt,
-      );
+  Submission _copy(
+    Submission s, {
+    SubmissionStatus? status,
+    String? feedback,
+    DateTime? reviewedAt,
+    bool dropClip = false,
+  }) => Submission(
+    id: s.id,
+    userId: s.userId,
+    exerciseId: s.exerciseId,
+    note: s.note,
+    status: status ?? s.status,
+    createdAt: s.createdAt,
+    videoPath: dropClip ? null : s.videoPath,
+    feedback: feedback ?? s.feedback,
+    reviewedAt: reviewedAt ?? s.reviewedAt,
+  );
 
   @override
   Future<void> sendFeedback(String submissionId, String feedback) async {
@@ -148,7 +175,13 @@ class FakeCloudBackend implements CloudBackend {
     if (!_me.isCoach) throw StateError('forbidden');
     final i = _rows.indexWhere((s) => s.id == submissionId);
     clips.remove(_rows[i].videoPath);
-    _rows[i] = _copy(_rows[i], status: SubmissionStatus.reviewed, feedback: feedback, reviewedAt: clock(), dropClip: true);
+    _rows[i] = _copy(
+      _rows[i],
+      status: SubmissionStatus.reviewed,
+      feedback: feedback,
+      reviewedAt: clock(),
+      dropClip: true,
+    );
   }
 
   @override
@@ -177,6 +210,7 @@ class FakeClipSource implements ClipSource {
   @override
   Future<File?> pick({required bool camera}) async {
     if (tooLong) throw const ClipTooLongException();
-    return File('${directory.path}/clip${_n++}.mp4')..writeAsBytesSync(List.filled(2048, 1));
+    return File('${directory.path}/clip${_n++}.mp4')
+      ..writeAsBytesSync(List.filled(2048, 1));
   }
 }

@@ -12,15 +12,17 @@ import '../../security/presentation/lock_gate.dart';
 import '../application/settings_controller.dart';
 import '../data/settings_repository.dart';
 
-final _biometricsAvailableProvider =
-    FutureProvider<bool>((ref) => ref.watch(appLockProvider).biometrics.isAvailable());
+final _biometricsAvailableProvider = FutureProvider<bool>(
+  (ref) => ref.watch(appLockProvider).biometrics.isAvailable(),
+);
 
 /// Asks for the current PIN on a full-screen route. Returns true when accepted.
 Future<bool> _confirmPin(BuildContext context) async {
   final ok = await Navigator.of(context).push<bool>(
     MaterialPageRoute(
       fullscreenDialog: true,
-      builder: (context) => PinEntryScreen(onUnlocked: () => Navigator.of(context).pop(true)),
+      builder: (context) =>
+          PinEntryScreen(onUnlocked: () => Navigator.of(context).pop(true)),
     ),
   );
   return ok ?? false;
@@ -179,10 +181,12 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.schedule),
             title: Text(l.reminderTime),
             trailing: Text(
-              westernDigits(TimeOfDay(
-                hour: s.reminderMinutes ~/ 60,
-                minute: s.reminderMinutes % 60,
-              ).format(context)),
+              westernDigits(
+                TimeOfDay(
+                  hour: s.reminderMinutes ~/ 60,
+                  minute: s.reminderMinutes % 60,
+                ).format(context),
+              ),
               style: const TextStyle(fontSize: 16),
             ),
             onTap: () async {
@@ -211,7 +215,9 @@ class SettingsScreen extends ConsumerWidget {
               // Changing an existing PIN requires entering it first.
               if (hasPin && !await _confirmPin(context)) return;
               if (!context.mounted) return;
-              await Navigator.of(context).push(MaterialPageRoute<bool>(builder: (_) => const PinSetupScreen()));
+              await Navigator.of(context).push(
+                MaterialPageRoute<bool>(builder: (_) => const PinSetupScreen()),
+              );
             },
           ),
           if (hasPin) ...[
@@ -222,7 +228,10 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () async {
                 if (!await _confirmPin(context)) return;
                 await ref.read(appLockProvider).clearPin();
-                await controller.change((c) => c.copyWith(lockWholeApp: false, biometricUnlock: false));
+                await controller.change(
+                  (c) =>
+                      c.copyWith(lockWholeApp: false, biometricUnlock: false),
+                );
                 ref.invalidate(hasPinProvider);
               },
             ),
@@ -231,13 +240,15 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l.lockWholeApp),
               subtitle: Text(l.lockWholeAppHint),
               value: s.lockWholeApp,
-              onChanged: (v) => controller.change((c) => c.copyWith(lockWholeApp: v)),
+              onChanged: (v) =>
+                  controller.change((c) => c.copyWith(lockWholeApp: v)),
             ),
             if (ref.watch(_biometricsAvailableProvider).value ?? false)
               SwitchListTile(
                 title: Text(l.useBiometrics),
                 value: s.biometricUnlock,
-                onChanged: (v) => controller.change((c) => c.copyWith(biometricUnlock: v)),
+                onChanged: (v) =>
+                    controller.change((c) => c.copyWith(biometricUnlock: v)),
               ),
           ],
           header(l.backupTitle),

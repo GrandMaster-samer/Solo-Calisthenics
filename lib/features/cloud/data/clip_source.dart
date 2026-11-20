@@ -28,7 +28,9 @@ class DeviceClipSource implements ClipSource {
     if (picked == null) return null;
     final info = await VideoCompress.getMediaInfo(picked.path);
     final seconds = (info.duration ?? 0) / 1000;
-    if (seconds > CloudLimits.maxClipSeconds + 0.5) throw const ClipTooLongException();
+    if (seconds > CloudLimits.maxClipSeconds + 0.5) {
+      throw const ClipTooLongException();
+    }
     final compressed = await VideoCompress.compressVideo(
       picked.path,
       quality: VideoQuality.Res1280x720Quality,

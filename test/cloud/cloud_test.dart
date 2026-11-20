@@ -28,7 +28,9 @@ void main() {
 
   Future<void> direct(void Function() work) async => work();
 
-  Future<({File file, MemoryKeyStore keys, CloudBackupService service})> device(String name) async {
+  Future<({File file, MemoryKeyStore keys, CloudBackupService service})> device(
+    String name,
+  ) async {
     final file = File('${dir.path}/$name.db');
     final keys = MemoryKeyStore();
     final db = AppDatabase(await openAppExecutor(file: file, keyStore: keys));
@@ -55,14 +57,20 @@ void main() {
   group('encrypted cloud backup', () {
     test('upload needs a signed-in user', () async {
       final a = await device('a');
-      await expectLater(a.service.upload('long passphrase'), throwsA(isA<NotSignedInException>()));
+      await expectLater(
+        a.service.upload('long passphrase'),
+        throwsA(isA<NotSignedInException>()),
+      );
     });
 
     test('phone A uploads, phone B restores with the passphrase; the server only holds ciphertext', () async {
       final a = await device('a');
-      var db = AppDatabase(openEncryptedExecutor(a.file, (await a.keys.read())!));
+      var db = AppDatabase(
+        openEncryptedExecutor(a.file, (await a.keys.read())!),
+      );
       await ProfileRepository(db).save(testProfile, const []);
-      await WorkoutRepository(db).createSession('Cloud session', const [], now: clock.now);
+      await WorkoutRepository(db)
+          .createSession('Cloud session', const [], now: clock.now);
       await AnalyticsRepository(db).addPhoto(tinyPng, takenAt: clock.now);
       await db.close();
 
@@ -72,7 +80,11 @@ void main() {
       expect(stored.startsWith('SQLite format 3'), isFalse);
       expect(stored.contains('Cloud session'), isFalse);
       expect((await backend.backupInfo())!.updatedAt, clock.now);
-      expect(Directory('${dir.path}/tmp_a').listSync(), isEmpty, reason: 'no temp copy left on the phone');
+      expect(
+        Directory('${dir.path}/tmp_a').listSync(),
+        isEmpty,
+        reason: 'no temp copy left on the phone',
+      );
 
       // New phone, same Google account, different device key.
       final b = await device('b');
@@ -80,12 +92,18 @@ void main() {
         b.service.downloadAndStage('wrong passphrase', currentSchemaVersion: 2),
         throwsA(isA<BackupUnreadableException>()),
       );
-      await b.service.downloadAndStage('long passphrase', currentSchemaVersion: 2);
+      await b.service.downloadAndStage(
+        'long passphrase',
+        currentSchemaVersion: 2,
+      );
       BackupService.commitRestore(b.file);
       db = AppDatabase(openEncryptedExecutor(b.file, (await b.keys.read())!));
       addTearDown(db.close);
       expect((await WorkoutRepository(db).loadActive())!.name, 'Cloud session');
-      expect((await ProfileRepository(db).loadProfile())!.birthYear, testProfile.birthYear);
+      expect(
+        (await ProfileRepository(db).loadProfile())!.birthYear,
+        testProfile.birthYear,
+      );
       expect((await AnalyticsRepository(db).photos()).length, 1);
       expect(Directory('${dir.path}/tmp_b').listSync(), isEmpty);
     });
@@ -94,7 +112,10 @@ void main() {
       final a = await device('a');
       await backend.signInWithGoogle();
       backend.failNextCall = true;
-      await expectLater(a.service.upload('long passphrase'), throwsA(isA<SocketException>()));
+      await expectLater(
+        a.service.upload('long passphrase'),
+        throwsA(isA<SocketException>()),
+      );
       expect(Directory('${dir.path}/tmp_a').listSync(), isEmpty);
       expect(backend.backups, isEmpty);
     });
@@ -104,35 +125,61 @@ void main() {
       await backend.signInWithGoogle();
       await a.service.upload('long passphrase');
       await backend.signOut();
-      backend.nextUser = const CloudUser(id: 'someone-else', email: 'x@example.com');
+      backend.nextUser = const CloudUser(
+        id: 'someone-else',
+        email: 'x@example.com',
+      );
       await backend.signInWithGoogle();
       expect(await backend.backupInfo(), isNull);
     });
   });
 
   group('coach review rules', () {
-    File clip([int bytes = 1024]) => File('${dir.path}/c$bytes.mp4')..writeAsBytesSync(List.filled(bytes, 0));
-    const coach = CloudUser(id: 'coach-1', email: 'coach@example.com', isCoach: true);
+    File clip([int bytes = 1024]) =>
+        File('${dir.path}/c$bytes.mp4')
+          ..writeAsBytesSync(List.filled(bytes, 0));
+    const coach = CloudUser(
+      id: 'coach-1',
+      email: 'coach@example.com',
+      isCoach: true,
+    );
 
     test('submit, review, feedback: the clip is deleted the moment feedback is sent', () async {
       await backend.signInWithGoogle();
-      final s = await backend.submitClip(clip: clip(), exerciseId: 'muscle_up_negative', note: 'Left elbow?');
+      final s = await backend.submitClip(
+        clip: clip(),
+        exerciseId: 'muscle_up_negative',
+        note: 'Left elbow?',
+      );
       expect(backend.clips.length, 1);
-      expect(await backend.reviewQueue(), isEmpty, reason: 'athletes never see the queue');
-      await expectLater(backend.sendFeedback(s.id, 'self-review'), throwsStateError);
+      expect(
+        await backend.reviewQueue(),
+        isEmpty,
+        reason: 'athletes never see the queue',
+      );
+      await expectLater(
+        backend.sendFeedback(s.id, 'self-review'),
+        throwsStateError,
+      );
 
       await backend.signOut();
       backend.nextUser = coach;
       await backend.signInWithGoogle();
       final queue = await backend.reviewQueue();
       expect(queue.single.note, 'Left elbow?');
-      expect((await backend.clipUrl(queue.single)).toString(), contains('token='));
+      expect(
+        (await backend.clipUrl(queue.single)).toString(),
+        contains('token='),
+      );
       await backend.sendFeedback(s.id, 'Keep the bar closer.');
       expect(backend.clips, isEmpty);
       expect(await backend.reviewQueue(), isEmpty);
 
       await backend.signOut();
-      backend.nextUser = const CloudUser(id: 'athlete-1', email: 'athlete@example.com');
+      backend.nextUser = const CloudUser(
+        id: 'athlete-1',
+        email: 'athlete@example.com',
+      );
       await backend.signInWithGoogle();
       final mine = (await backend.mySubmissions()).single;
       expect(mine.status, SubmissionStatus.reviewed);
@@ -150,31 +197,48 @@ void main() {
       clock.advance(const Duration(days: 1));
       expect(await backend.purgeExpiredClips(now: clock.now), 1);
       expect(backend.clips, isEmpty);
-      expect((await backend.mySubmissions()).single.status, SubmissionStatus.pending);
-      expect(await backend.purgeExpiredClips(now: clock.now), 0, reason: 'idempotent');
+      expect(
+        (await backend.mySubmissions()).single.status,
+        SubmissionStatus.pending,
+      );
+      expect(
+        await backend.purgeExpiredClips(now: clock.now),
+        0,
+        reason: 'idempotent',
+      );
     });
 
-    test('an athlete purges only their own clips; a coach purges everyone\'s', () async {
-      await backend.signInWithGoogle();
-      await backend.submitClip(clip: clip(), exerciseId: 'pull_up', note: '');
-      await backend.signOut();
-      backend.nextUser = const CloudUser(id: 'athlete-2', email: 'b@example.com');
-      await backend.signInWithGoogle();
-      await backend.submitClip(clip: clip(), exerciseId: 'dip', note: '');
-      clock.advance(const Duration(days: 31));
-      expect(await backend.purgeExpiredClips(now: clock.now), 1);
-      expect(backend.clips.keys.single, startsWith('athlete-1/'));
-      await backend.signOut();
-      backend.nextUser = coach;
-      await backend.signInWithGoogle();
-      expect(await backend.purgeExpiredClips(now: clock.now), 1);
-      expect(backend.clips, isEmpty);
-    });
+    test(
+      'an athlete purges only their own clips; a coach purges everyone\'s',
+      () async {
+        await backend.signInWithGoogle();
+        await backend.submitClip(clip: clip(), exerciseId: 'pull_up', note: '');
+        await backend.signOut();
+        backend.nextUser = const CloudUser(
+          id: 'athlete-2',
+          email: 'b@example.com',
+        );
+        await backend.signInWithGoogle();
+        await backend.submitClip(clip: clip(), exerciseId: 'dip', note: '');
+        clock.advance(const Duration(days: 31));
+        expect(await backend.purgeExpiredClips(now: clock.now), 1);
+        expect(backend.clips.keys.single, startsWith('athlete-1/'));
+        await backend.signOut();
+        backend.nextUser = coach;
+        await backend.signInWithGoogle();
+        expect(await backend.purgeExpiredClips(now: clock.now), 1);
+        expect(backend.clips, isEmpty);
+      },
+    );
 
     test('oversized clips are refused; deleting cloud data removes everything of that user only', () async {
       await backend.signInWithGoogle();
       await expectLater(
-        backend.submitClip(clip: clip(CloudLimits.maxClipBytes + 1), exerciseId: 'dip', note: ''),
+        backend.submitClip(
+          clip: clip(CloudLimits.maxClipBytes + 1),
+          exerciseId: 'dip',
+          note: '',
+        ),
         throwsA(isA<CloudFileTooLargeException>()),
       );
       await backend.submitClip(clip: clip(), exerciseId: 'dip', note: '');
@@ -186,8 +250,11 @@ void main() {
       expect(backend.backups.keys, ['other']);
     });
 
-    test('coach review is open to every signed-in user until payments exist', () async {
-      expect(await const FreeEntitlements().canUseCoachReview(coach), isTrue);
-    });
+    test(
+      'coach review is open to every signed-in user until payments exist',
+      () async {
+        expect(await const FreeEntitlements().canUseCoachReview(coach), isTrue);
+      },
+    );
   });
 }

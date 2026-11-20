@@ -17,7 +17,9 @@ import 'vault_screen.dart';
 
 final analyticsProvider = FutureProvider<AnalyticsData>((ref) {
   ref.watch(activeSessionProvider); // refresh after each workout
-  return ref.watch(analyticsRepositoryProvider).load(now: ref.watch(clockProvider)());
+  return ref
+      .watch(analyticsRepositoryProvider)
+      .load(now: ref.watch(clockProvider)());
 });
 
 /// Dashboard: consistency, strength gains and skill unlocks, plus the photo vault entry.
@@ -35,15 +37,25 @@ class ProgressScreen extends ConsumerWidget {
     final dates = MaterialLocalizations.of(context);
 
     Widget section(String title, [String? hint]) => Padding(
-          padding: const EdgeInsets.only(top: 24, bottom: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-              if (hint != null) Text(hint, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
-            ],
+      padding: const EdgeInsets.only(top: 24, bottom: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-        );
+          if (hint != null)
+            Text(
+              hint,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 13,
+              ),
+            ),
+        ],
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(l.tabProgress)),
@@ -54,11 +66,26 @@ class ProgressScreen extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(child: _StatTile(value: '${data.totalWorkouts}', label: l.statWorkouts)),
+                    Expanded(
+                      child: _StatTile(
+                        value: '${data.totalWorkouts}',
+                        label: l.statWorkouts,
+                      ),
+                    ),
                     const SizedBox(width: 10),
-                    Expanded(child: _StatTile(value: '${data.weekStreak}', label: l.statWeekStreak)),
+                    Expanded(
+                      child: _StatTile(
+                        value: '${data.weekStreak}',
+                        label: l.statWeekStreak,
+                      ),
+                    ),
                     const SizedBox(width: 10),
-                    Expanded(child: _StatTile(value: '${milestones.length}', label: l.statUnlocks)),
+                    Expanded(
+                      child: _StatTile(
+                        value: '${milestones.length}',
+                        label: l.statUnlocks,
+                      ),
+                    ),
                   ],
                 ),
                 section(l.chartWorkoutsTitle, l.chartLast8Weeks),
@@ -77,60 +104,89 @@ class ProgressScreen extends ConsumerWidget {
                 ),
                 section(l.strengthTitle, l.strengthHint),
                 if (data.trends.isEmpty)
-                  Text(l.strengthEmpty, style: const TextStyle(color: AppColors.textSecondary))
+                  Text(
+                    l.strengthEmpty,
+                    style: const TextStyle(color: AppColors.textSecondary),
+                  )
                 else
                   Card(
                     child: Column(
                       children: [
                         for (final t in data.trends.take(8))
-                          Builder(builder: (context) {
-                            final e = library.byId(t.exerciseId);
-                            final unit = (e?.isHold ?? false) ? l.secondsUnit : l.repsUnit;
-                            final up = t.change > 0;
-                            return ListTile(
-                              title: Text(e?.name.of(lang) ?? t.exerciseId),
-                              subtitle: Text(
-                                '${l.bestSetFromTo(t.firstBest, t.latestBest, unit)}'
-                                '${l.listSeparator}${l.sessionsCount(t.sessions)}',
-                              ),
-                              // Direction is carried by the icon and the signed number, not by color alone.
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    up
-                                        ? Icons.arrow_upward
-                                        : (t.change < 0 ? Icons.arrow_downward : Icons.remove),
-                                    size: 18,
-                                    color: up
-                                        ? AppColors.success
-                                        : (t.change < 0 ? AppColors.warning : AppColors.textSecondary),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '${t.change > 0 ? '+' : ''}${t.change}',
-                                    textDirection: TextDirection.ltr,
-                                    style: numericStyle(16, weight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+                          Builder(
+                            builder: (context) {
+                              final e = library.byId(t.exerciseId);
+                              final unit = (e?.isHold ?? false)
+                                  ? l.secondsUnit
+                                  : l.repsUnit;
+                              final up = t.change > 0;
+                              return ListTile(
+                                title: Text(e?.name.of(lang) ?? t.exerciseId),
+                                subtitle: Text(
+                                  '${l.bestSetFromTo(t.firstBest, t.latestBest, unit)}'
+                                  '${l.listSeparator}${l.sessionsCount(t.sessions)}',
+                                ),
+                                // Direction is carried by the icon and the signed number, not by color alone.
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      up
+                                          ? Icons.arrow_upward
+                                          : (t.change < 0
+                                                ? Icons.arrow_downward
+                                                : Icons.remove),
+                                      size: 18,
+                                      color: up
+                                          ? AppColors.success
+                                          : (t.change < 0
+                                                ? AppColors.warning
+                                                : AppColors.textSecondary),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      '${t.change > 0 ? '+' : ''}${t.change}',
+                                      textDirection: TextDirection.ltr,
+                                      style: numericStyle(
+                                        16,
+                                        weight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
                 section(l.milestonesTitle),
                 if (milestones.isEmpty)
-                  Text(l.milestonesEmpty, style: const TextStyle(color: AppColors.textSecondary))
+                  Text(
+                    l.milestonesEmpty,
+                    style: const TextStyle(color: AppColors.textSecondary),
+                  )
                 else
                   Card(
                     child: Column(
                       children: [
                         for (final m in milestones.take(10))
                           ListTile(
-                            leading: const Icon(Icons.lock_open, color: AppColors.primary),
-                            title: Text(library.byId(m.exerciseId)?.name.of(lang) ?? m.exerciseId),
-                            subtitle: Text(l.unlockedOn(westernDigits(dates.formatMediumDate(m.achievedAt)))),
+                            leading: const Icon(
+                              Icons.lock_open,
+                              color: AppColors.primary,
+                            ),
+                            title: Text(
+                              library.byId(m.exerciseId)?.name.of(lang) ??
+                                  m.exerciseId,
+                            ),
+                            subtitle: Text(
+                              l.unlockedOn(
+                                westernDigits(
+                                  dates.formatMediumDate(m.achievedAt),
+                                ),
+                              ),
+                            ),
                           ),
                       ],
                     ),
@@ -141,12 +197,18 @@ class ProgressScreen extends ConsumerWidget {
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
                       key: const Key('open-coach'),
-                      leading: const Icon(Icons.rate_review_outlined, color: AppColors.secondary),
+                      leading: const Icon(
+                        Icons.rate_review_outlined,
+                        color: AppColors.secondary,
+                      ),
                       title: Text(l.coachOpen),
                       subtitle: Text(l.coachHint),
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute<void>(builder: (_) => const CoachHubScreen())),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const CoachHubScreen(),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -155,12 +217,18 @@ class ProgressScreen extends ConsumerWidget {
                   clipBehavior: Clip.antiAlias,
                   child: ListTile(
                     key: const Key('open-vault'),
-                    leading: const Icon(Icons.photo_library_outlined, color: AppColors.secondary),
+                    leading: const Icon(
+                      Icons.photo_library_outlined,
+                      color: AppColors.secondary,
+                    ),
                     title: Text(l.vaultOpen),
                     subtitle: Text(l.vaultHint),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => Navigator.of(context)
-                        .push(MaterialPageRoute<void>(builder: (_) => const VaultScreen())),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const VaultScreen(),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -187,7 +255,10 @@ class _StatTile extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+              ),
             ),
           ],
         ),
@@ -200,7 +271,12 @@ class _StatTile extends StatelessWidget {
 /// section title names it. Each bar is labeled with its value, and tapping a bar
 /// shows the week it belongs to.
 class _WeekBars extends StatefulWidget {
-  const _WeekBars({super.key, required this.weeks, required this.value, required this.semanticUnit});
+  const _WeekBars({
+    super.key,
+    required this.weeks,
+    required this.value,
+    required this.semanticUnit,
+  });
   final List<WeekStat> weeks;
   final int Function(WeekStat) value;
   final String semanticUnit;
@@ -234,11 +310,14 @@ class _WeekBarsState extends State<_WeekBars> {
                     Expanded(
                       // The hit target is the full column, larger than the bar itself.
                       child: Semantics(
-                        label: '${l.weekOf(westernDigits(dates.formatShortMonthDay(widget.weeks[i].weekStart)))}: '
+                        label:
+                            '${l.weekOf(westernDigits(dates.formatShortMonthDay(widget.weeks[i].weekStart)))}: '
                             '${values[i]} ${widget.semanticUnit}',
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: () => setState(() => _selected = _selected == i ? null : i),
+                          onTap: () => setState(
+                            () => _selected = _selected == i ? null : i,
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 3),
                             child: Column(
@@ -250,19 +329,27 @@ class _WeekBarsState extends State<_WeekBars> {
                                     style: numericStyle(
                                       12,
                                       weight: FontWeight.w600,
-                                      color: selected == i ? AppColors.textPrimary : AppColors.textSecondary,
+                                      color: selected == i
+                                          ? AppColors.textPrimary
+                                          : AppColors.textSecondary,
                                     ),
                                   ),
                                 const SizedBox(height: 4),
                                 Container(
-                                  height: values[i] == 0 ? 2 : 104 * values[i] / maxValue,
+                                  height: values[i] == 0
+                                      ? 2
+                                      : 104 * values[i] / maxValue,
                                   decoration: BoxDecoration(
                                     color: values[i] == 0
                                         ? AppColors.surfaceElevated
                                         : (selected == null || selected == i
-                                            ? AppColors.primary
-                                            : AppColors.primary.withValues(alpha: 0.45)),
-                                    borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                                              ? AppColors.primary
+                                              : AppColors.primary.withValues(
+                                                  alpha: 0.45,
+                                                )),
+                                    borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(4),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -279,8 +366,13 @@ class _WeekBarsState extends State<_WeekBars> {
             Row(
               children: [
                 Text(
-                  westernDigits(dates.formatShortMonthDay(widget.weeks.first.weekStart)),
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                  westernDigits(
+                    dates.formatShortMonthDay(widget.weeks.first.weekStart),
+                  ),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                  ),
                 ),
                 Expanded(
                   child: Text(
@@ -288,10 +380,19 @@ class _WeekBarsState extends State<_WeekBars> {
                         ? ''
                         : '${l.weekOf(westernDigits(dates.formatShortMonthDay(widget.weeks[selected].weekStart)))}: ${values[selected]}',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                Text(l.thisWeek, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                Text(
+                  l.thisWeek,
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
           ],

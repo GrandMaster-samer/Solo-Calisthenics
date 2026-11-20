@@ -38,8 +38,11 @@ abstract final class BackupService {
     final db = sqlite3.open(database.path);
     try {
       db.execute('PRAGMA key = "x\'$hexKey\'";');
-      final version = db.select('PRAGMA user_version;').first.values.first as int;
-      db.execute('ATTACH DATABASE ${_quote(out.path)} AS backup KEY ${_quote(passphrase)};');
+      final version =
+          db.select('PRAGMA user_version;').first.values.first as int;
+      db.execute(
+        'ATTACH DATABASE ${_quote(out.path)} AS backup KEY ${_quote(passphrase)};',
+      );
       db.select("SELECT sqlcipher_export('backup');");
       db.execute('PRAGMA backup.user_version = $version;');
       db.execute('DETACH DATABASE backup;');
@@ -68,16 +71,23 @@ abstract final class BackupService {
       db.execute('PRAGMA key = "x\'$hexKey\'";');
       final int version;
       try {
-        db.execute('ATTACH DATABASE ${_quote(backup.path)} AS backup KEY ${_quote(passphrase)};');
-        final tables = db.select("SELECT name FROM backup.sqlite_master WHERE type = 'table' AND name = 'profiles';");
+        db.execute(
+          'ATTACH DATABASE ${_quote(backup.path)} AS backup KEY ${_quote(passphrase)};',
+        );
+        final tables = db.select(
+          "SELECT name FROM backup.sqlite_master WHERE type = 'table' AND name = 'profiles';",
+        );
         if (tables.isEmpty) throw const BackupUnreadableException();
-        version = db.select('PRAGMA backup.user_version;').first.values.first as int;
+        version =
+            db.select('PRAGMA backup.user_version;').first.values.first as int;
       } on SqliteException {
         throw const BackupUnreadableException();
       }
       if (version > currentSchemaVersion) throw const BackupTooNewException();
       db.select("SELECT sqlcipher_export('main', 'backup');");
-      db.execute('PRAGMA user_version = $version;'); // older backups migrate on next open
+      db.execute(
+        'PRAGMA user_version = $version;',
+      ); // older backups migrate on next open
       db.execute('DETACH DATABASE backup;');
     } catch (_) {
       db.close();

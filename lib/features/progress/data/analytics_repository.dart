@@ -1,11 +1,14 @@
-
 import 'package:drift/drift.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../planner/domain/weekly_planner.dart';
 
 class WeekStat {
-  const WeekStat({required this.weekStart, required this.workouts, required this.sets});
+  const WeekStat({
+    required this.weekStart,
+    required this.workouts,
+    required this.sets,
+  });
   final DateTime weekStart;
   final int workouts;
   final int sets;
@@ -64,14 +67,30 @@ class AnalyticsRepository {
     // One row per (session, exercise): best set and number of sets.
     final best = _db.setLogs.value.max();
     final count = _db.setLogs.id.count();
-    final q = _db.selectOnly(_db.setLogs).join([
-      innerJoin(_db.sessionExercises, _db.sessionExercises.id.equalsExp(_db.setLogs.sessionExerciseId)),
-      innerJoin(_db.sessions, _db.sessions.id.equalsExp(_db.sessionExercises.sessionId)),
-    ])
-      ..addColumns([_db.sessions.id, _db.sessions.startedAt, _db.sessionExercises.exerciseId, best, count])
-      ..where(_db.sessions.finishedAt.isNotNull())
-      ..groupBy([_db.sessions.id, _db.sessionExercises.exerciseId])
-      ..orderBy([OrderingTerm.asc(_db.sessions.startedAt), OrderingTerm.asc(_db.sessions.id)]);
+    final q =
+        _db.selectOnly(_db.setLogs).join([
+            innerJoin(
+              _db.sessionExercises,
+              _db.sessionExercises.id.equalsExp(_db.setLogs.sessionExerciseId),
+            ),
+            innerJoin(
+              _db.sessions,
+              _db.sessions.id.equalsExp(_db.sessionExercises.sessionId),
+            ),
+          ])
+          ..addColumns([
+            _db.sessions.id,
+            _db.sessions.startedAt,
+            _db.sessionExercises.exerciseId,
+            best,
+            count,
+          ])
+          ..where(_db.sessions.finishedAt.isNotNull())
+          ..groupBy([_db.sessions.id, _db.sessionExercises.exerciseId])
+          ..orderBy([
+            OrderingTerm.asc(_db.sessions.startedAt),
+            OrderingTerm.asc(_db.sessions.id),
+          ]);
     final rows = await q.get();
 
     final sessionWeek = <int, DateTime>{};
@@ -80,8 +99,14 @@ class AnalyticsRepository {
     for (final r in rows) {
       final week = DeloadPolicy.mondayOf(r.read(_db.sessions.startedAt)!);
       sessionWeek[r.read(_db.sessions.id)!] = week;
-      setsPerWeek.update(week, (v) => v + (r.read(count) ?? 0), ifAbsent: () => r.read(count) ?? 0);
-      bests.putIfAbsent(r.read(_db.sessionExercises.exerciseId)!, () => []).add(r.read(best) ?? 0);
+      setsPerWeek.update(
+        week,
+        (v) => v + (r.read(count) ?? 0),
+        ifAbsent: () => r.read(count) ?? 0,
+      );
+      bests
+          .putIfAbsent(r.read(_db.sessionExercises.exerciseId)!, () => [])
+          .add(r.read(best) ?? 0);
     }
     final workoutsPerWeek = <DateTime, int>{};
     for (final w in sessionWeek.values) {
@@ -93,13 +118,19 @@ class AnalyticsRepository {
       for (var i = weeksShown - 1; i >= 0; i--)
         () {
           final w = thisWeek.subtract(Duration(days: 7 * i));
-          return WeekStat(weekStart: w, workouts: workoutsPerWeek[w] ?? 0, sets: setsPerWeek[w] ?? 0);
+          return WeekStat(
+            weekStart: w,
+            workouts: workoutsPerWeek[w] ?? 0,
+            sets: setsPerWeek[w] ?? 0,
+          );
         }(),
     ];
 
     // The current week does not break the streak while it is still empty.
     var streak = 0;
-    var cursor = workoutsPerWeek.containsKey(thisWeek) ? thisWeek : thisWeek.subtract(const Duration(days: 7));
+    var cursor = workoutsPerWeek.containsKey(thisWeek)
+        ? thisWeek
+        : thisWeek.subtract(const Duration(days: 7));
     while (workoutsPerWeek.containsKey(cursor)) {
       streak++;
       cursor = cursor.subtract(const Duration(days: 7));
@@ -117,14 +148,29 @@ class AnalyticsRepository {
           ),
     ]..sort((a, b) => b.sessions.compareTo(a.sessions));
 
-    return AnalyticsData(weeks: weeks, totalWorkouts: sessionWeek.length, weekStreak: streak, trends: trends);
+    return AnalyticsData(
+      weeks: weeks,
+      totalWorkouts: sessionWeek.length,
+      weekStreak: streak,
+      trends: trends,
+    );
   }
 
   // ---- Progress photos (stored encrypted inside the database) ----
 
-  Future<int> addPhoto(Uint8List bytes, {required DateTime takenAt, double? weightKg}) => _db
+  Future<int> addPhoto(
+    Uint8List bytes, {
+    required DateTime takenAt,
+    double? weightKg,
+  }) => _db
       .into(_db.progressPhotos)
-      .insert(ProgressPhotosCompanion.insert(takenAt: takenAt, bytes: bytes, weightKg: Value(weightKg)));
+      .insert(
+        ProgressPhotosCompanion.insert(
+          takenAt: takenAt,
+          bytes: bytes,
+          weightKg: Value(weightKg),
+        ),
+      );
 
   /// Metadata only, newest first; image bytes are loaded one at a time with [photoBytes].
   Future<List<PhotoInfo>> photos() async {
@@ -134,12 +180,18 @@ class AnalyticsRepository {
       ..orderBy([OrderingTerm.desc(t.takenAt), OrderingTerm.desc(t.id)]);
     return [
       for (final r in await q.get())
-        PhotoInfo(id: r.read(t.id)!, takenAt: r.read(t.takenAt)!, weightKg: r.read(t.weightKg)),
+        PhotoInfo(
+          id: r.read(t.id)!,
+          takenAt: r.read(t.takenAt)!,
+          weightKg: r.read(t.weightKg),
+        ),
     ];
   }
 
-  Future<Uint8List?> photoBytes(int id) async =>
-      (await (_db.select(_db.progressPhotos)..where((p) => p.id.equals(id))).getSingleOrNull())?.bytes;
+  Future<Uint8List?> photoBytes(int id) async => (await (_db.select(
+    _db.progressPhotos,
+  )..where((p) => p.id.equals(id))).getSingleOrNull())?.bytes;
 
-  Future<void> deletePhoto(int id) => (_db.delete(_db.progressPhotos)..where((p) => p.id.equals(id))).go();
+  Future<void> deletePhoto(int id) =>
+      (_db.delete(_db.progressPhotos)..where((p) => p.id.equals(id))).go();
 }

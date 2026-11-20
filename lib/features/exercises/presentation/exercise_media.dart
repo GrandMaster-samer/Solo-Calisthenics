@@ -1,8 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+
+import '../../../core/providers.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_l10n.dart';
 import '../domain/exercise.dart';
+import 'exercise_illustration.dart';
 
 IconData patternIcon(MovementPattern p) => switch (p) {
   MovementPattern.push => Icons.keyboard_double_arrow_up,
@@ -12,29 +16,48 @@ IconData patternIcon(MovementPattern p) => switch (p) {
   MovementPattern.statics => Icons.balance,
 };
 
-/// Looping visual guide for an exercise. Shows the bundled animated WebP named in
-/// the exercise's `media` field, or a clearly labeled placeholder when none exists yet.
-/// See assets/media/README.md for how to add clips.
-class ExerciseMedia extends StatelessWidget {
+/// Looping visual guide for an exercise. A clip named in the exercise's `media`
+/// field wins (see assets/media/README.md); otherwise the app's own animated
+/// drawing is shown, and a labeled placeholder only if neither exists.
+class ExerciseMedia extends ConsumerWidget {
   const ExerciseMedia({super.key, required this.exercise});
   final Exercise exercise;
 
   static const directory = 'assets/media/exercises/';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final media = exercise.media;
+    final lang = Localizations.localeOf(context).languageCode;
+    final drawn =
+        ref.watch(exerciseLibraryProvider).illustrations[exercise.id] != null;
+    final fallback = drawn
+        ? ColoredBox(
+            key: const Key('exercise-illustration'),
+            color: AppColors.surfaceElevated,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: ExerciseIllustration(
+                exerciseId: exercise.id,
+                semanticLabel: illustrationLabel(
+                  context,
+                  exercise.name.of(lang),
+                ),
+              ),
+            ),
+          )
+        : _Placeholder(exercise: exercise);
     return AspectRatio(
-      aspectRatio: 16 / 9,
+      aspectRatio: 4 / 3,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: media == null
-            ? _Placeholder(exercise: exercise)
+            ? fallback
             : Image.asset(
                 '$directory$media',
                 fit: BoxFit.cover,
                 gaplessPlayback: true,
-                errorBuilder: (_, _, _) => _Placeholder(exercise: exercise),
+                errorBuilder: (_, _, _) => fallback,
               ),
       ),
     );

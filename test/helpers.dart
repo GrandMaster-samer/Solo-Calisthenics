@@ -16,6 +16,7 @@ import 'package:solo_calisthenics/features/cloud/data/clip_source.dart';
 import 'package:solo_calisthenics/features/cloud/domain/cloud_backend.dart';
 import 'package:solo_calisthenics/features/cloud/presentation/coach_screens.dart';
 import 'package:solo_calisthenics/features/exercises/data/exercise_repository.dart';
+import 'package:solo_calisthenics/features/exercises/presentation/exercise_illustration.dart';
 import 'package:solo_calisthenics/features/exercises/domain/exercise.dart';
 import 'package:solo_calisthenics/features/profile/application/profile_controller.dart';
 import 'package:solo_calisthenics/features/profile/domain/profile.dart';
@@ -26,6 +27,7 @@ import 'package:solo_calisthenics/features/settings/data/settings_repository.dar
 /// The real bundled seed data.
 ExerciseLibrary loadLibrary() => ExerciseLibrary.fromJsonString(
   File('assets/data/exercises.json').readAsStringSync(),
+  illustrations: File('assets/data/illustrations.json').readAsStringSync(),
 );
 
 AppDatabase memoryDb() => AppDatabase(NativeDatabase.memory());
@@ -99,10 +101,70 @@ class FakeBiometrics implements Biometrics {
 
 /// A valid 1x1 PNG, standing in for a camera photo.
 final tinyPng = Uint8List.fromList(const [
-  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52, //
-  0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4,
-  0x89, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00,
-  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE,
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x48,
+  0x44,
+  0x52, //
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1F,
+  0x15,
+  0xC4,
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x44,
+  0x41,
+  0x54,
+  0x78,
+  0x9C,
+  0x63,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x05,
+  0x00,
+  0x01,
+  0x0D,
+  0x0A,
+  0x2D,
+  0xB4,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4E,
+  0x44,
+  0xAE,
   0x42, 0x60, 0x82,
 ]);
 
@@ -138,12 +200,16 @@ class TestEnv {
     exerciseLibraryProvider.overrideWithValue(library),
     notificationServiceProvider.overrideWithValue(notifications),
     clockProvider.overrideWithValue(clock.call),
+    // Looping animations would never let pumpAndSettle finish.
+    animateIllustrationsProvider.overrideWithValue(false),
     volumeButtonsProvider.overrideWithValue(volume),
     cloudBackendProvider.overrideWithValue(cloud),
     if (clipSource != null) clipSourceProvider.overrideWithValue(clipSource!),
     clipPlayerBuilderProvider.overrideWithValue((url) => Text('PLAYER $url')),
     appLockProvider.overrideWithValue(appLock),
-    photoPickerProvider.overrideWithValue(({required bool camera}) async => tinyPng),
+    photoPickerProvider.overrideWithValue(
+      ({required bool camera}) async => tinyPng,
+    ),
     initialSettingsProvider.overrideWithValue(settings),
     initialProfileProvider.overrideWithValue(
       ProfileState(profile: profile, injuries: injuries),

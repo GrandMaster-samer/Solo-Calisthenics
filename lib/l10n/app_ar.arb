@@ -322,5 +322,6 @@
   "coachInboxEmpty": "لا توجد مقاطع بانتظار المراجعة.",
   "feedbackWrite": "ملاحظات على الأداء",
   "feedbackSend": "إرسال الملاحظات",
-  "feedbackDeletesClip": "إرسال الملاحظات يحذف المقطع من الخادم."
+  "feedbackDeletesClip": "إرسال الملاحظات يحذف المقطع من الخادم.",
+  "illustrationOf": "رسم توضيحي لتمرين {name}"
 }

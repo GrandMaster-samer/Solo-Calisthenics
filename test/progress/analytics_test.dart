@@ -16,15 +16,21 @@ void main() {
   });
   tearDown(() => env.db.close());
 
-  Future<void> session(DateTime day, Map<String, List<int>> sets, {bool finish = true}) async {
-    final id = await workouts.createSession(
-      'S',
-      [
-        for (final e in sets.keys)
-          PlannedExercise(exerciseId: e, sets: sets[e]!.length, targetMin: 1, targetMax: 99, restSec: 60),
-      ],
-      now: day,
-    );
+  Future<void> session(
+    DateTime day,
+    Map<String, List<int>> sets, {
+    bool finish = true,
+  }) async {
+    final id = await workouts.createSession('S', [
+      for (final e in sets.keys)
+        PlannedExercise(
+          exerciseId: e,
+          sets: sets[e]!.length,
+          targetMin: 1,
+          targetMax: 99,
+          restSec: 60,
+        ),
+    ], now: day);
     final s = (await workouts.load(id))!;
     for (final ex in s.exercises) {
       for (final v in sets[ex.exerciseId]!) {
@@ -38,7 +44,9 @@ void main() {
         );
       }
     }
-    if (finish) await workouts.finish(id, now: day.add(const Duration(minutes: 40)));
+    if (finish) {
+      await workouts.finish(id, now: day.add(const Duration(minutes: 40)));
+    }
   }
 
   test('empty history gives eight empty weeks and zeros', () async {
@@ -53,13 +61,27 @@ void main() {
 
   test('weekly consistency, set volume, streak and best-set trends', () async {
     final now = DateTime(2026, 3, 4); // Wednesday; this week starts Mon 2 Mar
-    await session(DateTime(2026, 2, 3), {'push_up': [8, 8, 7]}); // 4 weeks ago
+    await session(DateTime(2026, 2, 3), {
+      'push_up': [8, 8, 7],
+    }); // 4 weeks ago
     // (week of 9 Feb has no workout: breaks the streak)
-    await session(DateTime(2026, 2, 17), {'push_up': [9, 9, 8], 'plank': [30, 30]});
-    await session(DateTime(2026, 2, 19), {'push_up': [10, 9, 9]});
-    await session(DateTime(2026, 2, 24), {'push_up': [12, 10, 10], 'plank': [45, 40]});
-    await session(DateTime(2026, 3, 3), {'pull_up': [5, 4]});
-    await session(DateTime(2026, 3, 4), {'pull_up': [9]}, finish: false); // still running: not counted
+    await session(DateTime(2026, 2, 17), {
+      'push_up': [9, 9, 8],
+      'plank': [30, 30],
+    });
+    await session(DateTime(2026, 2, 19), {
+      'push_up': [10, 9, 9],
+    });
+    await session(DateTime(2026, 2, 24), {
+      'push_up': [12, 10, 10],
+      'plank': [45, 40],
+    });
+    await session(DateTime(2026, 3, 3), {
+      'pull_up': [5, 4],
+    });
+    await session(DateTime(2026, 3, 4), {
+      'pull_up': [9],
+    }, finish: false); // still running: not counted
 
     final a = await analytics.load(now: now);
     expect(a.totalWorkouts, 5);
@@ -74,26 +96,44 @@ void main() {
     expect(push.change, 4);
     final plank = a.trends.firstWhere((t) => t.exerciseId == 'plank');
     expect((plank.firstBest, plank.latestBest), (30, 45));
-    expect(a.trends.any((t) => t.exerciseId == 'pull_up'), isFalse, reason: 'needs two sessions');
+    expect(
+      a.trends.any((t) => t.exerciseId == 'pull_up'),
+      isFalse,
+      reason: 'needs two sessions',
+    );
     expect(a.trends.first.exerciseId, 'push_up', reason: 'most trained first');
   });
 
   test('an empty current week does not break the streak yet', () async {
-    await session(DateTime(2026, 2, 17), {'push_up': [8]});
-    await session(DateTime(2026, 2, 24), {'push_up': [8]});
+    await session(DateTime(2026, 2, 17), {
+      'push_up': [8],
+    });
+    await session(DateTime(2026, 2, 24), {
+      'push_up': [8],
+    });
     expect((await analytics.load(now: DateTime(2026, 3, 2))).weekStreak, 2);
     expect((await analytics.load(now: DateTime(2026, 3, 9))).weekStreak, 0);
   });
 
-  test('photos: metadata list is newest first, bytes load by id, delete works', () async {
-    final a = await analytics.addPhoto(tinyPng, takenAt: DateTime(2026, 1, 1), weightKg: 80);
-    final b = await analytics.addPhoto(tinyPng, takenAt: DateTime(2026, 2, 1));
-    final list = await analytics.photos();
-    expect(list.map((p) => p.id), [b, a]);
-    expect(list.last.weightKg, 80);
-    expect(await analytics.photoBytes(a), tinyPng);
-    await analytics.deletePhoto(a);
-    expect((await analytics.photos()).single.id, b);
-    expect(await analytics.photoBytes(a), isNull);
-  });
+  test(
+    'photos: metadata list is newest first, bytes load by id, delete works',
+    () async {
+      final a = await analytics.addPhoto(
+        tinyPng,
+        takenAt: DateTime(2026, 1, 1),
+        weightKg: 80,
+      );
+      final b = await analytics.addPhoto(
+        tinyPng,
+        takenAt: DateTime(2026, 2, 1),
+      );
+      final list = await analytics.photos();
+      expect(list.map((p) => p.id), [b, a]);
+      expect(list.last.weightKg, 80);
+      expect(await analytics.photoBytes(a), tinyPng);
+      await analytics.deletePhoto(a);
+      expect((await analytics.photos()).single.id, b);
+      expect(await analytics.photoBytes(a), isNull);
+    },
+  );
 }

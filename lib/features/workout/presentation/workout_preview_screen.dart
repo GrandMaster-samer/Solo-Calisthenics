@@ -5,6 +5,7 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/labels.dart';
 import '../../../l10n/app_l10n.dart';
+import '../../exercises/presentation/exercise_illustration.dart';
 import '../../exercises/presentation/library_screen.dart';
 import '../../profile/application/profile_controller.dart';
 import '../../profile/domain/profile.dart';
@@ -15,7 +16,12 @@ import 'active_session_screen.dart';
 
 /// Review and tweak a workout (sets, rest, order of exercises) before starting it.
 class WorkoutPreviewScreen extends ConsumerStatefulWidget {
-  const WorkoutPreviewScreen({super.key, required this.name, required this.initialPlan, this.link});
+  const WorkoutPreviewScreen({
+    super.key,
+    required this.name,
+    required this.initialPlan,
+    this.link,
+  });
 
   /// Set when this workout is a day of the weekly plan.
   final PlanLink? link;
@@ -115,7 +121,10 @@ class _WorkoutPreviewScreenState extends ConsumerState<WorkoutPreviewScreen> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.battery_charging_full, color: AppColors.warning),
+                  const Icon(
+                    Icons.battery_charging_full,
+                    color: AppColors.warning,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(child: Text(l.deloadExplainer)),
                 ],
@@ -141,6 +150,8 @@ class _WorkoutPreviewScreenState extends ConsumerState<WorkoutPreviewScreen> {
                       children: [
                         Row(
                           children: [
+                            ExerciseThumbnail(exerciseId: e.id),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

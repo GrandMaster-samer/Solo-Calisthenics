@@ -12,9 +12,12 @@ import '../../security/presentation/lock_gate.dart';
 import '../../settings/application/settings_controller.dart';
 import '../data/analytics_repository.dart';
 
-final photosProvider = FutureProvider<List<PhotoInfo>>((ref) => ref.watch(analyticsRepositoryProvider).photos());
-final photoBytesProvider =
-    FutureProvider.family<Uint8List?, int>((ref, id) => ref.watch(analyticsRepositoryProvider).photoBytes(id));
+final photosProvider = FutureProvider<List<PhotoInfo>>(
+  (ref) => ref.watch(analyticsRepositoryProvider).photos(),
+);
+final photoBytesProvider = FutureProvider.family<Uint8List?, int>(
+  (ref, id) => ref.watch(analyticsRepositoryProvider).photoBytes(id),
+);
 
 /// Private progress photos. They are stored inside the encrypted database, never in
 /// the phone gallery, and the screen sits behind the PIN when one is set.
@@ -69,7 +72,10 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
     final controller = TextEditingController(
       text: currentKg == null
           ? ''
-          : (settings.weightUnit == WeightUnit.kg ? currentKg : Units.kgToLb(currentKg)).toStringAsFixed(1),
+          : (settings.weightUnit == WeightUnit.kg
+                    ? currentKg
+                    : Units.kgToLb(currentKg))
+                .toStringAsFixed(1),
     );
     final save = await showDialog<bool>(
       context: context,
@@ -78,15 +84,22 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
         content: TextField(
           controller: controller,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+          ],
           decoration: InputDecoration(
             labelText: l.weight,
             helperText: l.optional,
-            suffixText: settings.weightUnit == WeightUnit.kg ? l.unitKg : l.unitLb,
+            suffixText: settings.weightUnit == WeightUnit.kg
+                ? l.unitKg
+                : l.unitLb,
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l.cancel),
+          ),
           TextButton(
             key: const Key('photo-save'),
             onPressed: () => Navigator.pop(context, true),
@@ -96,23 +109,29 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
       ),
     );
     if (save != true) return;
-    final entered = double.tryParse(controller.text.trim().replaceAll(',', '.'));
-    await ref.read(analyticsRepositoryProvider).addPhoto(
+    final entered = double.tryParse(
+      controller.text.trim().replaceAll(',', '.'),
+    );
+    await ref
+        .read(analyticsRepositoryProvider)
+        .addPhoto(
           bytes,
           takenAt: ref.read(clockProvider)(),
           weightKg: entered == null || entered <= 0
               ? null
-              : (settings.weightUnit == WeightUnit.kg ? entered : Units.lbToKg(entered)),
+              : (settings.weightUnit == WeightUnit.kg
+                    ? entered
+                    : Units.lbToKg(entered)),
         );
     ref.invalidate(photosProvider);
   }
 
   void _toggle(int id) => setState(() {
-        if (!_selected.remove(id)) {
-          if (_selected.length == 2) _selected.removeAt(0);
-          _selected.add(id);
-        }
-      });
+    if (!_selected.remove(id)) {
+      if (_selected.length == 2) _selected.removeAt(0);
+      _selected.add(id);
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +171,10 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
                     final pair = [byId[_selected[0]]!, byId[_selected[1]]!]
                       ..sort((a, b) => a.takenAt.compareTo(b.takenAt));
                     Navigator.of(context).push(
-                      MaterialPageRoute<void>(builder: (_) => CompareScreen(before: pair[0], after: pair[1])),
+                      MaterialPageRoute<void>(
+                        builder: (_) =>
+                            CompareScreen(before: pair[0], after: pair[1]),
+                      ),
                     );
                   },
                   icon: const Icon(Icons.compare),
@@ -170,8 +192,11 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
               actions: [
                 TextButton(
                   key: const Key('vault-set-pin'),
-                  onPressed: () => Navigator.of(context)
-                      .push(MaterialPageRoute<bool>(builder: (_) => const PinSetupScreen())),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<bool>(
+                      builder: (_) => const PinSetupScreen(),
+                    ),
+                  ),
                   child: Text(l.setPin),
                 ),
               ],
@@ -190,12 +215,13 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
                   )
                 : GridView.builder(
                     padding: const EdgeInsets.all(12),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 0.72,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 0.72,
+                        ),
                     itemCount: photos.length,
                     itemBuilder: (context, i) {
                       final p = photos[i];
@@ -203,7 +229,9 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
                       return _PhotoTile(
                         key: Key('photo-${p.id}'),
                         photo: p,
-                        caption: westernDigits(dates.formatMediumDate(p.takenAt)),
+                        caption: westernDigits(
+                          dates.formatMediumDate(p.takenAt),
+                        ),
                         selectedOrder: order < 0 ? null : order + 1,
                         onTap: () => _toggle(p.id),
                         onDelete: () async {
@@ -213,16 +241,27 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
                               title: Text(l.photoDeleteTitle),
                               content: Text(l.photoDeleteBody),
                               actions: [
-                                TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l.cancel)),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: Text(l.cancel),
+                                ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(context, true),
-                                  child: Text(l.delete, style: const TextStyle(color: AppColors.error)),
+                                  child: Text(
+                                    l.delete,
+                                    style: const TextStyle(
+                                      color: AppColors.error,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           );
                           if (ok != true) return;
-                          await ref.read(analyticsRepositoryProvider).deletePhoto(p.id);
+                          await ref
+                              .read(analyticsRepositoryProvider)
+                              .deletePhoto(p.id);
                           ref.invalidate(photosProvider);
                         },
                       );
@@ -232,7 +271,10 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
           if (photos.length >= 2 && _selected.length < 2)
             Padding(
               padding: const EdgeInsets.all(12),
-              child: Text(l.compareHint, style: const TextStyle(color: AppColors.textSecondary)),
+              child: Text(
+                l.compareHint,
+                style: const TextStyle(color: AppColors.textSecondary),
+              ),
             ),
         ],
       ),
@@ -241,7 +283,11 @@ class _VaultBodyState extends ConsumerState<_VaultBody> {
 }
 
 class _PhotoImage extends ConsumerWidget {
-  const _PhotoImage({required this.id, this.fit = BoxFit.cover, this.cacheWidth});
+  const _PhotoImage({
+    required this.id,
+    this.fit = BoxFit.cover,
+    this.cacheWidth,
+  });
   final int id;
   final BoxFit fit;
   final int? cacheWidth;
@@ -249,7 +295,9 @@ class _PhotoImage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bytes = ref.watch(photoBytesProvider(id)).value;
-    if (bytes == null) return const ColoredBox(color: AppColors.surfaceElevated);
+    if (bytes == null) {
+      return const ColoredBox(color: AppColors.surfaceElevated);
+    }
     return Image.memory(
       bytes,
       fit: fit,
@@ -257,7 +305,12 @@ class _PhotoImage extends ConsumerWidget {
       gaplessPlayback: true,
       errorBuilder: (_, _, _) => const ColoredBox(
         color: AppColors.surfaceElevated,
-        child: Center(child: Icon(Icons.broken_image_outlined, color: AppColors.textSecondary)),
+        child: Center(
+          child: Icon(
+            Icons.broken_image_outlined,
+            color: AppColors.textSecondary,
+          ),
+        ),
       ),
     );
   }
@@ -285,7 +338,10 @@ class _PhotoTile extends StatelessWidget {
       color: AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: selectedOrder != null ? AppColors.primary : Colors.transparent, width: 3),
+        side: BorderSide(
+          color: selectedOrder != null ? AppColors.primary : Colors.transparent,
+          width: 3,
+        ),
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -306,7 +362,10 @@ class _PhotoTile extends StatelessWidget {
                         radius: 14,
                         backgroundColor: AppColors.primary,
                         foregroundColor: AppColors.background,
-                        child: Text('$selectedOrder', style: const TextStyle(fontWeight: FontWeight.w700)),
+                        child: Text(
+                          '$selectedOrder',
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ),
                 ],
@@ -316,7 +375,9 @@ class _PhotoTile extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(start: 10),
               child: Row(
                 children: [
-                  Expanded(child: Text(caption, style: const TextStyle(fontSize: 13))),
+                  Expanded(
+                    child: Text(caption, style: const TextStyle(fontSize: 13)),
+                  ),
                   IconButton(
                     tooltip: l.delete,
                     onPressed: onDelete,
@@ -351,27 +412,35 @@ class CompareScreen extends ConsumerWidget {
     }
 
     Widget side(PhotoInfo p, String label) => Expanded(
-          child: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: InteractiveViewer(child: _PhotoImage(id: p.id, fit: BoxFit.contain)),
-                  ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: InteractiveViewer(
+                  child: _PhotoImage(id: p.id, fit: BoxFit.contain),
                 ),
               ),
-              Text(label, style: const TextStyle(color: AppColors.secondary, fontWeight: FontWeight.w700)),
-              Text(westernDigits(dates.formatMediumDate(p.takenAt))),
-              Text(
-                p.weightKg == null ? '—' : Units.formatWeight(p.weightKg!, unit),
-                style: const TextStyle(color: AppColors.textSecondary),
-              ),
-              const SizedBox(height: 8),
-            ],
+            ),
           ),
-        );
+          Text(
+            label,
+            style: const TextStyle(
+              color: AppColors.secondary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(westernDigits(dates.formatMediumDate(p.takenAt))),
+          Text(
+            p.weightKg == null ? '—' : Units.formatWeight(p.weightKg!, unit),
+            style: const TextStyle(color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(l.compare)),
@@ -381,7 +450,9 @@ class CompareScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
-                a != null && b != null ? '${l.daysApart(days)} · ${signedWeight(b - a)}' : l.daysApart(days),
+                a != null && b != null
+                    ? '${l.daysApart(days)} · ${signedWeight(b - a)}'
+                    : l.daysApart(days),
                 key: const Key('compare-summary'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -390,7 +461,9 @@ class CompareScreen extends ConsumerWidget {
               // Before is always on the left, after on the right, in both languages.
               child: Directionality(
                 textDirection: TextDirection.ltr,
-                child: Row(children: [side(before, l.before), side(after, l.after)]),
+                child: Row(
+                  children: [side(before, l.before), side(after, l.after)],
+                ),
               ),
             ),
           ],

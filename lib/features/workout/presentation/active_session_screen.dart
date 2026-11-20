@@ -15,6 +15,7 @@ import '../../../core/widgets/labels.dart';
 import '../../../l10n/app_l10n.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../exercises/presentation/exercise_detail_screen.dart';
+import '../../exercises/presentation/exercise_illustration.dart';
 import '../../planner/domain/progression_engine.dart';
 import '../../profile/application/profile_controller.dart';
 import '../../settings/application/settings_controller.dart';
@@ -244,10 +245,18 @@ class _ActiveSessionScreenState extends ConsumerState<ActiveSessionScreen>
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(switch (c.action) {
-                    ProgressionAction.advance => l.changeUnlocked(name(c.newExerciseId)),
-                    ProgressionAction.increaseTarget => l.changeGoalUp(name(c.exerciseId)),
-                    ProgressionAction.decreaseTarget => l.changeGoalDown(name(c.exerciseId)),
-                    ProgressionAction.regress => l.changeRegressed(name(c.newExerciseId)),
+                    ProgressionAction.advance => l.changeUnlocked(
+                      name(c.newExerciseId),
+                    ),
+                    ProgressionAction.increaseTarget => l.changeGoalUp(
+                      name(c.exerciseId),
+                    ),
+                    ProgressionAction.decreaseTarget => l.changeGoalDown(
+                      name(c.exerciseId),
+                    ),
+                    ProgressionAction.regress => l.changeRegressed(
+                      name(c.newExerciseId),
+                    ),
                     ProgressionAction.repeat => '',
                   }),
                 ),
@@ -671,8 +680,8 @@ class _ActiveSessionScreenState extends ConsumerState<ActiveSessionScreen>
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
-                      width: 220,
-                      height: 220,
+                      width: 196,
+                      height: 196,
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
@@ -729,16 +738,47 @@ class _ActiveSessionScreenState extends ConsumerState<ActiveSessionScreen>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      l.nextUp(
-                        nextDef?.name.of(lang) ?? next.exerciseId,
-                        l.setOf(
-                          (next.sets.length + 1).clamp(1, next.targetSets),
-                          next.targetSets,
+                    Row(
+                      children: [
+                        if (nextDef != null) ...[
+                          Container(
+                            width: 92,
+                            height: 62,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: AppColors.surface,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ExerciseIllustration(
+                              key: const Key('next-illustration'),
+                              exerciseId: nextDef.id,
+                              color: AppColors.textPrimary,
+                              semanticLabel: illustrationLabel(
+                                context,
+                                nextDef.name.of(lang),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                        ],
+                        Expanded(
+                          child: Text(
+                            l.nextUp(
+                              nextDef?.name.of(lang) ?? next.exerciseId,
+                              l.setOf(
+                                (next.sets.length + 1).clamp(
+                                  1,
+                                  next.targetSets,
+                                ),
+                                next.targetSets,
+                              ),
+                            ),
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
                         ),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: AppColors.textSecondary),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
@@ -836,7 +876,8 @@ class _EffortChip extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              textDirection: TextDirection.ltr, // keeps "4+" from flipping in Arabic
+              textDirection:
+                  TextDirection.ltr, // keeps "4+" from flipping in Arabic
               style: numericStyle(
                 18,
                 color: selected ? AppColors.background : AppColors.textPrimary,

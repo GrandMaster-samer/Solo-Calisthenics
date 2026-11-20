@@ -42,14 +42,22 @@ final workoutRepositoryProvider = Provider(
   (ref) => WorkoutRepository(ref.watch(databaseProvider)),
 );
 
-final analyticsRepositoryProvider = Provider((ref) => AnalyticsRepository(ref.watch(databaseProvider)));
+final analyticsRepositoryProvider = Provider(
+  (ref) => AnalyticsRepository(ref.watch(databaseProvider)),
+);
 
 /// One instance for the app's lifetime so failed-attempt counting is not reset.
-final appLockProvider = Provider<AppLock>((ref) => AppLock(const SecureSecretStore(), DeviceBiometrics()));
+final appLockProvider = Provider<AppLock>(
+  (ref) => AppLock(const SecureSecretStore(), DeviceBiometrics()),
+);
 
 /// Handles to things only main() knows: where the database lives and how to restart.
 class AppControl {
-  const AppControl({required this.databaseFile, required this.keyStore, required this.restart});
+  const AppControl({
+    required this.databaseFile,
+    required this.keyStore,
+    required this.restart,
+  });
   final File databaseFile;
   final KeyStore keyStore;
 
@@ -57,7 +65,9 @@ class AppControl {
   final Future<void> Function() restart;
 }
 
-final appControlProvider = Provider<AppControl>((ref) => throw UnimplementedError('appControlProvider not overridden'));
+final appControlProvider = Provider<AppControl>(
+  (ref) => throw UnimplementedError('appControlProvider not overridden'),
+);
 
 /// Returns the bytes of a photo from the camera or the gallery, or null if cancelled.
 /// The picked image is downscaled and never written to the gallery by the app.
@@ -74,7 +84,8 @@ final photoPickerProvider = Provider<PhotoPicker>((ref) {
     if (file == null) return null;
     final bytes = await file.readAsBytes();
     try {
-      await File(file.path).delete(); // do not leave an unencrypted copy in the cache
+      await File(file.path)
+          .delete(); // do not leave an unencrypted copy in the cache
     } on Object {
       // Some sources hand out paths that cannot be deleted.
     }

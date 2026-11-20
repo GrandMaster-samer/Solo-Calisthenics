@@ -29,7 +29,11 @@ Future<void> settle(WidgetTester tester) =>
 Future<void> tapOn(WidgetTester tester, Finder finder) async {
   if (finder.evaluate().isEmpty) {
     // Lazily built list: scroll until the item exists.
-    await tester.scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      finder,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
   }
   if (finder.hitTestable().evaluate().isEmpty) {
     // Only scroll when needed, so the screen is not moved under the user's feet.
@@ -154,7 +158,10 @@ void main() {
       findsNothing,
     ); // incline is wrists:medium too
     expect(find.text('Try instead: Wall Push-up'), findsOneWidget);
-    expect(find.textContaining('PLACEHOLDER'), findsOneWidget);
+    // Every exercise has its own drawing; the placeholder is gone.
+    expect(find.byKey(const Key('exercise-illustration')), findsOneWidget);
+    expect(find.textContaining('PLACEHOLDER'), findsNothing);
+    expect(find.bySemanticsLabel('Drawing of Push-up'), findsOneWidget);
   });
 
   testWidgets(
@@ -196,7 +203,11 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 250));
-      expect(env.volume.capturing, isFalse, reason: 'volume keys work normally while resting');
+      expect(
+        env.volume.capturing,
+        isFalse,
+        reason: 'volume keys work normally while resting',
+      );
 
       // Rest view with the one-tap RIR picker.
       expect(find.byKey(const Key('rest-clock')), findsOneWidget);
